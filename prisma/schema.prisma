@@ -1,0 +1,97 @@
+// Prisma Schema for Findo Kids E-Commerce Platform
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Category {
+  id          String    @id @default(cuid())
+  name        String
+  slug        String    @unique
+  image       String?
+  description String?
+  products    Product[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Product {
+  id             String      @id @default(cuid())
+  name           String
+  slug           String      @unique
+  description    String
+  shortDesc      String
+  price          Float
+  compareAtPrice Float?
+  stock          Int         @default(10)
+  categoryId     String
+  category       Category    @relation(fields: [categoryId], references: [id])
+  images         String      // JSON string array of image URLs
+  isFeatured     Boolean     @default(false)
+  ageRange       String      // e.g., "3-6 years", "0-2 years", "6-9 years"
+  badges         String      @default("[]") // JSON array of string badges like ["Best Seller", "100% Non-Toxic"]
+  specs          String      @default("{}") // JSON object of specs
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+  orderItems     OrderItem[]
+}
+
+model Order {
+  id               String      @id @default(cuid())
+  orderNumber      String      @unique
+  customerName     String
+  customerEmail    String
+  customerPhone    String
+  address          String
+  city             String
+  state            String
+  pincode          String
+  subtotal         Float
+  shippingFee      Float       @default(0)
+  totalAmount      Float
+  paymentMethod    String      @default("COD") // "COD" | "RAZORPAY"
+  paymentStatus    String      @default("PENDING") // "PENDING" | "PAID" | "FAILED"
+  orderStatus      String      @default("PENDING") // "PENDING" | "PROCESSING" | "SHIPPED" | "DELIVERED" | "CANCELLED"
+  razorpayOrderId  String?
+  razorpayPaymentId String?
+  items            OrderItem[]
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+}
+
+model OrderItem {
+  id           String   @id @default(cuid())
+  orderId      String
+  order        Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId    String
+  product      Product  @relation(fields: [productId], references: [id])
+  quantity     Int
+  price        Float
+  productName  String
+  productImage String
+}
+
+model AdminUser {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String
+  role         String   @default("ADMIN")
+  createdAt    DateTime @default(now())
+}
+
+model CustomerQuery {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  subject   String
+  message   String
+  status    String   @default("UNREAD") // "UNREAD" | "READ" | "RESOLVED"
+  createdAt DateTime @default(now())
+}

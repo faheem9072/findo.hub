@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+:root {
+  --color-brand-navy: #0d1b1e;
+  --color-brand-navy-light: #182e33;
+  --color-brand-green: #5a9e2f;
+  --color-brand-green-hover: #488224;
+  --color-brand-green-light: #eef8ea;
+  --color-brand-cream: #fafbf8;
+  --color-surface: #ffffff;
+}
+
+@theme inline {
+  --color-navy: #0d1b1e;
+  --color-navy-light: #182e33;
+  --color-navy-dark: #070e10;
+  --color-green: #5a9e2f;
+  --color-green-hover: #488224;
+  --color-green-light: #eef8ea;
+  --color-green-accent: #72bf44;
+  --color-cream: #fafbf8;
+  --font-quicksand: var(--font-quicksand);
+}
+
+body {
+  background-color: #fafbf8;
+  color: #0d1b1e;
+  font-family: var(--font-quicksand), system-ui, -apple-system, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Friendly smooth shadows & rounded corners */
+.card-hover {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px -6px rgba(13, 27, 30, 0.08), 0 4px 12px -2px rgba(90, 158, 47, 0.12);
+}
+
+/* Glassmorphism Navigation */
+.glass-nav {
+  background-color: rgba(250, 251, 248, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Badge Pulse Animation */
+@keyframes pulse-subtle {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.85; transform: scale(1.03); }
+}
+.animate-pulse-subtle {
+  animation: pulse-subtle 2.5s infinite ease-in-out;
+}
