@@ -202,6 +202,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                   <LogOut className="w-4 h-4" />
                 </button>
               </div>
+
+              <div className="pt-2 text-center text-[10px] text-slate-500 border-t border-white/5">
+                Designed &amp; Developed by <span className="text-[#5a9e2f] font-semibold">KORE</span>
+              </div>
             </div>
           </div>
         </div>
@@ -275,6 +279,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             >
               <LogOut className="w-4 h-4" />
             </button>
+          </div>
+
+          <div className="pt-2 text-center text-[10px] text-slate-500 border-t border-white/5">
+            Designed &amp; Developed by <span className="text-[#5a9e2f] font-semibold">KORE</span>
           </div>
         </div>
       </aside>

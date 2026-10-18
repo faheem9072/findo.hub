@@ -81,7 +81,10 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
           <p>© {new Date().getFullYear()} FINDO. All rights reserved.</p>
-          <p>Find What You Need — Premium Children&apos;s Lifestyle</p>
+          <p className="flex items-center gap-1 text-slate-400">
+            <span>Designed and Developed by</span>
+            <span className="text-[#5a9e2f] font-bold tracking-wider">KORE</span>
+          </p>
         </div>
       </div>
     </footer>
