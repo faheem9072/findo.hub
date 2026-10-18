@@ -4,16 +4,21 @@ import prisma from '@/lib/prisma';
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://findo-store.vercel.app';
 
-  const products = await prisma.product.findMany({
-    select: { slug: true, updatedAt: true },
-  });
+  let productUrls: MetadataRoute.Sitemap = [];
+  try {
+    const products = await prisma.product.findMany({
+      select: { slug: true, updatedAt: true },
+    });
 
-  const productUrls: MetadataRoute.Sitemap = products.map((p) => ({
-    url: `${baseUrl}/products/${p.slug}`,
-    lastModified: p.updatedAt,
-    changeFrequency: 'weekly',
-    priority: 0.8,
-  }));
+    productUrls = products.map((p) => ({
+      url: `${baseUrl}/products/${p.slug}`,
+      lastModified: p.updatedAt,
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    }));
+  } catch {
+    productUrls = [];
+  }
 
   const staticUrls: MetadataRoute.Sitemap = [
     {
