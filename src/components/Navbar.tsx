@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { ShoppingBag, Search, Menu, X, ShieldCheck, Sparkles, UserCheck } from 'lucide-react';
+import { ShoppingBag, Search, Menu, X, User } from 'lucide-react';
 import { useCart } from '@/lib/cart-context';
 
 export default function Navbar({ onOpenSearch }: { onOpenSearch?: () => void }) {
@@ -13,59 +13,47 @@ export default function Navbar({ onOpenSearch }: { onOpenSearch?: () => void }) 
   const { cartCount, setIsCartOpen } = useCart();
 
   const navLinks = [
-    { name: 'Home', href: '/' },
-    { name: 'All Products', href: '/products' },
-    { name: 'Learning Toys', href: '/products?category=learning-toys' },
-    { name: 'Feeding', href: '/products?category=feeding-tableware' },
-    { name: 'Nursery', href: '/products?category=nursery-lights' },
-    { name: 'About Us', href: '/about' },
+    { name: 'Shop', href: '/shop' },
+    { name: 'About', href: '/about' },
     { name: 'Contact', href: '/contact' },
   ];
 
-  const isAdminRoute = pathname.startsWith('/admin');
-
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-emerald-950/10 glass-nav transition-all">
-      {/* Top Banner Strip */}
-      <div className="bg-[#0d1b1e] text-emerald-100 text-xs py-2 px-4 text-center font-medium flex items-center justify-center gap-2">
-        <Sparkles className="w-3.5 h-3.5 text-[#5a9e2f] animate-pulse" />
-        <span>Free Shipping Across India on Orders Over ₹999! Code: <strong className="text-[#5a9e2f]">FREESHIP</strong></span>
-        <span className="hidden md:inline-block text-[#5a9e2f]">• 100% Non-Toxic & Child-Safe Guarantee</span>
-      </div>
-
+    <header className="sticky top-0 z-40 w-full bg-white/95 backdrop-blur-md border-b border-slate-100 transition-all">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
-          {/* Brand Logo & Tagline */}
-          <Link href="/" className="flex items-center gap-3 group">
-            <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-[#5a9e2f] shadow-md group-hover:scale-105 transition-transform">
+        <div className="flex items-center justify-between h-18 sm:h-20">
+          
+          {/* FINDO Logo */}
+          <Link href="/" className="flex items-center gap-2.5 group">
+            <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-full overflow-hidden border border-[#5a9e2f]/30 shadow-xs">
               <Image
                 src="/logo.jpeg"
-                alt="Findo Logo"
+                alt="FINDO Logo"
                 fill
                 className="object-cover"
                 priority
               />
             </div>
             <div className="flex flex-col">
-              <span className="text-2xl font-bold tracking-tight text-[#0d1b1e] leading-none flex items-center gap-1">
-                findo<span className="w-2 h-2 rounded-full bg-[#5a9e2f] inline-block"></span>
+              <span className="text-xl sm:text-2xl font-extrabold tracking-tight text-[#0d1b1e] leading-none">
+                FINDO<span className="text-[#5a9e2f]">.</span>
               </span>
-              <span className="text-[10px] tracking-wider text-[#576b70] font-semibold uppercase mt-0.5">
+              <span className="text-[9px] tracking-wider text-slate-400 font-medium uppercase mt-0.5 hidden sm:block">
                 Find What You Need
               </span>
             </div>
           </Link>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-8">
+          <nav className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
               return (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`text-sm font-semibold transition-colors hover:text-[#5a9e2f] ${
-                    isActive ? 'text-[#5a9e2f] font-bold underline underline-offset-4 decoration-2' : 'text-[#0d1b1e]'
+                  className={`text-sm font-medium transition-colors hover:text-[#5a9e2f] ${
+                    isActive ? 'text-[#5a9e2f] font-semibold' : 'text-[#0d1b1e]'
                   }`}
                 >
                   {link.name}
@@ -74,51 +62,47 @@ export default function Navbar({ onOpenSearch }: { onOpenSearch?: () => void }) 
             })}
           </nav>
 
-          {/* Action Icons (Search, Cart, Admin toggle, Mobile Menu) */}
-          <div className="flex items-center gap-3">
-            {/* Search Trigger Button */}
+          {/* Header Action Icons */}
+          <div className="flex items-center gap-2 sm:gap-4">
+            {/* Search Trigger */}
             <button
               onClick={onOpenSearch}
-              className="p-2.5 rounded-full hover:bg-emerald-100/50 text-[#0d1b1e] hover:text-[#5a9e2f] transition-all"
-              title="Search products"
+              className="p-2.5 text-slate-700 hover:text-[#5a9e2f] hover:bg-slate-50 rounded-full transition-all"
               aria-label="Search products"
+              title="Search products"
             >
               <Search className="w-5 h-5" />
             </button>
 
-            {/* Admin Dashboard shortcut icon */}
+            {/* Account Icon */}
             <Link
-              href="/admin"
-              className={`p-2.5 rounded-full transition-all text-xs font-semibold flex items-center gap-1.5 ${
-                isAdminRoute
-                  ? 'bg-[#0d1b1e] text-[#5a9e2f]'
-                  : 'hover:bg-emerald-100/50 text-[#576b70] hover:text-[#0d1b1e]'
-              }`}
-              title="Admin Panel"
+              href="/account"
+              className="p-2.5 text-slate-700 hover:text-[#5a9e2f] hover:bg-slate-50 rounded-full transition-all hidden sm:flex items-center gap-1"
+              aria-label="My Account"
+              title="My Account"
             >
-              <UserCheck className="w-4 h-4" />
-              <span className="hidden sm:inline-block">Admin</span>
+              <User className="w-5 h-5" />
             </Link>
 
-            {/* Cart Button with Count Badge */}
+            {/* Cart Icon with Live Count */}
             <button
               onClick={() => setIsCartOpen(true)}
-              className="relative p-2.5 rounded-full bg-[#5a9e2f] text-white hover:bg-[#488224] transition-all shadow-sm hover:shadow-md flex items-center justify-center"
-              aria-label="View Shopping Cart"
+              className="relative p-2.5 text-slate-800 hover:text-[#5a9e2f] hover:bg-slate-50 rounded-full transition-all flex items-center justify-center"
+              aria-label="Shopping Cart"
             >
               <ShoppingBag className="w-5 h-5" />
               {cartCount > 0 && (
-                <span className="absolute -top-1.5 -right-1.5 bg-[#0d1b1e] text-white text-[11px] font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-white animate-bounce">
+                <span className="absolute -top-0.5 -right-0.5 bg-[#5a9e2f] text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
                   {cartCount}
                 </span>
               )}
             </button>
 
-            {/* Mobile Hamburger Menu Trigger */}
+            {/* Mobile Hamburger Trigger */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-2 rounded-lg text-[#0d1b1e] hover:bg-emerald-100/50"
-              aria-label="Toggle Navigation Menu"
+              className="md:hidden p-2.5 text-slate-800 hover:bg-slate-50 rounded-lg"
+              aria-label="Toggle navigation menu"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -126,27 +110,41 @@ export default function Navbar({ onOpenSearch }: { onOpenSearch?: () => void }) 
         </div>
       </div>
 
-      {/* Mobile Navigation Drawer */}
+      {/* Mobile Menu Drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-[#ffffff] border-b border-emerald-900/10 px-4 pt-3 pb-6 space-y-2 shadow-lg animate-in slide-in-from-top duration-200">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              onClick={() => setMobileMenuOpen(false)}
-              className="block py-2.5 px-3 rounded-lg text-base font-medium text-[#0d1b1e] hover:bg-[#eef8ea] hover:text-[#5a9e2f] transition-colors"
-            >
-              {link.name}
-            </Link>
-          ))}
-          <div className="pt-2 border-t border-slate-100">
-            <Link
-              href="/admin"
-              onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center gap-2 py-2.5 px-3 rounded-lg text-sm font-semibold text-[#0d1b1e] bg-[#eef8ea] hover:bg-[#5a9e2f] hover:text-white transition-all"
-            >
-              <UserCheck className="w-4 h-4 text-[#5a9e2f]" />
-              Go to Admin Panel
+        <div className="md:hidden bg-white border-b border-slate-100 px-6 py-6 space-y-4 shadow-xl">
+          <Link
+            href="/shop"
+            onClick={() => setMobileMenuOpen(false)}
+            className="block text-base font-semibold text-[#0d1b1e] hover:text-[#5a9e2f]"
+          >
+            Shop All Products
+          </Link>
+          <Link
+            href="/account"
+            onClick={() => setMobileMenuOpen(false)}
+            className="block text-base font-semibold text-[#0d1b1e] hover:text-[#5a9e2f]"
+          >
+            My Account & Orders
+          </Link>
+          <Link
+            href="/about"
+            onClick={() => setMobileMenuOpen(false)}
+            className="block text-base font-semibold text-[#0d1b1e] hover:text-[#5a9e2f]"
+          >
+            About FINDO
+          </Link>
+          <Link
+            href="/contact"
+            onClick={() => setMobileMenuOpen(false)}
+            className="block text-base font-semibold text-[#0d1b1e] hover:text-[#5a9e2f]"
+          >
+            Contact & Support
+          </Link>
+          <div className="pt-4 border-t border-slate-100 flex justify-between items-center text-xs text-slate-400">
+            <span>FINDO • Find What You Need</span>
+            <Link href="/admin" onClick={() => setMobileMenuOpen(false)} className="underline hover:text-[#5a9e2f]">
+              Admin Portal
             </Link>
           </div>
         </div>

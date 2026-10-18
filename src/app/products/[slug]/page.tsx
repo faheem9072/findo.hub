@@ -1,8 +1,6 @@
 import React from 'react';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import Image from 'next/image';
-import Link from 'next/link';
 import prisma from '@/lib/prisma';
 import ProductDetailClient from './ProductDetailClient';
 
@@ -18,9 +16,7 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
   });
 
   if (!product) {
-    return {
-      title: 'Product Not Found — Findo',
-    };
+    return { title: 'Product Not Found — FINDO' };
   }
 
   let images: string[] = [];
@@ -30,19 +26,13 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
   const mainImage = images[0] || '/logo.jpeg';
 
   return {
-    title: `${product.name} — Findo Kids Store`,
-    description: product.shortDesc || product.description.substring(0, 150),
+    title: product.seoTitle || `${product.name} — FINDO`,
+    description: product.seoDescription || product.shortDesc || product.description.substring(0, 150),
     openGraph: {
       title: product.name,
       description: product.shortDesc,
       images: [{ url: mainImage, alt: product.name }],
       type: 'website',
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: product.name,
-      description: product.shortDesc,
-      images: [mainImage],
     },
   };
 }
@@ -51,12 +41,31 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
   const { slug } = await params;
   const product = await prisma.product.findFirst({
     where: { OR: [{ slug: slug }, { id: slug }] },
-    include: { category: true },
+    include: {
+      category: true,
+      reviews: {
+        where: { isApproved: true },
+        orderBy: { createdAt: 'desc' },
+      },
+    },
   });
 
   if (!product) {
     notFound();
   }
 
-  return <ProductDetailClient product={product} />;
+  const relatedProducts = await prisma.product.findMany({
+    where: {
+      isPublished: true,
+      id: { not: product.id },
+      OR: [
+        { categoryId: product.categoryId },
+        { purpose: product.purpose },
+      ],
+    },
+    take: 4,
+    include: { category: true },
+  });
+
+  return <ProductDetailClient product={product} relatedProducts={relatedProducts} />;
 }

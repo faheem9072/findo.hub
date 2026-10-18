@@ -41,11 +41,13 @@ export async function POST(request: Request) {
       customerEmail,
       customerPhone,
       address,
+      building,
       city,
       state,
       pincode,
       paymentMethod,
       items,
+      couponCode,
       razorpayOrderId,
       razorpayPaymentId,
     } = body;
@@ -78,9 +80,40 @@ export async function POST(request: Request) {
       };
     });
 
-    const freeShippingThreshold = 999;
-    const shippingFee = subtotal >= freeShippingThreshold ? 0 : 70;
-    const totalAmount = subtotal + shippingFee;
+    // Server-side Coupon Verification
+    let discountAmount = 0;
+    let validCouponCode = null;
+
+    if (couponCode) {
+      const coupon = await prisma.coupon.findUnique({
+        where: { code: couponCode.trim().toUpperCase() },
+      });
+
+      if (coupon && coupon.isActive && (!coupon.expiryDate || new Date(coupon.expiryDate) >= new Date())) {
+        if (!coupon.minOrderValue || subtotal >= coupon.minOrderValue) {
+          validCouponCode = coupon.code;
+          if (coupon.discountType === 'PERCENTAGE') {
+            discountAmount = Math.round((subtotal * coupon.discountValue) / 100);
+          } else {
+            discountAmount = coupon.discountValue;
+          }
+          discountAmount = Math.min(discountAmount, subtotal);
+
+          // Increment coupon usage count
+          await prisma.coupon.update({
+            where: { id: coupon.id },
+            data: { timesUsed: { increment: 1 } },
+          });
+        }
+      }
+    }
+
+    const settings = await prisma.setting.findUnique({ where: { id: 'default' } });
+    const freeShippingThreshold = settings?.freeShippingThreshold ?? 999;
+    const flatShippingRate = settings?.flatShippingRate ?? 79;
+
+    const shippingFee = subtotal >= freeShippingThreshold ? 0 : flatShippingRate;
+    const totalAmount = Math.max(0, subtotal - discountAmount + shippingFee);
 
     const orderNumber = 'FND-' + Math.floor(100000 + Math.random() * 900000);
     const paymentStatus = paymentMethod === 'RAZORPAY' && razorpayPaymentId ? 'PAID' : 'PENDING';
@@ -89,13 +122,16 @@ export async function POST(request: Request) {
       data: {
         orderNumber,
         customerName,
-        customerEmail,
+        customerEmail: customerEmail.trim().toLowerCase(),
         customerPhone,
         address,
+        building: building || null,
         city,
         state,
         pincode,
         subtotal,
+        discountAmount,
+        couponCode: validCouponCode,
         shippingFee,
         totalAmount,
         paymentMethod: paymentMethod || 'COD',

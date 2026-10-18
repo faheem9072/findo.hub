@@ -76,69 +76,69 @@ export default async function AdminDashboardPage() {
         </div>
 
         {/* Metrics Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
           {/* Revenue */}
-          <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-2">
+          <div className="bg-white p-4 sm:p-6 rounded-2xl border border-slate-200 shadow-xs space-y-1.5 sm:space-y-2">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Revenue</span>
-              <div className="w-9 h-9 rounded-xl bg-emerald-100 text-[#5a9e2f] flex items-center justify-center">
-                <IndianRupee className="w-5 h-5" />
+              <span className="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-wider">Revenue</span>
+              <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-emerald-100 text-[#5a9e2f] flex items-center justify-center">
+                <IndianRupee className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
             </div>
-            <div className="text-2xl font-extrabold text-[#0d1b1e]">₹{totalRevenue.toFixed(2)}</div>
-            <p className="text-[11px] text-emerald-800 font-semibold flex items-center gap-1">
-              <TrendingUp className="w-3.5 h-3.5" />
-              <span>Live Sales Generated</span>
+            <div className="text-lg sm:text-2xl font-extrabold text-[#0d1b1e]">₹{totalRevenue.toFixed(0)}</div>
+            <p className="text-[10px] sm:text-[11px] text-emerald-800 font-semibold flex items-center gap-1">
+              <TrendingUp className="w-3 h-3" />
+              <span className="hidden sm:inline">Live Sales</span>
             </p>
           </div>
 
           {/* Orders */}
-          <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-2">
+          <div className="bg-white p-4 sm:p-6 rounded-2xl border border-slate-200 shadow-xs space-y-1.5 sm:space-y-2">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Orders</span>
-              <div className="w-9 h-9 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center">
-                <ShoppingBag className="w-5 h-5" />
+              <span className="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-wider">Orders</span>
+              <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center">
+                <ShoppingBag className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
             </div>
-            <div className="text-2xl font-extrabold text-[#0d1b1e]">{totalOrders}</div>
-            <Link href="/admin/orders" className="text-[11px] text-blue-600 font-bold hover:underline inline-block">
-              Manage All Orders →
+            <div className="text-lg sm:text-2xl font-extrabold text-[#0d1b1e]">{totalOrders}</div>
+            <Link href="/admin/orders" className="text-[10px] sm:text-[11px] text-blue-600 font-bold hover:underline inline-block truncate">
+              Manage Orders →
             </Link>
           </div>
 
           {/* Active Products */}
-          <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-2">
+          <div className="bg-white p-4 sm:p-6 rounded-2xl border border-slate-200 shadow-xs space-y-1.5 sm:space-y-2">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Catalog Products</span>
-              <div className="w-9 h-9 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center">
-                <Package className="w-5 h-5" />
+              <span className="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-wider">Products</span>
+              <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center">
+                <Package className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
             </div>
-            <div className="text-2xl font-extrabold text-[#0d1b1e]">{products}</div>
-            <Link href="/admin/products" className="text-[11px] text-purple-600 font-bold hover:underline inline-block">
-              View Product List →
+            <div className="text-lg sm:text-2xl font-extrabold text-[#0d1b1e]">{products}</div>
+            <Link href="/admin/products" className="text-[10px] sm:text-[11px] text-purple-600 font-bold hover:underline inline-block truncate">
+              Catalog List →
             </Link>
           </div>
 
           {/* Customer Queries */}
-          <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-2">
+          <div className="bg-white p-4 sm:p-6 rounded-2xl border border-slate-200 shadow-xs space-y-1.5 sm:space-y-2">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Customer Messages</span>
-              <div className="w-9 h-9 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center">
-                <MessageSquare className="w-5 h-5" />
+              <span className="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-wider">Messages</span>
+              <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center">
+                <MessageSquare className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
             </div>
-            <div className="text-2xl font-extrabold text-[#0d1b1e]">{queries}</div>
-            <Link href="/admin/queries" className="text-[11px] text-amber-600 font-bold hover:underline inline-block">
-              View Customer Queries →
+            <div className="text-lg sm:text-2xl font-extrabold text-[#0d1b1e]">{queries}</div>
+            <Link href="/admin/queries" className="text-[10px] sm:text-[11px] text-amber-600 font-bold hover:underline inline-block truncate">
+              View Queries →
             </Link>
           </div>
         </div>
 
         {/* Low Stock Alerts & Recent Orders */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          {/* Recent Orders Table */}
-          <div className="lg:col-span-8 bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-4">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8">
+          {/* Recent Orders Section */}
+          <div className="lg:col-span-8 bg-white p-4 sm:p-6 rounded-2xl sm:rounded-3xl border border-slate-200 shadow-xs space-y-4">
             <div className="flex items-center justify-between pb-3 border-b border-slate-100">
               <h2 className="text-base font-bold text-[#0d1b1e]">Recent Orders</h2>
               <Link href="/admin/orders" className="text-xs font-bold text-[#5a9e2f] hover:underline">
@@ -149,45 +149,77 @@ export default async function AdminDashboardPage() {
             {orders.length === 0 ? (
               <p className="text-xs text-slate-400 text-center py-6">No orders placed yet.</p>
             ) : (
-              <div className="overflow-x-auto">
-                <table className="w-full text-left text-xs">
-                  <thead>
-                    <tr className="border-b border-slate-100 text-slate-400 font-bold uppercase tracking-wider">
-                      <th className="pb-3">Order #</th>
-                      <th className="pb-3">Customer</th>
-                      <th className="pb-3">Items</th>
-                      <th className="pb-3">Amount</th>
-                      <th className="pb-3">Status</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-slate-100 font-medium text-[#0d1b1e]">
-                    {orders.map((order) => (
-                      <tr key={order.id} className="hover:bg-slate-50">
-                        <td className="py-3 font-bold">{order.orderNumber}</td>
-                        <td className="py-3">
-                          <div>{order.customerName}</div>
-                          <span className="text-[10px] text-slate-400">{order.city}</span>
-                        </td>
-                        <td className="py-3">{order.items.length} items</td>
-                        <td className="py-3 font-bold">₹{order.totalAmount.toFixed(2)}</td>
-                        <td className="py-3">
-                          <span
-                            className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold ${
-                              order.orderStatus === 'DELIVERED'
-                                ? 'bg-emerald-100 text-emerald-800'
-                                : order.orderStatus === 'SHIPPED'
-                                ? 'bg-blue-100 text-blue-800'
-                                : 'bg-amber-100 text-amber-800'
-                            }`}
-                          >
-                            {order.orderStatus}
-                          </span>
-                        </td>
+              <>
+                {/* Mobile View: Order Cards */}
+                <div className="md:hidden space-y-3">
+                  {orders.map((order) => (
+                    <div key={order.id} className="p-3 bg-slate-50 rounded-xl border border-slate-100 space-y-2">
+                      <div className="flex items-center justify-between">
+                        <span className="font-bold text-xs text-[#0d1b1e]">{order.orderNumber}</span>
+                        <span
+                          className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                            order.orderStatus === 'DELIVERED'
+                              ? 'bg-emerald-100 text-emerald-800'
+                              : order.orderStatus === 'SHIPPED'
+                              ? 'bg-blue-100 text-blue-800'
+                              : 'bg-amber-100 text-amber-800'
+                          }`}
+                        >
+                          {order.orderStatus}
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-between text-xs text-slate-600">
+                        <div>
+                          <p className="font-semibold text-[#0d1b1e]">{order.customerName}</p>
+                          <span className="text-[10px] text-slate-400">{order.city} • {order.items.length} items</span>
+                        </div>
+                        <span className="font-extrabold text-[#5a9e2f] text-sm">₹{order.totalAmount.toFixed(2)}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Desktop View: Table */}
+                <div className="hidden md:block overflow-x-auto">
+                  <table className="w-full text-left text-xs">
+                    <thead>
+                      <tr className="border-b border-slate-100 text-slate-400 font-bold uppercase tracking-wider">
+                        <th className="pb-3">Order #</th>
+                        <th className="pb-3">Customer</th>
+                        <th className="pb-3">Items</th>
+                        <th className="pb-3">Amount</th>
+                        <th className="pb-3">Status</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+                    </thead>
+                    <tbody className="divide-y divide-slate-100 font-medium text-[#0d1b1e]">
+                      {orders.map((order) => (
+                        <tr key={order.id} className="hover:bg-slate-50 transition-colors">
+                          <td className="py-3 font-bold">{order.orderNumber}</td>
+                          <td className="py-3">
+                            <div>{order.customerName}</div>
+                            <span className="text-[10px] text-slate-400">{order.city}</span>
+                          </td>
+                          <td className="py-3">{order.items.length} items</td>
+                          <td className="py-3 font-bold">₹{order.totalAmount.toFixed(2)}</td>
+                          <td className="py-3">
+                            <span
+                              className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold ${
+                                order.orderStatus === 'DELIVERED'
+                                  ? 'bg-emerald-100 text-emerald-800'
+                                  : order.orderStatus === 'SHIPPED'
+                                  ? 'bg-blue-100 text-blue-800'
+                                  : 'bg-amber-100 text-amber-800'
+                              }`}
+                            >
+                              {order.orderStatus}
+                            </span>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </>
             )}
           </div>
 

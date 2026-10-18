@@ -28,40 +28,60 @@ model Product {
   shortDesc      String
   price          Float
   compareAtPrice Float?
-  stock          Int         @default(10)
+  stock          Int         @default(15)
+  sku            String      @default("")
   categoryId     String
   category       Category    @relation(fields: [categoryId], references: [id])
+  purpose        String      @default("LEARN") // "PLAY" | "LEARN" | "CREATE" | "EXPLORE" | "BUILD HABITS"
   images         String      // JSON string array of image URLs
   isFeatured     Boolean     @default(false)
-  ageRange       String      // e.g., "3-6 years", "0-2 years", "6-9 years"
-  badges         String      @default("[]") // JSON array of string badges like ["Best Seller", "100% Non-Toxic"]
+  isPublished    Boolean     @default(true)
+  ageRange       String      @default("3-6 years")
+  weight         String?     @default("350g")
+  dimensions     String?     @default("25cm x 18cm x 5cm")
+  material       String?     @default("BPA-free Non-Toxic Material")
+  whatsIncluded  String?     @default("Main product item, user guide, storage box")
+  safetyInfo     String?     @default("ASTM & EN71 Child Safety Certified. Non-toxic water-based finishes.")
+  rating         Float       @default(4.9)
+  reviewCount    Int         @default(12)
+  badges         String      @default("[]") // JSON array of string badges
   specs          String      @default("{}") // JSON object of specs
+  seoTitle       String?
+  seoDescription String?
   createdAt      DateTime    @default(now())
   updatedAt      DateTime    @updatedAt
   orderItems     OrderItem[]
+  reviews        Review[]
 }
 
 model Order {
-  id               String      @id @default(cuid())
-  orderNumber      String      @unique
-  customerName     String
-  customerEmail    String
-  customerPhone    String
-  address          String
-  city             String
-  state            String
-  pincode          String
-  subtotal         Float
-  shippingFee      Float       @default(0)
-  totalAmount      Float
-  paymentMethod    String      @default("COD") // "COD" | "RAZORPAY"
-  paymentStatus    String      @default("PENDING") // "PENDING" | "PAID" | "FAILED"
-  orderStatus      String      @default("PENDING") // "PENDING" | "PROCESSING" | "SHIPPED" | "DELIVERED" | "CANCELLED"
-  razorpayOrderId  String?
+  id                String      @id @default(cuid())
+  orderNumber       String      @unique
+  customerName      String
+  customerEmail     String
+  customerPhone     String
+  address           String
+  building          String?
+  city              String
+  state             String
+  pincode           String
+  country           String      @default("India")
+  subtotal          Float
+  discountAmount    Float       @default(0)
+  couponCode        String?
+  shippingFee       Float       @default(0)
+  totalAmount       Float
+  paymentMethod     String      @default("RAZORPAY") // "RAZORPAY" | "COD"
+  paymentStatus     String      @default("PENDING")  // "PENDING" | "PAID" | "FAILED"
+  orderStatus       String      @default("PENDING")  // "PENDING" | "CONFIRMED" | "PROCESSING" | "PACKED" | "SHIPPED" | "OUT_FOR_DELIVERY" | "DELIVERED" | "CANCELLED" | "REFUNDED"
+  razorpayOrderId   String?
   razorpayPaymentId String?
-  items            OrderItem[]
-  createdAt        DateTime    @default(now())
-  updatedAt        DateTime    @updatedAt
+  razorpaySignature String?
+  customerId        String?
+  customer          Customer?   @relation(fields: [customerId], references: [id])
+  items             OrderItem[]
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
 }
 
 model OrderItem {
@@ -74,6 +94,68 @@ model OrderItem {
   price        Float
   productName  String
   productImage String
+}
+
+model Customer {
+  id           String    @id @default(cuid())
+  email        String    @unique
+  passwordHash String
+  name         String
+  phone        String?
+  addresses    Address[]
+  orders       Order[]
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+}
+
+model Address {
+  id         String   @id @default(cuid())
+  customerId String
+  customer   Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  name       String
+  phone      String
+  address    String
+  building   String?
+  city       String
+  state      String
+  pincode    String
+  isDefault  Boolean  @default(false)
+}
+
+model Coupon {
+  id            String    @id @default(cuid())
+  code          String    @unique
+  discountType  String    // "PERCENTAGE" | "FIXED"
+  discountValue Float
+  minOrderValue Float     @default(0)
+  expiryDate    DateTime?
+  usageLimit    Int?
+  timesUsed     Int       @default(0)
+  isActive      Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+}
+
+model Review {
+  id                 String   @id @default(cuid())
+  productId          String
+  product            Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  customerName       String
+  customerEmail      String
+  rating             Int
+  comment            String
+  isApproved         Boolean  @default(true)
+  isVerifiedPurchase Boolean  @default(true)
+  createdAt          DateTime @default(now())
+}
+
+model Setting {
+  id                    String   @id @default("default")
+  whatsappNumber        String   @default("+919876543210")
+  supportEmail          String   @default("support@findo.com")
+  freeShippingThreshold Float    @default(999)
+  flatShippingRate      Float    @default(79)
+  storeNotice           String?  @default("Free Shipping across India on orders above ₹999!")
+  updatedAt             DateTime @updatedAt
 }
 
 model AdminUser {

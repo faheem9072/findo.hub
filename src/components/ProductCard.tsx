@@ -16,8 +16,10 @@ export interface ProductCardProps {
     compareAtPrice?: number | null;
     stock: number;
     images: string;
-    ageRange: string;
-    badges: string;
+    ageRange?: string;
+    badges?: string;
+    rating?: number;
+    reviewCount?: number;
     category?: { name: string; slug: string };
   };
 }
@@ -31,11 +33,6 @@ export default function ProductCard({ product }: ProductCardProps) {
     parsedImages = typeof product.images === 'string' ? JSON.parse(product.images) : product.images;
   } catch {}
   const mainImage = parsedImages[0] || '/logo.jpeg';
-
-  let parsedBadges: string[] = [];
-  try {
-    parsedBadges = typeof product.badges === 'string' ? JSON.parse(product.badges) : product.badges;
-  } catch {}
 
   const discountPercent =
     product.compareAtPrice && product.compareAtPrice > product.price
@@ -51,97 +48,92 @@ export default function ProductCard({ product }: ProductCardProps) {
   };
 
   return (
-    <div className="group bg-white rounded-2xl border border-slate-200/80 overflow-hidden card-hover flex flex-col justify-between h-full relative">
+    <div className="group bg-white rounded-xl border border-slate-200/70 overflow-hidden flex flex-col justify-between h-full transition-all hover:border-[#5a9e2f]/40 hover:shadow-sm">
       <div>
-        {/* Product Image Box */}
-        <Link href={`/products/${product.slug}`} className="block relative aspect-square bg-slate-50 overflow-hidden">
+        {/* Product Image */}
+        <Link href={`/product/${product.slug}`} className="block relative aspect-square bg-[#f9faf8] overflow-hidden">
           <Image
             src={mainImage}
             alt={product.name}
             fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            className="object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+            sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
+            className="object-cover group-hover:scale-104 transition-transform duration-500 ease-out"
           />
 
-          {/* Badges Overlay */}
-          <div className="absolute top-3 left-3 flex flex-col gap-1.5 z-10">
-            {discountPercent && (
-              <span className="bg-[#5a9e2f] text-white text-[11px] font-bold px-2.5 py-1 rounded-full shadow-xs">
-                -{discountPercent}% OFF
+          {discountPercent && (
+            <div className="absolute top-3 left-3 z-10">
+              <span className="bg-[#0d1b1e] text-white text-[10px] font-bold px-2 py-0.5 rounded-md uppercase tracking-wider">
+                -{discountPercent}%
               </span>
-            )}
-            {parsedBadges.length > 0 && (
-              <span className="bg-[#0d1b1e]/85 backdrop-blur-xs text-emerald-300 text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">
-                {parsedBadges[0]}
-              </span>
-            )}
-          </div>
+            </div>
+          )}
 
-          {/* Age Group Tag */}
-          <div className="absolute bottom-3 right-3 z-10">
-            <span className="bg-white/90 backdrop-blur-xs text-[#0d1b1e] text-[11px] font-bold px-2.5 py-1 rounded-full border border-slate-200 shadow-xs">
-              {product.ageRange}
-            </span>
-          </div>
+          {product.ageRange && (
+            <div className="absolute bottom-3 right-3 z-10">
+              <span className="bg-white/90 backdrop-blur-xs text-[#0d1b1e] text-[10px] font-semibold px-2 py-0.5 rounded-md border border-slate-200">
+                {product.ageRange}
+              </span>
+            </div>
+          )}
         </Link>
 
-        {/* Content Body */}
-        <div className="p-5 space-y-2">
-          {/* Category & Rating */}
-          <div className="flex items-center justify-between text-xs text-slate-500">
-            <span className="font-semibold text-[#5a9e2f] uppercase tracking-wider text-[10px]">
-              {product.category?.name || 'Kids Essential'}
+        {/* Product Content */}
+        <div className="p-3 sm:p-4 space-y-1 sm:space-y-1.5">
+          <div className="flex items-center justify-between text-xs">
+            <span className="text-[9px] sm:text-[10px] font-bold text-slate-400 uppercase tracking-wider truncate max-w-[90px]">
+              {product.category?.name || 'FINDO'}
             </span>
-            <div className="flex items-center gap-1 text-amber-400 font-bold">
-              <Star className="w-3.5 h-3.5 fill-amber-400" />
-              <span className="text-slate-700 text-xs">4.9</span>
+            <div className="flex items-center gap-1 text-amber-400 font-semibold text-xs shrink-0">
+              <Star className="w-3 sm:w-3.5 h-3 sm:h-3.5 fill-amber-400 text-amber-400" />
+              <span className="text-slate-700 text-[11px] sm:text-xs font-bold">{product.rating || 4.9}</span>
             </div>
           </div>
 
-          {/* Title */}
-          <Link href={`/products/${product.slug}`} className="block group-hover:text-[#5a9e2f] transition-colors">
-            <h3 className="font-bold text-[#0d1b1e] text-base leading-snug line-clamp-2">
+          <Link href={`/product/${product.slug}`} className="block group-hover:text-[#5a9e2f] transition-colors">
+            <h3 className="font-bold text-[#0d1b1e] text-xs sm:text-sm leading-snug line-clamp-1">
               {product.name}
             </h3>
           </Link>
 
-          {/* Short description */}
-          <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed">
+          <p className="text-[11px] sm:text-xs text-slate-500 line-clamp-2 leading-relaxed hidden xs:line-clamp-2">
             {product.shortDesc}
           </p>
         </div>
       </div>
 
-      {/* Footer Price & Add to Cart */}
-      <div className="p-5 pt-0 mt-auto">
-        <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
-          <div className="flex flex-col">
-            <div className="flex items-baseline gap-1.5">
-              <span className="text-lg font-bold text-[#0d1b1e]">₹{product.price}</span>
-              {product.compareAtPrice && product.compareAtPrice > product.price && (
-                <span className="text-xs text-slate-400 line-through">₹{product.compareAtPrice}</span>
-              )}
-            </div>
-            <span className="text-[10px] text-emerald-800 font-medium">Incl. all taxes</span>
+      {/* Pricing & Add to Cart */}
+      <div className="p-3 sm:p-4 pt-0 mt-auto">
+        <div className="pt-2 sm:pt-3 border-t border-slate-100 flex items-center justify-between gap-1">
+          <div className="flex flex-col sm:flex-row sm:items-baseline sm:gap-1.5">
+            <span className="text-sm sm:text-base font-extrabold text-[#0d1b1e]">₹{product.price}</span>
+            {product.compareAtPrice && product.compareAtPrice > product.price && (
+              <span className="text-[10px] sm:text-xs text-slate-400 line-through">₹{product.compareAtPrice}</span>
+            )}
           </div>
 
           <button
             onClick={handleAddToCart}
-            className={`py-2.5 px-4 rounded-xl font-bold text-xs flex items-center gap-1.5 transition-all shadow-xs ${
-              added
-                ? 'bg-[#0d1b1e] text-[#5a9e2f]'
-                : 'bg-[#5a9e2f] hover:bg-[#488224] text-white hover:shadow-md'
+            disabled={product.stock <= 0}
+            className={`py-1.5 sm:py-2 px-2.5 sm:px-3.5 rounded-lg font-bold text-xs flex items-center gap-1 sm:gap-1.5 transition-all shrink-0 ${
+              product.stock <= 0
+                ? 'bg-slate-100 text-slate-400 cursor-not-allowed'
+                : added
+                ? 'bg-[#0d1b1e] text-emerald-400'
+                : 'bg-[#5a9e2f] hover:bg-[#488224] text-white shadow-xs'
             }`}
           >
-            {added ? (
+            {product.stock <= 0 ? (
+              <span>Out</span>
+            ) : added ? (
               <>
-                <Check className="w-4 h-4 text-[#5a9e2f]" />
-                <span>Added!</span>
+                <Check className="w-3.5 h-3.5" />
+                <span>Added</span>
               </>
             ) : (
               <>
-                <ShoppingBag className="w-4 h-4" />
-                <span>Add</span>
+                <ShoppingBag className="w-3.5 h-3.5" />
+                <span className="hidden sm:inline">Add to Cart</span>
+                <span className="sm:hidden">Add</span>
               </>
             )}
           </button>

@@ -98,8 +98,104 @@ export default function AdminProductsClient({
         </span>
       </div>
 
-      {/* Products Table */}
-      <div className="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
+      {/* Mobile View: Product Cards */}
+      <div className="md:hidden space-y-3">
+        {filteredProducts.length === 0 ? (
+          <div className="bg-white p-8 rounded-2xl border border-slate-200 text-center text-xs text-slate-400">
+            No products found matching your search.
+          </div>
+        ) : (
+          filteredProducts.map((p) => {
+            let img = '/logo.jpeg';
+            try {
+              const imgs = typeof p.images === 'string' ? JSON.parse(p.images) : p.images;
+              if (Array.isArray(imgs) && imgs.length > 0) img = imgs[0];
+            } catch {}
+
+            return (
+              <div key={p.id} className="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs space-y-3">
+                <div className="flex gap-3">
+                  <div className="relative w-16 h-16 rounded-xl overflow-hidden border border-slate-200 shrink-0 bg-slate-50">
+                    <Image src={img} alt={p.name} fill className="object-cover" />
+                  </div>
+
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-start justify-between gap-2">
+                      <Link
+                        href={`/products/${p.slug}`}
+                        target="_blank"
+                        className="font-bold text-[#0d1b1e] text-xs leading-snug hover:text-[#5a9e2f] transition-colors line-clamp-2"
+                      >
+                        {p.name}
+                      </Link>
+                      <button
+                        onClick={() => handleToggleFeatured(p)}
+                        className={`p-1.5 rounded-lg border text-xs shrink-0 transition-all ${
+                          p.isFeatured
+                            ? 'bg-amber-100 text-amber-800 border-amber-300'
+                            : 'bg-slate-100 text-slate-400 border-slate-200'
+                        }`}
+                        title="Toggle Featured"
+                      >
+                        <Star className={`w-3.5 h-3.5 ${p.isFeatured ? 'fill-amber-400 text-amber-500' : ''}`} />
+                      </button>
+                    </div>
+
+                    <div className="flex items-center gap-2 mt-1">
+                      <span className="bg-[#eef8ea] text-[#5a9e2f] px-2 py-0.5 rounded-md text-[9px] font-bold">
+                        {p.category?.name || 'General'}
+                      </span>
+                      <span className="text-[10px] text-slate-400">{p.ageRange}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="pt-2 border-t border-slate-100 flex items-center justify-between">
+                  <div className="flex items-baseline gap-1.5">
+                    <span className="font-extrabold text-[#0d1b1e] text-sm">₹{p.price}</span>
+                    {p.compareAtPrice && (
+                      <span className="text-[10px] text-slate-400 line-through">₹{p.compareAtPrice}</span>
+                    )}
+                    <span
+                      className={`ml-2 px-2 py-0.5 rounded-full text-[9px] font-bold ${
+                        p.stock > 10
+                          ? 'bg-emerald-100 text-emerald-800'
+                          : p.stock > 0
+                          ? 'bg-amber-100 text-amber-800'
+                          : 'bg-red-100 text-red-700'
+                      }`}
+                    >
+                      {p.stock} in stock
+                    </span>
+                  </div>
+
+                  <div className="flex items-center gap-1.5">
+                    <Link
+                      href={`/admin/products/${p.id}/edit`}
+                      className="p-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-[#0d1b1e] transition-colors"
+                      title="Edit"
+                    >
+                      <Edit3 className="w-4 h-4" />
+                    </Link>
+
+                    <button
+                      onClick={() => handleDelete(p.id, p.name)}
+                      disabled={deletingId === p.id}
+                      className="p-2 rounded-lg bg-red-50 hover:bg-red-100 text-red-600 transition-colors disabled:opacity-50"
+                      title="Delete"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })
+        )}
+      </div>
+
+      {/* Desktop View: Products Table */}
+      <div className="hidden md:block bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
             <thead>
