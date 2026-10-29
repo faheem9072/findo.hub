@@ -1,75 +1,146 @@
 import { NextResponse } from 'next/server';
 import Razorpay from 'razorpay';
-import crypto from 'crypto';
+import crypto from 'node:crypto';
+
+export const runtime = 'nodejs';
+
+function getRazorpayConfig() {
+  const keyId = process.env.RAZORPAY_KEY_ID;
+  const keySecret = process.env.RAZORPAY_KEY_SECRET;
+
+  if (!keyId || !keySecret) {
+    throw new Error('Razorpay API keys are not configured.');
+  }
+
+  if (!keyId.startsWith('rzp_test_') && !keyId.startsWith('rzp_live_')) {
+    throw new Error('Invalid Razorpay Key ID configuration.');
+  }
+
+  return { keyId, keySecret };
+}
 
 export async function POST(request: Request) {
   try {
+    const { keyId, keySecret } = getRazorpayConfig();
     const body = await request.json();
-    const { amount, action, razorpay_order_id, razorpay_payment_id, razorpay_signature } = body;
 
-    const key_id = process.env.RAZORPAY_KEY_ID || 'rzp_test_findo_mock_key_id';
-    const key_secret = process.env.RAZORPAY_KEY_SECRET || 'findo_mock_razorpay_secret_key';
+    // Verify a payment after Razorpay Checkout returns its response.
+    if (body.action === 'verify') {
+      const {
+        razorpay_order_id,
+        razorpay_payment_id,
+        razorpay_signature,
+      } = body;
 
-    // Action: Verify Payment Signature
-    if (action === 'verify') {
-      if (!razorpay_order_id || !razorpay_payment_id) {
-        return NextResponse.json({ error: 'Missing payment details for verification' }, { status: 400 });
+      if (
+        typeof razorpay_order_id !== 'string' ||
+        typeof razorpay_payment_id !== 'string' ||
+        typeof razorpay_signature !== 'string'
+      ) {
+        return NextResponse.json(
+          { success: false, error: 'Missing payment verification details.' },
+          { status: 400 }
+        );
       }
 
-      // If mock test keys are being used, approve automatically
-      if (key_id.includes('mock') || razorpay_order_id.startsWith('order_mock')) {
-        return NextResponse.json({ success: true, verified: true });
-      }
-
-      const generated_signature = crypto
-        .createHmac('sha256', key_secret)
+      const expectedSignature = crypto
+        .createHmac('sha256', keySecret)
         .update(`${razorpay_order_id}|${razorpay_payment_id}`)
-        .digest('hex');
+        .digest();
 
-      if (generated_signature === razorpay_signature) {
-        return NextResponse.json({ success: true, verified: true });
-      } else {
-        return NextResponse.json({ error: 'Invalid Razorpay payment signature', verified: false }, { status: 400 });
+      let receivedSignature: Buffer;
+
+      try {
+        receivedSignature = Buffer.from(razorpay_signature, 'hex');
+      } catch {
+        return NextResponse.json(
+          { success: false, error: 'Invalid payment signature.' },
+          { status: 400 }
+        );
       }
-    }
 
-    // Action: Create Razorpay Order
-    if (!amount || amount <= 0) {
-      return NextResponse.json({ error: 'Invalid amount' }, { status: 400 });
-    }
+      if (
+        receivedSignature.length !== expectedSignature.length ||
+        !crypto.timingSafeEqual(expectedSignature, receivedSignature)
+      ) {
+        return NextResponse.json(
+          { success: false, verified: false, error: 'Payment verification failed.' },
+          { status: 400 }
+        );
+      }
 
-    // Try creating with Razorpay SDK
-    try {
+      // A valid signature confirms the Checkout response.
+      // The order must still be checked against the server-side
+      // order record and actual Razorpay payment status.
       const razorpay = new Razorpay({
-        key_id,
-        key_secret,
+        key_id: keyId,
+        key_secret: keySecret,
       });
 
-      const order = await razorpay.orders.create({
-        amount: Math.round(amount * 100), // amount in paise
-        currency: 'INR',
-        receipt: `receipt_${Date.now()}`,
-      });
+      const payment = await razorpay.payments.fetch(razorpay_payment_id);
+
+      if (
+        payment.order_id !== razorpay_order_id ||
+        payment.status !== 'captured' ||
+        payment.currency !== 'INR'
+      ) {
+        return NextResponse.json(
+          { success: false, verified: false, error: 'Payment is not captured.' },
+          { status: 400 }
+        );
+      }
 
       return NextResponse.json({
-        id: order.id,
-        currency: order.currency,
-        amount: order.amount,
-        key_id,
-      });
-    } catch (sdkError: any) {
-      console.warn('Razorpay SDK warning (falling back to sandbox mock order):', sdkError.message);
-      // Fallback mock order ID for seamless testing
-      const mockOrderId = `order_mock_${Math.random().toString(36).substring(2, 10)}`;
-      return NextResponse.json({
-        id: mockOrderId,
-        currency: 'INR',
-        amount: Math.round(amount * 100),
-        key_id,
-        isMock: true,
+        success: true,
+        verified: true,
+        razorpay_order_id,
+        razorpay_payment_id,
+        amount: payment.amount,
+        currency: payment.currency,
       });
     }
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+
+    // Create a real Razorpay order.
+    const amount = body.amount;
+
+    if (
+      typeof amount !== 'number' ||
+      !Number.isFinite(amount) ||
+      amount <= 0 ||
+      Math.round(amount * 100) < 100
+    ) {
+      return NextResponse.json(
+        { error: 'Invalid payment amount.' },
+        { status: 400 }
+      );
+    }
+
+    const razorpay = new Razorpay({
+      key_id: keyId,
+      key_secret: keySecret,
+    });
+
+    const order = await razorpay.orders.create({
+      amount: Math.round(amount * 100),
+      currency: 'INR',
+      receipt: `fndo_${crypto.randomUUID().replace(/-/g, '').slice(0, 32)}`,
+    });
+
+    return NextResponse.json({
+      id: order.id,
+      amount: order.amount,
+      currency: order.currency,
+      key_id: keyId,
+    });
+  } catch (error: unknown) {
+    console.error(
+      'Razorpay API error:',
+      error instanceof Error ? error.message : 'Unknown error'
+    );
+
+    return NextResponse.json(
+      { error: 'Unable to process payment. Please try again.' },
+      { status: 502 }
+    );
   }
 }
