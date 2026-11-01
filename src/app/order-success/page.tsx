@@ -88,7 +88,14 @@ export default async function OrderSuccessPage({ searchParams }: OrderSuccessPro
                 <span>Customer Contact</span>
               </h3>
               <p className="text-slate-600">Email: {order.customerEmail}</p>
-              <p className="text-slate-600">Payment Method: {order.paymentMethod}</p>
+              <p className="text-slate-600">
+                Payment Method: <span className="font-semibold text-[#0d1b1e]">{order.paymentMethod === 'RAZORPAY' ? 'Razorpay Online' : order.paymentMethod}</span>
+              </p>
+              {order.razorpayPaymentId && (
+                <p className="text-slate-600 font-mono text-[11px]">
+                  Payment Ref: <span className="text-[#0d1b1e] font-semibold">{order.razorpayPaymentId}</span>
+                </p>
+              )}
               <p className="text-slate-600">
                 Date: {new Date(order.createdAt).toLocaleDateString('en-IN', { dateStyle: 'medium' })}
               </p>

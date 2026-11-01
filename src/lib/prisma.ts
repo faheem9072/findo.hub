@@ -7,9 +7,14 @@ function getDatabaseUrl(): string {
     return process.env.DATABASE_URL;
   }
 
-  // On Vercel / serverless runtime, /var/task is read-only.
+  // On Vercel / Cloud Run / Firebase App Hosting / serverless runtime, the container is read-only.
   // We copy the seeded database to /tmp/findo.db which has full read/write permissions.
-  if (process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME) {
+  if (
+    process.env.VERCEL ||
+    process.env.AWS_LAMBDA_FUNCTION_NAME ||
+    process.env.K_SERVICE ||
+    process.env.FIREBASE_CONFIG
+  ) {
     const tmpDbPath = '/tmp/findo.db';
     const bundledDb = path.join(process.cwd(), 'prisma', 'dev.db');
 

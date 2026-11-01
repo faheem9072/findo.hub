@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -35,7 +35,7 @@ export default function CheckoutPage() {
     city: '',
     state: '',
     pincode: '',
-    paymentMethod: 'COD', // 'COD' | 'RAZORPAY'
+    paymentMethod: 'RAZORPAY', // 'RAZORPAY' | 'COD'
   });
 
   const [couponInput, setCouponInput] = useState('');
@@ -80,11 +80,54 @@ export default function CheckoutPage() {
     }
   };
 
+  useEffect(() => {
+    if (typeof window !== 'undefined' && !(window as any).Razorpay) {
+      loadRazorpayScript();
+    }
+  }, []);
+
+  const loadRazorpayScript = (): Promise<boolean> => {
+    return new Promise((resolve) => {
+      if (typeof window === 'undefined') return resolve(false);
+      if ((window as any).Razorpay) return resolve(true);
+
+      const existingScript = document.getElementById('razorpay-checkout-js') as HTMLScriptElement | null;
+      if (existingScript) {
+        if ((window as any).Razorpay) return resolve(true);
+        existingScript.addEventListener('load', () => resolve(true));
+        existingScript.addEventListener('error', () => resolve(false));
+        setTimeout(() => resolve(Boolean((window as any).Razorpay)), 3000);
+        return;
+      }
+
+      const script = document.createElement('script');
+      script.id = 'razorpay-checkout-js';
+      script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+      script.async = true;
+      script.onload = () => resolve(true);
+      script.onerror = () => resolve(false);
+      setTimeout(() => resolve(Boolean((window as any).Razorpay)), 3000);
+      document.body.appendChild(script);
+    });
+  };
+
   const handleRazorpayPayment = async () => {
+    const isLoaded = await loadRazorpayScript();
+    if (!isLoaded && !(window as any).Razorpay) {
+      throw new Error('Could not load Razorpay payment gateway. Please check your internet connection.');
+    }
+
     const res = await fetch('/api/checkout/razorpay', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ amount: totalPayable }),
+      body: JSON.stringify({
+        amount: totalPayable,
+        notes: {
+          customerName: formData.customerName,
+          customerEmail: formData.customerEmail,
+          customerPhone: formData.customerPhone,
+        },
+      }),
     });
 
     const razorpayData = await res.json();
@@ -92,44 +135,63 @@ export default function CheckoutPage() {
       throw new Error(razorpayData.error || 'Failed to initialize payment');
     }
 
-    return new Promise<{ razorpayOrderId: string; razorpayPaymentId: string }>((resolve, reject) => {
-      if (typeof window !== 'undefined' && (window as any).Razorpay) {
-        const options = {
-          key: razorpayData.key_id,
-          amount: razorpayData.amount,
-          currency: razorpayData.currency,
-          name: 'FINDO Store',
-          description: 'Payment for FINDO Kids Products',
-          image: '/logo.jpeg',
-          order_id: razorpayData.id,
-          handler: function (response: any) {
-            resolve({
-              razorpayOrderId: response.razorpay_order_id || razorpayData.id,
-              razorpayPaymentId: response.razorpay_payment_id || `pay_mock_${Date.now()}`,
-            });
-          },
-          prefill: {
-            name: formData.customerName,
-            email: formData.customerEmail,
-            contact: formData.customerPhone,
-          },
-          theme: {
-            color: '#5a9e2f',
-          },
-        };
+    return new Promise<{
+      razorpayOrderId: string;
+      razorpayPaymentId: string;
+      razorpaySignature: string;
+    }>((resolve, reject) => {
+      if (typeof window === 'undefined' || !(window as any).Razorpay) {
+        return reject(new Error('Razorpay SDK is not available. Please refresh and try again.'));
+      }
 
+      const rawDigits = (formData.customerPhone || '').replace(/[^0-9]/g, '');
+      const formattedContact = rawDigits.length === 10
+        ? `+91${rawDigits}`
+        : rawDigits.startsWith('91') && rawDigits.length === 12
+        ? `+${rawDigits}`
+        : `+91${rawDigits.slice(-10)}`;
+
+      const options = {
+        key: razorpayData.key_id,
+        amount: razorpayData.amount,
+        currency: razorpayData.currency || 'INR',
+        name: 'FINDO Store',
+        description: 'Payment for FINDO Kids Products',
+        image: '/logo.jpeg',
+        order_id: razorpayData.id,
+        handler: function (response: any) {
+          if (!response.razorpay_payment_id) {
+            return reject(new Error('Payment failed or incomplete'));
+          }
+          resolve({
+            razorpayOrderId: response.razorpay_order_id || razorpayData.id,
+            razorpayPaymentId: response.razorpay_payment_id,
+            razorpaySignature: response.razorpay_signature || '',
+          });
+        },
+        modal: {
+          ondismiss: function () {
+            reject(new Error('Payment was cancelled or closed'));
+          },
+        },
+        prefill: {
+          name: formData.customerName,
+          email: formData.customerEmail,
+          contact: formattedContact,
+        },
+        theme: {
+          color: '#5a9e2f',
+        },
+      };
+
+      try {
         const rzp = new (window as any).Razorpay(options);
         rzp.on('payment.failed', function (response: any) {
-          reject(new Error(response.error.description || 'Payment Failed'));
+          reject(new Error(response.error?.description || 'Unable to process payment. Please try again.'));
         });
         rzp.open();
-      } else {
-        setTimeout(() => {
-          resolve({
-            razorpayOrderId: razorpayData.id || `order_mock_${Date.now()}`,
-            razorpayPaymentId: `pay_mock_${Date.now()}`,
-          });
-        }, 1200);
+      } catch (err: any) {
+        reject(new Error(err.message || 'Failed to open Razorpay payment window'));
       }
     });
   };
@@ -161,11 +223,13 @@ export default function CheckoutPage() {
     try {
       let razorpayOrderId = null;
       let razorpayPaymentId = null;
+      let razorpaySignature = null;
 
       if (formData.paymentMethod === 'RAZORPAY') {
         const rzpResult = await handleRazorpayPayment();
         razorpayOrderId = rzpResult.razorpayOrderId;
         razorpayPaymentId = rzpResult.razorpayPaymentId;
+        razorpaySignature = rzpResult.razorpaySignature;
       }
 
       const orderPayload = {
@@ -180,6 +244,7 @@ export default function CheckoutPage() {
         })),
         razorpayOrderId,
         razorpayPaymentId,
+        razorpaySignature,
       };
 
       const res = await fetch('/api/orders', {
@@ -223,7 +288,6 @@ export default function CheckoutPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
-      <script src="https://checkout.razorpay.com/v1/checkout.js" async />
 
       <div className="flex items-center justify-between">
         <Link
@@ -256,8 +320,29 @@ export default function CheckoutPage() {
               </div>
 
               {error && (
-                <div className="p-4 bg-red-50 border border-red-200 text-red-700 text-xs font-semibold rounded-xl">
-                  {error}
+                <div className="p-4 bg-red-50 border border-red-200 text-red-700 text-xs rounded-2xl space-y-2">
+                  <div className="flex items-start gap-2">
+                    <span className="font-bold text-sm">⚠️</span>
+                    <div className="flex-1">
+                      <p className="font-bold">{error}</p>
+                      <p className="text-[11px] text-red-600 mt-1 leading-relaxed">
+                        UPI/Card online payment issue? You can switch to <strong>Cash on Delivery (COD)</strong> to complete and confirm your order right away without online payment.
+                      </p>
+                    </div>
+                  </div>
+                  {formData.paymentMethod === 'RAZORPAY' && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setFormData((prev) => ({ ...prev, paymentMethod: 'COD' }));
+                        setError('');
+                      }}
+                      className="mt-1 py-1.5 px-3 bg-[#0d1b1e] hover:bg-black text-white text-xs font-bold rounded-xl transition-all inline-flex items-center gap-1.5 cursor-pointer shadow-xs"
+                    >
+                      <Truck className="w-3.5 h-3.5 text-[#5a9e2f]" />
+                      <span>Switch to Cash on Delivery (COD) & Complete</span>
+                    </button>
+                  )}
                 </div>
               )}
 
@@ -446,6 +531,33 @@ export default function CheckoutPage() {
                 </label>
               </div>
             </div>
+
+            {error && (
+              <div className="p-4 bg-red-50 border border-red-200 text-red-700 text-xs rounded-2xl space-y-2">
+                <div className="flex items-start gap-2">
+                  <span className="font-bold text-sm">⚠️</span>
+                  <div className="flex-1">
+                    <p className="font-bold">{error}</p>
+                    <p className="text-[11px] text-red-600 mt-1 leading-relaxed">
+                      UPI/Card online payment issue? You can switch to <strong>Cash on Delivery (COD)</strong> to complete and confirm your order right away without online payment.
+                    </p>
+                  </div>
+                </div>
+                {formData.paymentMethod === 'RAZORPAY' && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setFormData((prev) => ({ ...prev, paymentMethod: 'COD' }));
+                      setError('');
+                    }}
+                    className="mt-1 py-1.5 px-3 bg-[#0d1b1e] hover:bg-black text-white text-xs font-bold rounded-xl transition-all inline-flex items-center gap-1.5 cursor-pointer shadow-xs"
+                  >
+                    <Truck className="w-3.5 h-3.5 text-[#5a9e2f]" />
+                    <span>Switch to Cash on Delivery (COD) & Complete</span>
+                  </button>
+                )}
+              </div>
+            )}
 
             <button
               type="submit"

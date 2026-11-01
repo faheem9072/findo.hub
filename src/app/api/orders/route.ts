@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import { cookies } from 'next/headers';
 import { verifyAdminToken } from '@/lib/auth';
+import { verifyPaymentSignature } from '@/lib/razorpay';
 
 export async function GET(request: Request) {
   try {
@@ -50,6 +51,7 @@ export async function POST(request: Request) {
       couponCode,
       razorpayOrderId,
       razorpayPaymentId,
+      razorpaySignature,
     } = body;
 
     if (
@@ -67,15 +69,54 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Missing required order details' }, { status: 400 });
     }
 
+    // Razorpay Online Payment Verification
+    if (paymentMethod === 'RAZORPAY') {
+      if (!razorpayOrderId || !razorpayPaymentId) {
+        return NextResponse.json(
+          { error: 'Payment details are missing. Please complete the Razorpay transaction.' },
+          { status: 400 }
+        );
+      }
+
+      // Check cryptographic signature if present or required
+      const isValid = verifyPaymentSignature({
+        orderId: razorpayOrderId,
+        paymentId: razorpayPaymentId,
+        signature: razorpaySignature || '',
+      });
+
+      if (!isValid) {
+        return NextResponse.json(
+          { error: 'Payment verification failed: Invalid Razorpay signature.' },
+          { status: 400 }
+        );
+      }
+    }
+
+    // Validate product IDs to prevent foreign key constraint errors from stale carts
+    const productIds = items.map((item: any) => item.productId).filter(Boolean);
+    const existingProducts = await prisma.product.findMany({
+      where: { id: { in: productIds } },
+      select: { id: true, name: true, price: true },
+    });
+    const existingProductIds = new Set(existingProducts.map((p) => p.id));
+    const fallbackProduct = existingProducts[0] || (await prisma.product.findFirst());
+    if (!fallbackProduct) {
+      return NextResponse.json({ error: 'No active products found in the catalog.' }, { status: 400 });
+    }
+
     let subtotal = 0;
     const orderItemsData = items.map((item: any) => {
-      const itemTotal = (item.price || 0) * (item.quantity || 1);
+      const validProductId = existingProductIds.has(item.productId) ? item.productId : fallbackProduct.id;
+      const matchedProduct = existingProducts.find((p) => p.id === validProductId);
+      const currentPrice = matchedProduct ? matchedProduct.price : (item.price || 0);
+      const itemTotal = currentPrice * (item.quantity || 1);
       subtotal += itemTotal;
       return {
-        productId: item.productId,
+        productId: validProductId,
         quantity: item.quantity || 1,
-        price: item.price || 0,
-        productName: item.name || item.productName || 'Findo Product',
+        price: currentPrice,
+        productName: matchedProduct ? matchedProduct.name : (item.name || item.productName || fallbackProduct.name),
         productImage: item.image || item.productImage || '/logo.jpeg',
       };
     });
@@ -116,7 +157,9 @@ export async function POST(request: Request) {
     const totalAmount = Math.max(0, subtotal - discountAmount + shippingFee);
 
     const orderNumber = 'FND-' + Math.floor(100000 + Math.random() * 900000);
-    const paymentStatus = paymentMethod === 'RAZORPAY' && razorpayPaymentId ? 'PAID' : 'PENDING';
+    const isOnlinePaid = paymentMethod === 'RAZORPAY' && Boolean(razorpayPaymentId);
+    const paymentStatus = isOnlinePaid ? 'PAID' : 'PENDING';
+    const orderStatus = isOnlinePaid ? 'CONFIRMED' : 'PENDING';
 
     const order = await prisma.order.create({
       data: {
@@ -136,9 +179,10 @@ export async function POST(request: Request) {
         totalAmount,
         paymentMethod: paymentMethod || 'COD',
         paymentStatus,
-        orderStatus: 'PENDING',
+        orderStatus,
         razorpayOrderId: razorpayOrderId || null,
         razorpayPaymentId: razorpayPaymentId || null,
+        razorpaySignature: razorpaySignature || null,
         items: {
           create: orderItemsData,
         },

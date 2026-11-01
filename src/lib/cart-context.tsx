@@ -47,12 +47,39 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
 
-  // Load cart from localStorage on client mount
+  // Load cart from localStorage on client mount & auto-sync prices
   useEffect(() => {
     try {
       const savedCart = localStorage.getItem('findo_cart');
       if (savedCart) {
-        setCart(JSON.parse(savedCart));
+        const parsed = JSON.parse(savedCart);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          setCart(parsed);
+          // Sync prices in background so cart always reflects admin price updates
+          fetch('/api/products')
+            .then((res) => res.json())
+            .then((data) => {
+              if (data?.products && Array.isArray(data.products)) {
+                const productMap = new Map<string, any>(data.products.map((p: any) => [p.id, p]));
+                setCart((current) =>
+                  current.map((item) => {
+                    const latest = productMap.get(item.productId);
+                    if (latest) {
+                      return {
+                        ...item,
+                        price: latest.price,
+                        compareAtPrice: latest.compareAtPrice,
+                        stock: latest.stock,
+                        name: latest.name,
+                      };
+                    }
+                    return item;
+                  })
+                );
+              }
+            })
+            .catch((err) => console.error('Cart price sync failed:', err));
+        }
       }
     } catch (e) {
       console.error('Failed to load cart from localStorage:', e);
@@ -98,7 +125,12 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       if (existingIndex > -1) {
         const updated = [...prevCart];
         const newQty = Math.min(updated[existingIndex].quantity + quantityToAdd, product.stock || 99);
-        updated[existingIndex].quantity = newQty;
+        updated[existingIndex] = {
+          ...updated[existingIndex],
+          price: product.price,
+          compareAtPrice: product.compareAtPrice,
+          quantity: newQty,
+        };
         return updated;
       } else {
         return [

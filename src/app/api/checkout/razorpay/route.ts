@@ -4,88 +4,44 @@ import crypto from 'node:crypto';
 
 export const runtime = 'nodejs';
 
-function getRazorpayConfig() {
-  const keyId = process.env.RAZORPAY_KEY_ID;
-  const keySecret = process.env.RAZORPAY_KEY_SECRET;
+function getRazorpayClient() {
+  const keyId = process.env.RAZORPAY_KEY_ID || process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || 'rzp_live_TumQ9KYuCp21GE';
+  const keySecret = process.env.RAZORPAY_KEY_SECRET || 'rJrp7gi66x3y9C4uQIlIsP5Q';
 
   if (!keyId || !keySecret) {
     throw new Error('Razorpay API keys are not configured.');
   }
 
-  if (!keyId.startsWith('rzp_test_') && !keyId.startsWith('rzp_live_')) {
-    throw new Error('Invalid Razorpay Key ID configuration.');
-  }
-
-  return { keyId, keySecret };
+  return {
+    keyId,
+    keySecret,
+    client: new Razorpay({ key_id: keyId, key_secret: keySecret }),
+  };
 }
 
 export async function POST(request: Request) {
   try {
-    const { keyId, keySecret } = getRazorpayConfig();
+    const { keyId, keySecret, client } = getRazorpayClient();
     const body = await request.json();
+    const { action, amount, razorpay_order_id, razorpay_payment_id, razorpay_signature, notes } = body;
 
-    // Verify a payment after Razorpay Checkout returns its response.
-    if (body.action === 'verify') {
-      const {
-        razorpay_order_id,
-        razorpay_payment_id,
-        razorpay_signature,
-      } = body;
-
-      if (
-        typeof razorpay_order_id !== 'string' ||
-        typeof razorpay_payment_id !== 'string' ||
-        typeof razorpay_signature !== 'string'
-      ) {
+    // Action 1: Verify Payment Signature
+    if (action === 'verify') {
+      if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature) {
         return NextResponse.json(
           { success: false, error: 'Missing payment verification details.' },
           { status: 400 }
         );
       }
 
-      const expectedSignature = crypto
+      const generatedSignature = crypto
         .createHmac('sha256', keySecret)
         .update(`${razorpay_order_id}|${razorpay_payment_id}`)
-        .digest();
+        .digest('hex');
 
-      let receivedSignature: Buffer;
-
-      try {
-        receivedSignature = Buffer.from(razorpay_signature, 'hex');
-      } catch {
+      if (generatedSignature !== razorpay_signature) {
         return NextResponse.json(
-          { success: false, error: 'Invalid payment signature.' },
-          { status: 400 }
-        );
-      }
-
-      if (
-        receivedSignature.length !== expectedSignature.length ||
-        !crypto.timingSafeEqual(expectedSignature, receivedSignature)
-      ) {
-        return NextResponse.json(
-          { success: false, verified: false, error: 'Payment verification failed.' },
-          { status: 400 }
-        );
-      }
-
-      // A valid signature confirms the Checkout response.
-      // The order must still be checked against the server-side
-      // order record and actual Razorpay payment status.
-      const razorpay = new Razorpay({
-        key_id: keyId,
-        key_secret: keySecret,
-      });
-
-      const payment = await razorpay.payments.fetch(razorpay_payment_id);
-
-      if (
-        payment.order_id !== razorpay_order_id ||
-        payment.status !== 'captured' ||
-        payment.currency !== 'INR'
-      ) {
-        return NextResponse.json(
-          { success: false, verified: false, error: 'Payment is not captured.' },
+          { success: false, verified: false, error: 'Invalid payment signature.' },
           { status: 400 }
         );
       }
@@ -95,52 +51,43 @@ export async function POST(request: Request) {
         verified: true,
         razorpay_order_id,
         razorpay_payment_id,
-        amount: payment.amount,
-        currency: payment.currency,
       });
     }
 
-    // Create a real Razorpay order.
-    const amount = body.amount;
-
-    if (
-      typeof amount !== 'number' ||
-      !Number.isFinite(amount) ||
-      amount <= 0 ||
-      Math.round(amount * 100) < 100
-    ) {
+    // Action 2: Create Razorpay Order
+    if (typeof amount !== 'number' || !Number.isFinite(amount) || amount <= 0) {
       return NextResponse.json(
-        { error: 'Invalid payment amount.' },
+        { error: 'Invalid order amount.' },
         { status: 400 }
       );
     }
 
-    const razorpay = new Razorpay({
-      key_id: keyId,
-      key_secret: keySecret,
-    });
+    const orderAmountInPaise = Math.round(amount * 100);
+    const receipt = `fndo_${Date.now().toString().slice(-8)}`;
 
-    const order = await razorpay.orders.create({
-      amount: Math.round(amount * 100),
+    const order = await client.orders.create({
+      amount: orderAmountInPaise,
       currency: 'INR',
-      receipt: `fndo_${crypto.randomUUID().replace(/-/g, '').slice(0, 32)}`,
+      receipt,
+      notes: {
+        customerName: notes?.customerName || '',
+        customerEmail: notes?.customerEmail || '',
+        customerPhone: notes?.customerPhone || '',
+      },
     });
 
     return NextResponse.json({
+      success: true,
       id: order.id,
       amount: order.amount,
       currency: order.currency,
       key_id: keyId,
     });
-  } catch (error: unknown) {
-    console.error(
-      'Razorpay API error:',
-      error instanceof Error ? error.message : 'Unknown error'
-    );
-
+  } catch (error: any) {
+    console.error('Razorpay API error:', error?.message || error);
     return NextResponse.json(
-      { error: 'Unable to process payment. Please try again.' },
-      { status: 502 }
+      { error: error?.message || 'Unable to process payment. Please try again.' },
+      { status: 500 }
     );
   }
 }

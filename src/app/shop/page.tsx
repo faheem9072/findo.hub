@@ -2,6 +2,7 @@ import React from 'react';
 import prisma from '@/lib/prisma';
 import ShopClient from './ShopClient';
 
+export const dynamic = 'force-dynamic';
 export const revalidate = 0; // Dynamic data
 
 export const metadata = {

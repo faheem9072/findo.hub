@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import { Search, ChevronDown, MapPin, Phone, Mail, Package, Check, RefreshCw } from 'lucide-react';
 
@@ -9,6 +9,38 @@ export default function AdminOrdersClient({ initialOrders }: { initialOrders: an
   const [statusFilter, setStatusFilter] = useState('ALL');
   const [search, setSearch] = useState('');
   const [updatingId, setUpdatingId] = useState<string | null>(null);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  // Sync state if initialOrders prop changes
+  useEffect(() => {
+    setOrders(initialOrders);
+  }, [initialOrders]);
+
+  // Fetch latest orders live
+  const fetchOrders = useCallback(async (showIndicator = false) => {
+    if (showIndicator) setIsRefreshing(true);
+    try {
+      const res = await fetch('/api/orders');
+      if (res.ok) {
+        const data = await res.json();
+        if (data.orders) {
+          setOrders(data.orders);
+        }
+      }
+    } catch (err) {
+      console.error('Failed to fetch orders:', err);
+    } finally {
+      if (showIndicator) setIsRefreshing(false);
+    }
+  }, []);
+
+  // Poll for new orders every 15 seconds
+  useEffect(() => {
+    const timer = setInterval(() => {
+      fetchOrders(false);
+    }, 15000);
+    return () => clearInterval(timer);
+  }, [fetchOrders]);
 
   const filteredOrders = orders.filter((o) => {
     const matchesStatus = statusFilter === 'ALL' || o.orderStatus === statusFilter;
@@ -57,10 +89,20 @@ export default function AdminOrdersClient({ initialOrders }: { initialOrders: an
           </p>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
           <span className="text-xs font-bold text-slate-500">
             Total Orders: <strong className="text-[#0d1b1e]">{filteredOrders.length}</strong>
           </span>
+
+          <button
+            onClick={() => fetchOrders(true)}
+            disabled={isRefreshing}
+            title="Refresh orders live"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-slate-200 hover:border-[#5a9e2f] text-slate-700 hover:text-[#5a9e2f] text-xs font-bold transition-all shadow-2xs disabled:opacity-50"
+          >
+            <RefreshCw className={`w-3.5 h-3.5 ${isRefreshing ? 'animate-spin text-[#5a9e2f]' : ''}`} />
+            <span>{isRefreshing ? 'Refreshing...' : 'Refresh'}</span>
+          </button>
         </div>
       </div>
 
@@ -169,7 +211,10 @@ export default function AdminOrdersClient({ initialOrders }: { initialOrders: an
               <div className="flex items-center justify-between pt-1 text-xs">
                 <div>
                   <span className="text-[10px] text-slate-400 uppercase tracking-wider block">Payment</span>
-                  <span className="font-bold text-slate-700 uppercase text-[10px]">{o.paymentMethod} • {o.paymentStatus}</span>
+                  <span className="font-bold text-slate-700 uppercase text-[10px]">{o.paymentMethod} • <span className={o.paymentStatus === 'PAID' ? 'text-emerald-600' : 'text-amber-600'}>{o.paymentStatus}</span></span>
+                  {o.razorpayPaymentId && (
+                    <span className="text-[9px] font-mono text-slate-400 block truncate max-w-[140px]">{o.razorpayPaymentId}</span>
+                  )}
                 </div>
                 <div className="text-right">
                   <span className="text-[10px] text-slate-400 uppercase tracking-wider block">Total</span>
@@ -237,8 +282,13 @@ export default function AdminOrdersClient({ initialOrders }: { initialOrders: an
                     <td className="py-4 px-4">
                       <div className="font-extrabold text-sm text-[#0d1b1e]">₹{o.totalAmount.toFixed(2)}</div>
                       <div className="text-[10px] uppercase font-bold text-slate-500">
-                        {o.paymentMethod} ({o.paymentStatus})
+                        {o.paymentMethod} • <span className={o.paymentStatus === 'PAID' ? 'text-emerald-600' : 'text-amber-600'}>{o.paymentStatus}</span>
                       </div>
+                      {o.razorpayPaymentId && (
+                        <div className="text-[9px] font-mono text-slate-400 truncate max-w-[120px]" title={o.razorpayPaymentId}>
+                          {o.razorpayPaymentId}
+                        </div>
+                      )}
                     </td>
 
                     <td className="py-4 px-6 text-right">

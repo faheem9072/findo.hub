@@ -5,15 +5,32 @@ import { ArrowRight, Sparkles, Compass, Lightbulb, Smile, MonitorOff } from 'luc
 import prisma from '@/lib/prisma';
 import ProductCard from '@/components/ProductCard';
 
-export const revalidate = 60; // Revalidate every minute
+export const dynamic = 'force-dynamic';
+export const revalidate = 0; // Live real-time updates for newly added/edited products
 
 async function getHomePageData() {
-  const featuredProducts = await prisma.product.findMany({
+  // First try to get products marked as featured
+  let featuredProducts = await prisma.product.findMany({
     where: { isFeatured: true, isPublished: true },
     take: 6,
     orderBy: { createdAt: 'desc' },
     include: { category: true },
   });
+
+  // If there are fewer than 6 featured products, fill with latest published products
+  if (featuredProducts.length < 6) {
+    const existingIds = featuredProducts.map((p) => p.id);
+    const additionalProducts = await prisma.product.findMany({
+      where: {
+        isPublished: true,
+        id: { notIn: existingIds },
+      },
+      take: 6 - featuredProducts.length,
+      orderBy: { createdAt: 'desc' },
+      include: { category: true },
+    });
+    featuredProducts = [...featuredProducts, ...additionalProducts];
+  }
 
   return { featuredProducts };
 }
@@ -31,12 +48,12 @@ export default async function HomePage() {
 
   return (
     <div className="space-y-16 sm:space-y-24 pb-20">
-      
+
       {/* SECTION 1 — HERO */}
       <section className="relative pt-8 sm:pt-16 pb-12 sm:pb-20 bg-[#fafbf8]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
-            
+
             {/* Left Copy */}
             <div className="lg:col-span-6 space-y-6 text-center lg:text-left">
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#0d1b1e] tracking-tight leading-tight">

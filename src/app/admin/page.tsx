@@ -13,6 +13,7 @@ import {
   AlertTriangle,
 } from 'lucide-react';
 
+export const dynamic = 'force-dynamic';
 export const revalidate = 0; // Dynamic route
 
 async function getDashboardData() {

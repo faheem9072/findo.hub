@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import prisma from '@/lib/prisma';
 import { cookies } from 'next/headers';
 import { verifyAdminToken } from '@/lib/auth';
@@ -105,6 +106,16 @@ export async function POST(request: Request) {
         specs: typeof specs === 'string' ? specs : JSON.stringify(specs || {}),
       },
     });
+
+    try {
+      revalidatePath('/', 'layout');
+      revalidatePath('/shop');
+      revalidatePath('/products');
+      revalidatePath('/search');
+      revalidatePath('/admin/products');
+    } catch (revalError) {
+      console.error('Error revalidating paths after product creation:', revalError);
+    }
 
     return NextResponse.json({ product, success: true }, { status: 201 });
   } catch (error: any) {

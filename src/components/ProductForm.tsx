@@ -1,9 +1,10 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { ArrowLeft, Save, Plus, X, Image as ImageIcon, Sparkles } from 'lucide-react';
+import { ArrowLeft, Save, Plus, X, Image as ImageIcon, Sparkles, UploadCloud, Loader2 } from 'lucide-react';
+import { uploadImageToFirebase } from '@/lib/storage';
 
 interface ProductFormProps {
   initialData?: any;
@@ -60,6 +61,9 @@ export default function ProductForm({ initialData, categories }: ProductFormProp
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [uploadingIndex, setUploadingIndex] = useState<number | null>(null);
+  const [uploadProgress, setUploadProgress] = useState<number>(0);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const value = e.target.type === 'checkbox' ? (e.target as HTMLInputElement).checked : e.target.value;
@@ -78,6 +82,33 @@ export default function ProductForm({ initialData, categories }: ProductFormProp
 
   const removeImageUrl = (index: number) => {
     setImageUrls(imageUrls.filter((_, i) => i !== index));
+  };
+
+  const handleFileUpload = async (file: File, targetIndex?: number) => {
+    try {
+      const idx = typeof targetIndex === 'number' ? targetIndex : imageUrls.length;
+      setUploadingIndex(idx);
+      setUploadProgress(0);
+      setError('');
+
+      const url = await uploadImageToFirebase(file, 'products', (progress) => {
+        setUploadProgress(progress);
+      });
+
+      if (typeof targetIndex === 'number') {
+        const updated = [...imageUrls];
+        updated[targetIndex] = url;
+        setImageUrls(updated);
+      } else {
+        setImageUrls((prev) => (prev.length === 1 && !prev[0] ? [url] : [...prev, url]));
+      }
+    } catch (err: any) {
+      console.error('Upload failed:', err);
+      setError(err?.message || 'Failed to upload image to Firebase Storage.');
+    } finally {
+      setUploadingIndex(null);
+      setUploadProgress(0);
+    }
   };
 
   const addBadge = () => {
@@ -238,6 +269,8 @@ export default function ProductForm({ initialData, categories }: ProductFormProp
             <label className="text-xs font-bold text-[#0d1b1e]">Selling Price (₹) *</label>
             <input
               type="number"
+              step="any"
+              min="0"
               name="price"
               required
               value={formData.price}
@@ -251,6 +284,8 @@ export default function ProductForm({ initialData, categories }: ProductFormProp
             <label className="text-xs font-bold text-[#0d1b1e]">Original / Compare Price (₹)</label>
             <input
               type="number"
+              step="any"
+              min="0"
               name="compareAtPrice"
               value={formData.compareAtPrice}
               onChange={handleChange}
@@ -314,21 +349,60 @@ export default function ProductForm({ initialData, categories }: ProductFormProp
         </div>
       </div>
 
-      {/* Image URLs Manager with Live Preview */}
+      {/* Image URLs & Firebase Storage Upload Manager */}
       <div className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-4">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-wrap items-center justify-between gap-3">
           <h3 className="text-sm font-bold text-[#0d1b1e] uppercase tracking-wider flex items-center gap-2">
             <ImageIcon className="w-4 h-4 text-[#5a9e2f]" />
-            <span>Product Images (Cloudinary / Direct URLs)</span>
+            <span>Product Images</span>
+            <span className="text-[10px] font-semibold bg-emerald-50 text-[#5a9e2f] border border-emerald-200 px-2 py-0.5 rounded-full">
+              Firebase Storage / URL
+            </span>
           </h3>
-          <button
-            type="button"
-            onClick={addImageUrl}
-            className="text-xs font-bold text-[#5a9e2f] hover:underline flex items-center gap-1"
-          >
-            <Plus className="w-3.5 h-3.5" />
-            <span>Add Image URL</span>
-          </button>
+
+          <div className="flex items-center gap-3">
+            <input
+              type="file"
+              ref={fileInputRef}
+              accept="image/*"
+              className="hidden"
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (file) {
+                  handleFileUpload(file);
+                  e.target.value = '';
+                }
+              }}
+            />
+
+            <button
+              type="button"
+              disabled={uploadingIndex !== null}
+              onClick={() => fileInputRef.current?.click()}
+              className="px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+            >
+              {uploadingIndex !== null ? (
+                <>
+                  <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                  <span>Uploading {uploadProgress}%</span>
+                </>
+              ) : (
+                <>
+                  <UploadCloud className="w-3.5 h-3.5" />
+                  <span>Upload to Firebase</span>
+                </>
+              )}
+            </button>
+
+            <button
+              type="button"
+              onClick={addImageUrl}
+              className="text-xs font-bold text-[#5a9e2f] hover:underline flex items-center gap-1"
+            >
+              <Plus className="w-3.5 h-3.5" />
+              <span>Add URL</span>
+            </button>
+          </div>
         </div>
 
         <div className="space-y-3">
@@ -348,7 +422,7 @@ export default function ProductForm({ initialData, categories }: ProductFormProp
                 type="text"
                 value={url}
                 onChange={(e) => handleImageChange(idx, e.target.value)}
-                placeholder="https://images.unsplash.com/... or Cloudinary URL"
+                placeholder="Paste Image URL or click Upload button above"
                 className="flex-1 px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-mono text-[#0d1b1e] focus:outline-none focus:border-[#5a9e2f]"
               />
 

@@ -122,9 +122,17 @@ export default function OrderConfirmationClient({ order }: { order: any }) {
             <p>
               <strong>Email:</strong> {order.customerEmail}
             </p>
-            <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-[#0d1b1e]">
-              <span>Payment Mode:</span>
-              <strong className="text-[#5a9e2f] uppercase">{order.paymentMethod} ({order.paymentStatus})</strong>
+            <div className="pt-2 border-t border-slate-100 space-y-1">
+              <div className="flex items-center justify-between text-[#0d1b1e]">
+                <span>Payment Mode:</span>
+                <strong className="text-[#5a9e2f] uppercase">{order.paymentMethod === 'RAZORPAY' ? 'Razorpay Online' : order.paymentMethod} ({order.paymentStatus})</strong>
+              </div>
+              {order.razorpayPaymentId && (
+                <div className="flex items-center justify-between text-[11px] text-slate-500 font-mono">
+                  <span>Txn Ref:</span>
+                  <span className="font-semibold text-[#0d1b1e]">{order.razorpayPaymentId}</span>
+                </div>
+              )}
             </div>
           </div>
         </div>
