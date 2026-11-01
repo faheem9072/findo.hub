@@ -1,40 +1,13 @@
 import { PrismaClient } from '@prisma/client';
-import fs from 'fs';
-import path from 'path';
+
+const NEON_DATABASE_URL =
+  'postgresql://neondb_owner:npg_Zcb2nWrh8CQS@ep-little-mode-b4qdwq1h-pooler.c-6.us-east-2.aws.neon.tech/neondb?sslmode=require';
 
 function getDatabaseUrl(): string {
-  if (process.env.DATABASE_URL && !process.env.DATABASE_URL.startsWith('file:')) {
+  if (process.env.DATABASE_URL && process.env.DATABASE_URL.startsWith('postgres')) {
     return process.env.DATABASE_URL;
   }
-
-  // On Vercel / Cloud Run / Firebase App Hosting / serverless runtime, the container is read-only.
-  // We copy the seeded database to /tmp/findo.db which has full read/write permissions.
-  if (
-    process.env.VERCEL ||
-    process.env.AWS_LAMBDA_FUNCTION_NAME ||
-    process.env.K_SERVICE ||
-    process.env.FIREBASE_CONFIG
-  ) {
-    const tmpDbPath = '/tmp/findo.db';
-    const bundledDb = path.join(process.cwd(), 'prisma', 'dev.db');
-
-    if (!fs.existsSync(tmpDbPath) && fs.existsSync(bundledDb)) {
-      try {
-        fs.copyFileSync(bundledDb, tmpDbPath);
-        try {
-          fs.chmodSync(tmpDbPath, 0o666);
-        } catch {}
-      } catch (e) {
-        console.error('Failed to copy bundled dev.db to /tmp:', e);
-      }
-    }
-
-    if (fs.existsSync(tmpDbPath)) {
-      return `file:${tmpDbPath}`;
-    }
-  }
-
-  return process.env.DATABASE_URL || 'file:./dev.db';
+  return NEON_DATABASE_URL;
 }
 
 const resolvedDbUrl = getDatabaseUrl();
@@ -52,7 +25,7 @@ export const prisma =
         url: resolvedDbUrl,
       },
     },
-    log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
+    log: process.env.NODE_ENV === 'development' ? ['error', 'warn'] : ['error'],
   });
 
 if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
