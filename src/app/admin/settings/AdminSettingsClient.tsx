@@ -1,13 +1,15 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Save, Check, Settings, Truck, PhoneCall, Mail, Bell } from 'lucide-react';
 
 export default function AdminSettingsClient({ initialSettings }: { initialSettings: any }) {
+  const router = useRouter();
   const [whatsappNumber, setWhatsappNumber] = useState(initialSettings.whatsappNumber || '');
   const [supportEmail, setSupportEmail] = useState(initialSettings.supportEmail || '');
-  const [freeShippingThreshold, setFreeShippingThreshold] = useState(initialSettings.freeShippingThreshold || 999);
-  const [flatShippingRate, setFlatShippingRate] = useState(initialSettings.flatShippingRate || 79);
+  const [freeShippingThreshold, setFreeShippingThreshold] = useState(initialSettings.freeShippingThreshold ?? 999);
+  const [flatShippingRate, setFlatShippingRate] = useState(initialSettings.flatShippingRate ?? 79);
   const [storeNotice, setStoreNotice] = useState(initialSettings.storeNotice || '');
 
   const [saving, setSaving] = useState(false);
@@ -26,8 +28,8 @@ export default function AdminSettingsClient({ initialSettings }: { initialSettin
         body: JSON.stringify({
           whatsappNumber,
           supportEmail,
-          freeShippingThreshold,
-          flatShippingRate,
+          freeShippingThreshold: Number(freeShippingThreshold),
+          flatShippingRate: Number(flatShippingRate),
           storeNotice,
         }),
       });
@@ -36,6 +38,7 @@ export default function AdminSettingsClient({ initialSettings }: { initialSettin
       if (!res.ok) throw new Error(data.error || 'Failed to save settings');
 
       setSaved(true);
+      router.refresh();
       setTimeout(() => setSaved(false), 3000);
     } catch (err: any) {
       setError(err.message);

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 
 export interface CartItem {
   id: string; // unique cart item id (product.id)
@@ -36,16 +36,46 @@ interface CartContextType {
   subtotal: number;
   freeShippingThreshold: number;
   freeShippingRemaining: number;
+  flatShippingRate: number;
+  shippingFee: number;
+  refreshSettings: () => Promise<void>;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
-export const FREE_SHIPPING_THRESHOLD = 999;
+export const DEFAULT_FREE_SHIPPING_THRESHOLD = 999;
+export const DEFAULT_FLAT_SHIPPING_RATE = 79;
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [freeShippingThreshold, setFreeShippingThreshold] = useState<number>(DEFAULT_FREE_SHIPPING_THRESHOLD);
+  const [flatShippingRate, setFlatShippingRate] = useState<number>(DEFAULT_FLAT_SHIPPING_RATE);
+
+  const fetchSettings = useCallback(async () => {
+    try {
+      const res = await fetch('/api/settings', { cache: 'no-store' });
+      if (res.ok) {
+        const data = await res.json();
+        if (data?.settings) {
+          if (typeof data.settings.freeShippingThreshold === 'number') {
+            setFreeShippingThreshold(data.settings.freeShippingThreshold);
+          }
+          if (typeof data.settings.flatShippingRate === 'number') {
+            setFlatShippingRate(data.settings.flatShippingRate);
+          }
+        }
+      }
+    } catch (e) {
+      console.error('Failed to load store settings:', e);
+    }
+  }, []);
+
+  // Fetch settings on mount
+  useEffect(() => {
+    fetchSettings();
+  }, [fetchSettings]);
 
   // Load cart from localStorage on client mount & auto-sync prices
   useEffect(() => {
@@ -176,7 +206,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
   const subtotal = cart.reduce((total, item) => total + item.price * item.quantity, 0);
-  const freeShippingRemaining = Math.max(0, FREE_SHIPPING_THRESHOLD - subtotal);
+  const freeShippingRemaining = Math.max(0, freeShippingThreshold - subtotal);
+  const shippingFee = cart.length === 0 ? 0 : subtotal >= freeShippingThreshold ? 0 : flatShippingRate;
 
   return (
     <CartContext.Provider
@@ -190,8 +221,11 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         setIsCartOpen,
         cartCount,
         subtotal,
-        freeShippingThreshold: FREE_SHIPPING_THRESHOLD,
+        freeShippingThreshold,
         freeShippingRemaining,
+        flatShippingRate,
+        shippingFee,
+        refreshSettings: fetchSettings,
       }}
     >
       {children}

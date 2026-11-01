@@ -14,9 +14,9 @@ export default function CartPage() {
     subtotal,
     freeShippingThreshold,
     freeShippingRemaining,
+    shippingFee,
   } = useCart();
 
-  const shippingFee = freeShippingRemaining === 0 ? 0 : 79;
   const finalTotal = subtotal + shippingFee;
 
   if (cart.length === 0) {

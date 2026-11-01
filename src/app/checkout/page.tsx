@@ -23,7 +23,7 @@ import {
 import { useCart } from '@/lib/cart-context';
 
 export default function CheckoutPage() {
-  const { cart, subtotal, freeShippingRemaining, clearCart } = useCart();
+  const { cart, subtotal, freeShippingThreshold, flatShippingRate, clearCart } = useCart();
   const router = useRouter();
 
   const [formData, setFormData] = useState({
@@ -46,7 +46,34 @@ export default function CheckoutPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const shippingFee = freeShippingRemaining === 0 ? 0 : 79;
+  const [liveShippingRate, setLiveShippingRate] = useState<number>(flatShippingRate);
+  const [liveThreshold, setLiveThreshold] = useState<number>(freeShippingThreshold);
+
+  useEffect(() => {
+    setLiveShippingRate(flatShippingRate);
+  }, [flatShippingRate]);
+
+  useEffect(() => {
+    setLiveThreshold(freeShippingThreshold);
+  }, [freeShippingThreshold]);
+
+  useEffect(() => {
+    fetch('/api/settings', { cache: 'no-store' })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.settings) {
+          if (typeof data.settings.flatShippingRate === 'number') {
+            setLiveShippingRate(data.settings.flatShippingRate);
+          }
+          if (typeof data.settings.freeShippingThreshold === 'number') {
+            setLiveThreshold(data.settings.freeShippingThreshold);
+          }
+        }
+      })
+      .catch((e) => console.error('Failed to sync settings in checkout:', e));
+  }, []);
+
+  const shippingFee = subtotal >= liveThreshold ? 0 : liveShippingRate;
   const discountAmount = appliedCoupon ? appliedCoupon.calculatedDiscount : 0;
   const totalPayable = Math.max(0, subtotal - discountAmount + shippingFee);
 

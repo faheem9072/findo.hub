@@ -16,6 +16,7 @@ export default function CartDrawer() {
     subtotal,
     freeShippingThreshold,
     freeShippingRemaining,
+    shippingFee,
   } = useCart();
 
   if (!isCartOpen) return null;
@@ -169,13 +170,13 @@ export default function CartDrawer() {
                 <div className="flex justify-between text-slate-600">
                   <span>Shipping</span>
                   <span className="font-semibold text-[#5a9e2f]">
-                    {freeShippingRemaining === 0 ? 'FREE' : '₹70'}
+                    {shippingFee === 0 ? 'FREE' : `₹${shippingFee}`}
                   </span>
                 </div>
                 <div className="flex justify-between text-base font-bold text-[#0d1b1e] pt-2 border-t border-slate-100">
                   <span>Total Payable</span>
                   <span className="text-lg text-[#0d1b1e]">
-                    ₹{(subtotal + (freeShippingRemaining === 0 ? 0 : 70)).toFixed(2)}
+                    ₹{(subtotal + shippingFee).toFixed(2)}
                   </span>
                 </div>
               </div>
