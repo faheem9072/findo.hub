@@ -70,7 +70,7 @@ export default function AdminSettingsClient({ initialSettings }: { initialSettin
                 value={whatsappNumber}
                 onChange={(e) => setWhatsappNumber(e.target.value)}
                 className="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#5a9e2f] outline-none"
-                placeholder="+919876543210"
+                placeholder="+917025387764"
               />
             </div>
 
@@ -81,7 +81,7 @@ export default function AdminSettingsClient({ initialSettings }: { initialSettin
                 value={supportEmail}
                 onChange={(e) => setSupportEmail(e.target.value)}
                 className="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#5a9e2f] outline-none"
-                placeholder="support@findo.com"
+                placeholder="findohub7@gmail.com"
               />
             </div>
           </div>

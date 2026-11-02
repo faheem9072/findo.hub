@@ -17,8 +17,8 @@ export async function GET() {
       settings = await prisma.setting.create({
         data: {
           id: 'default',
-          whatsappNumber: '+919876543210',
-          supportEmail: 'support@findo.com',
+          whatsappNumber: '+917025387764',
+          supportEmail: 'findohub7@gmail.com',
           freeShippingThreshold: 999,
           flatShippingRate: 79,
           storeNotice: 'Free Shipping across India on orders above ₹999!',
@@ -69,8 +69,8 @@ export async function PUT(request: Request) {
       },
       create: {
         id: 'default',
-        whatsappNumber: whatsappNumber || '+919876543210',
-        supportEmail: supportEmail || 'support@findo.com',
+        whatsappNumber: whatsappNumber || '+917025387764',
+        supportEmail: supportEmail || 'findohub7@gmail.com',
         freeShippingThreshold: finalThreshold,
         flatShippingRate: finalShippingRate,
         storeNotice,

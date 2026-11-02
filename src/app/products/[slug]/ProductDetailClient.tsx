@@ -237,7 +237,7 @@ export default function ProductDetailClient({
       title: 'Returns & Replacement Policy',
       icon: RotateCcw,
       content:
-        'Enjoy 7 days hassle-free replacement warranty for manufacturing defects or damaged items during transit. Contact support@findo.com for instant pickup.',
+        'Enjoy 7 days hassle-free replacement warranty for manufacturing defects or damaged items during transit. Contact findohub7@gmail.com or WhatsApp +91 70253 87764 for instant pickup.',
     },
   ];
 

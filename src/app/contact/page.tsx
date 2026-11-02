@@ -72,7 +72,12 @@ export default function ContactPage() {
               </div>
               <div>
                 <h4 className="font-bold text-xs text-emerald-400 uppercase">Email Support</h4>
-                <p className="text-sm font-semibold text-white">support@findostore.com</p>
+                <a
+                  href="mailto:findohub7@gmail.com"
+                  className="text-sm font-semibold text-white hover:text-[#5a9e2f] transition-colors block"
+                >
+                  findohub7@gmail.com
+                </a>
                 <p className="text-[11px] text-slate-400">Response within 24 hours</p>
               </div>
             </div>
@@ -81,10 +86,25 @@ export default function ContactPage() {
               <div className="w-10 h-10 rounded-xl bg-[#5a9e2f] text-white flex items-center justify-center shrink-0">
                 <Phone className="w-5 h-5" />
               </div>
-              <div>
-                <h4 className="font-bold text-xs text-emerald-400 uppercase">Phone & WhatsApp</h4>
-                <p className="text-sm font-semibold text-white">+91 98765 43210</p>
-                <p className="text-[11px] text-slate-400">Mon - Sat, 9am - 7pm IST</p>
+              <div className="space-y-1.5">
+                <h4 className="font-bold text-xs text-emerald-400 uppercase">Phone & WhatsApp Support</h4>
+                <div className="space-y-1">
+                  <a
+                    href="https://wa.me/917025387764"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm font-semibold text-white hover:text-[#5a9e2f] transition-colors block"
+                  >
+                    +91 70253 87764 <span className="text-[11px] text-emerald-400 font-normal">(WhatsApp & Call)</span>
+                  </a>
+                  <a
+                    href="tel:+919539740449"
+                    className="text-sm font-semibold text-white hover:text-[#5a9e2f] transition-colors block"
+                  >
+                    +91 95397 40449 <span className="text-[11px] text-emerald-400 font-normal">(Call Support)</span>
+                  </a>
+                </div>
+                <p className="text-[11px] text-slate-400">Mon - Sat, 9am - 8pm IST</p>
               </div>
             </div>
 
@@ -93,8 +113,8 @@ export default function ContactPage() {
                 <MapPin className="w-5 h-5" />
               </div>
               <div>
-                <h4 className="font-bold text-xs text-emerald-400 uppercase">Headquarters</h4>
-                <p className="text-xs text-slate-300">Findo Kids Brand HQ, Tech Park, Powai, Mumbai - 400076, MH, India</p>
+                <h4 className="font-bold text-xs text-emerald-400 uppercase">Findo Hub</h4>
+                <p className="text-xs text-slate-300">Kerala, India • Pan-India Delivery</p>
               </div>
             </div>
           </div>

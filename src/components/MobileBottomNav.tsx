@@ -75,7 +75,7 @@ export default function MobileBottomNav({ onOpenSearch }: { onOpenSearch?: () =>
 
         {/* WhatsApp Support */}
         <a
-          href="https://wa.me/919876543210?text=Hello%20Findo%20Team!%20I%20have%20an%20enquiry%20about%20your%20products."
+          href="https://wa.me/917025387764?text=Hello%20Findo%20Team!%20I%20have%20an%20enquiry%20about%20your%20products."
           target="_blank"
           rel="noopener noreferrer"
           className="flex flex-col items-center justify-center py-1 px-1 rounded-xl text-slate-500 hover:text-emerald-600 font-medium transition-colors"

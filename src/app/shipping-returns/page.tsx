@@ -76,7 +76,7 @@ export default function ShippingReturnsPage() {
             <h4 className="font-bold text-sm text-[#0d1b1e]">How to Request a Replacement:</h4>
             <ol className="list-decimal pl-5 space-y-1">
               <li>Take a quick photo or 10-second video showing the issue.</li>
-              <li>Email us at <strong>support@findostore.com</strong> or WhatsApp us at <strong>+91 98765 43210</strong> within 7 days of delivery.</li>
+              <li>Email us at <strong>findohub7@gmail.com</strong> or WhatsApp/Call us at <strong>+91 70253 87764</strong> / <strong>+91 95397 40449</strong> within 7 days of delivery.</li>
               <li>Our team will arrange a free reverse pickup and send a brand-new replacement immediately!</li>
             </ol>
           </div>

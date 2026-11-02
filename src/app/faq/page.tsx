@@ -26,7 +26,7 @@ export default function FAQPage() {
     },
     {
       q: 'What is your replacement policy if an item arrives damaged?',
-      a: 'We offer a 7-day hassle-free replacement guarantee! Simply share a photo/video of the damaged package with our support team at support@findostore.com or WhatsApp +91 98765 43210, and we will ship a fresh replacement free of charge.',
+      a: 'We offer a 7-day hassle-free replacement guarantee! Simply share a photo/video of the damaged package with our support team at findohub7@gmail.com or WhatsApp +91 70253 87764 / +91 95397 40449, and we will ship a fresh replacement free of charge.',
     },
     {
       q: 'Do you offer Cash on Delivery (COD)?',
