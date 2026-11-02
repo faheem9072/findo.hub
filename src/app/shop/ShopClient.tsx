@@ -119,12 +119,12 @@ export default function ShopClient({ initialProducts, categories }: ShopClientPr
   }
 
   const isAgeActive = (val: string, label: string) => {
-    if (!val && !selectedAge) return true;
+    if (!val) return !selectedAge;
     if (!selectedAge) return false;
     const cleanSel = selectedAge.toLowerCase().replace(/[\s\-_+]+/g, '');
     const cleanVal = val.toLowerCase().replace(/[\s\-_+]+/g, '');
     const cleanLab = label.toLowerCase().replace(/[\s\-_+]+/g, '');
-    return cleanSel === cleanVal || cleanSel === cleanLab || cleanSel.includes(cleanVal);
+    return cleanSel === cleanVal || cleanSel === cleanLab || (cleanVal.length > 1 && cleanSel.includes(cleanVal));
   };
 
   const applyFilters = (newParams: Record<string, string>) => {

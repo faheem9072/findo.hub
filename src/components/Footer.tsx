@@ -5,7 +5,7 @@ import { MessageCircle, Mail, Phone } from 'lucide-react';
 
 export default function Footer() {
   return (
-    <footer className="bg-[#0d1b1e] text-slate-300 pt-16 pb-28 md:pb-14">
+    <footer className="bg-[#0d1b1e] text-slate-300 pt-16 pb-32 sm:pb-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 pb-12 border-b border-slate-800">
           
@@ -85,13 +85,15 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Bottom Bar: Copyright & Designed and Developed by KORE */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-4 text-center sm:text-left">
-          <p>© {new Date().getFullYear()} FINDO. All rights reserved.</p>
-          <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs text-slate-300">
+        {/* Bottom Bar: Copyright & Directly Below It "Designed and Developed by KORE" */}
+        <div className="pt-8 flex flex-col items-center justify-center text-center space-y-2">
+          <p className="text-xs text-slate-400">
+            © {new Date().getFullYear()} FINDO. All rights reserved.
+          </p>
+          <p className="flex items-center justify-center gap-1.5 text-xs text-slate-300">
             <span>Designed and Developed by</span>
-            <span className="text-[#5a9e2f] font-extrabold tracking-wider">KORE</span>
-          </div>
+            <span className="text-[#5a9e2f] font-extrabold tracking-wider text-sm">KORE</span>
+          </p>
         </div>
       </div>
     </footer>

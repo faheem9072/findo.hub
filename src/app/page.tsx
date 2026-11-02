@@ -235,33 +235,61 @@ export default async function HomePage() {
         </div>
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 text-center">
-          <div className="p-4 space-y-2">
-            <div className="w-10 h-10 rounded-full bg-[#5a9e2f]/10 text-[#5a9e2f] flex items-center justify-center mx-auto">
+          <Link
+            href="/shop?purpose=LEARN"
+            className="p-4 space-y-2 rounded-2xl bg-white border border-slate-200/80 hover:border-[#5a9e2f] hover:shadow-xs transition-all group block"
+          >
+            <div className="w-10 h-10 rounded-full bg-[#5a9e2f]/10 text-[#5a9e2f] flex items-center justify-center mx-auto group-hover:scale-110 transition-transform">
               <Lightbulb className="w-5 h-5" />
             </div>
-            <h3 className="font-bold text-[#0d1b1e] text-sm">Learn through play</h3>
-          </div>
+            <h3 className="font-bold text-[#0d1b1e] text-sm group-hover:text-[#5a9e2f] transition-colors">Learn through play</h3>
+            <span className="text-[11px] font-semibold text-[#5a9e2f] flex items-center justify-center gap-1 group-hover:underline">
+              <span>View Products</span>
+              <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+            </span>
+          </Link>
 
-          <div className="p-4 space-y-2">
-            <div className="w-10 h-10 rounded-full bg-[#5a9e2f]/10 text-[#5a9e2f] flex items-center justify-center mx-auto">
+          <Link
+            href={`/shop?purpose=${encodeURIComponent('BUILD HABITS')}`}
+            className="p-4 space-y-2 rounded-2xl bg-white border border-slate-200/80 hover:border-[#5a9e2f] hover:shadow-xs transition-all group block"
+          >
+            <div className="w-10 h-10 rounded-full bg-[#5a9e2f]/10 text-[#5a9e2f] flex items-center justify-center mx-auto group-hover:scale-110 transition-transform">
               <Smile className="w-5 h-5" />
             </div>
-            <h3 className="font-bold text-[#0d1b1e] text-sm">Build better habits</h3>
-          </div>
+            <h3 className="font-bold text-[#0d1b1e] text-sm group-hover:text-[#5a9e2f] transition-colors">Build better habits</h3>
+            <span className="text-[11px] font-semibold text-[#5a9e2f] flex items-center justify-center gap-1 group-hover:underline">
+              <span>View Products</span>
+              <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+            </span>
+          </Link>
 
-          <div className="p-4 space-y-2">
-            <div className="w-10 h-10 rounded-full bg-[#5a9e2f]/10 text-[#5a9e2f] flex items-center justify-center mx-auto">
+          <Link
+            href="/shop?purpose=CREATE"
+            className="p-4 space-y-2 rounded-2xl bg-white border border-slate-200/80 hover:border-[#5a9e2f] hover:shadow-xs transition-all group block"
+          >
+            <div className="w-10 h-10 rounded-full bg-[#5a9e2f]/10 text-[#5a9e2f] flex items-center justify-center mx-auto group-hover:scale-110 transition-transform">
               <Sparkles className="w-5 h-5" />
             </div>
-            <h3 className="font-bold text-[#0d1b1e] text-sm">Explore creativity</h3>
-          </div>
+            <h3 className="font-bold text-[#0d1b1e] text-sm group-hover:text-[#5a9e2f] transition-colors">Explore creativity</h3>
+            <span className="text-[11px] font-semibold text-[#5a9e2f] flex items-center justify-center gap-1 group-hover:underline">
+              <span>View Products</span>
+              <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+            </span>
+          </Link>
 
-          <div className="p-4 space-y-2">
-            <div className="w-10 h-10 rounded-full bg-[#5a9e2f]/10 text-[#5a9e2f] flex items-center justify-center mx-auto">
+          <Link
+            href="/shop?purpose=PLAY"
+            className="p-4 space-y-2 rounded-2xl bg-white border border-slate-200/80 hover:border-[#5a9e2f] hover:shadow-xs transition-all group block"
+          >
+            <div className="w-10 h-10 rounded-full bg-[#5a9e2f]/10 text-[#5a9e2f] flex items-center justify-center mx-auto group-hover:scale-110 transition-transform">
               <MonitorOff className="w-5 h-5" />
             </div>
-            <h3 className="font-bold text-[#0d1b1e] text-sm">Screen-free fun</h3>
-          </div>
+            <h3 className="font-bold text-[#0d1b1e] text-sm group-hover:text-[#5a9e2f] transition-colors">Screen-free fun</h3>
+            <span className="text-[11px] font-semibold text-[#5a9e2f] flex items-center justify-center gap-1 group-hover:underline">
+              <span>View Products</span>
+              <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+            </span>
+          </Link>
         </div>
       </section>
 
