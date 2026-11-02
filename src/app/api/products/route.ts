@@ -19,8 +19,9 @@ export async function GET(request: Request) {
       where.category = { slug: categorySlug };
     }
 
-    if (ageRange) {
-      where.ageRange = ageRange;
+    if (ageRange && ageRange !== 'All Ages' && ageRange !== 'all') {
+      const cleanAge = ageRange.replace('+', '').split(' ')[0];
+      where.ageRange = { contains: cleanAge, mode: 'insensitive' };
     }
 
     if (featured === 'true') {

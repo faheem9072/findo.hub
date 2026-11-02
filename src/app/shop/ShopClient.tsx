@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Search, Filter, X, ChevronDown, SlidersHorizontal } from 'lucide-react';
+import { Search, Filter, X, ChevronDown, SlidersHorizontal, Check } from 'lucide-react';
 import ProductCard from '@/components/ProductCard';
 
 interface ShopClientProps {
@@ -14,14 +14,33 @@ export default function ShopClient({ initialProducts, categories }: ShopClientPr
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const [search, setSearch] = useState(searchParams.get('q') || searchParams.get('search') || '');
-  const [selectedCategory, setSelectedCategory] = useState(searchParams.get('category') || '');
-  const [selectedPurpose, setSelectedPurpose] = useState(searchParams.get('purpose') || '');
-  const [selectedAge, setSelectedAge] = useState(searchParams.get('age') || '');
-  const [maxPrice, setMaxPrice] = useState(searchParams.get('maxPrice') || '');
-  const [inStockOnly, setInStockOnly] = useState(searchParams.get('inStock') === 'true');
-  const [sort, setSort] = useState(searchParams.get('sort') || 'featured');
+  const queryQ = searchParams.get('q') || searchParams.get('search') || '';
+  const queryCat = searchParams.get('category') || '';
+  const queryPurpose = searchParams.get('purpose') || '';
+  const queryAge = searchParams.get('age') || '';
+  const queryMaxPrice = searchParams.get('maxPrice') || '';
+  const queryInStock = searchParams.get('inStock') === 'true';
+  const querySort = searchParams.get('sort') || 'featured';
+
+  const [search, setSearch] = useState(queryQ);
+  const [selectedCategory, setSelectedCategory] = useState(queryCat);
+  const [selectedPurpose, setSelectedPurpose] = useState(queryPurpose);
+  const [selectedAge, setSelectedAge] = useState(queryAge);
+  const [maxPrice, setMaxPrice] = useState(queryMaxPrice);
+  const [inStockOnly, setInStockOnly] = useState(queryInStock);
+  const [sort, setSort] = useState(querySort);
   const [mobileFilterOpen, setMobileFilterOpen] = useState(false);
+
+  // Sync state with URL search parameters on every navigation
+  useEffect(() => {
+    setSearch(queryQ);
+    setSelectedCategory(queryCat);
+    setSelectedPurpose(queryPurpose);
+    setSelectedAge(queryAge);
+    setMaxPrice(queryMaxPrice);
+    setInStockOnly(queryInStock);
+    setSort(querySort);
+  }, [queryQ, queryCat, queryPurpose, queryAge, queryMaxPrice, queryInStock, querySort]);
 
   const purposes = ['PLAY', 'LEARN', 'CREATE', 'EXPLORE', 'BUILD HABITS'];
   const ageRanges = [
@@ -33,63 +52,80 @@ export default function ShopClient({ initialProducts, categories }: ShopClientPr
   ];
 
   function matchAgeRange(productAge: string | undefined | null, filterAge: string): boolean {
-    if (!filterAge || filterAge === 'All Ages') return true;
+    if (!filterAge || filterAge === 'All Ages' || filterAge === '' || filterAge === 'all') return true;
     if (!productAge) return false;
 
-    const cleanFilter = filterAge.trim().toLowerCase();
-    const cleanProd = productAge.trim().toLowerCase();
+    const f = filterAge.toLowerCase().replace(/[\s\-_]+/g, '');
+    const p = productAge.toLowerCase().replace(/[\s\-_]+/g, '');
 
-    if (cleanProd === cleanFilter || cleanProd.includes(cleanFilter) || cleanFilter.includes(cleanProd)) {
-      return true;
-    }
+    // Exact or substring match
+    if (p.includes(f) || f.includes(p)) return true;
 
-    // 0 - 3 Years (Toddlers)
-    if (cleanFilter.includes('0-3') || cleanFilter.includes('0 - 3')) {
+    // 0 - 3 Years (Toddlers & Sensory)
+    if (f.includes('03') || f.includes('02') || f.includes('toddler')) {
       return (
-        cleanProd.includes('1-3') ||
-        cleanProd.includes('0-2') ||
-        cleanProd.includes('0-3') ||
-        cleanProd.startsWith('1') ||
-        cleanProd.startsWith('2')
+        p.includes('03') ||
+        p.includes('02') ||
+        p.includes('13') ||
+        p.includes('24') ||
+        p.includes('25') ||
+        p.includes('26') ||
+        p.startsWith('0') ||
+        p.startsWith('1') ||
+        p.startsWith('2')
       );
     }
 
-    // 3 - 5 Years (Preschool)
-    if (cleanFilter.includes('3-5') || cleanFilter.includes('3 - 5')) {
+    // 3 - 5 Years (Preschool & Routine)
+    if (f.includes('35') || f.includes('36') || f.includes('preschool')) {
       return (
-        cleanProd.includes('3-6') ||
-        cleanProd.includes('3-8') ||
-        cleanProd.includes('4-8') ||
-        cleanProd.includes('3-5')
+        p.includes('36') ||
+        p.includes('38') ||
+        p.includes('48') ||
+        p.includes('35') ||
+        p.includes('25') ||
+        p.includes('26') ||
+        p.includes('410')
       );
     }
 
-    // 6 - 8 Years (Growing Explorers)
-    if (cleanFilter.includes('6-8') || cleanFilter.includes('6 - 8')) {
+    // 6 - 8 Years (Growing Explorers & Active Play)
+    if (f.includes('68')) {
       return (
-        cleanProd.includes('3-8') ||
-        cleanProd.includes('4-8') ||
-        cleanProd.includes('5-10') ||
-        cleanProd.includes('4-10') ||
-        cleanProd.includes('6-12') ||
-        cleanProd.includes('7-14') ||
-        cleanProd.includes('7+')
+        p.includes('38') ||
+        p.includes('48') ||
+        p.includes('510') ||
+        p.includes('410') ||
+        p.includes('612') ||
+        p.includes('714') ||
+        p.includes('7+') ||
+        p.includes('6+')
       );
     }
 
-    // 8+ Years (Science & STEM Labs)
-    if (cleanFilter.includes('8+') || cleanFilter.includes('8 +')) {
+    // 8+ Years (Science & STEM Labs, handles "8+", "8plus", "8years" if + was decoded as space)
+    if (f.includes('8+') || f.includes('8plus') || f.includes('8years') || f.startsWith('8')) {
       return (
-        cleanProd.includes('8+') ||
-        cleanProd.includes('7-14') ||
-        cleanProd.includes('6-12') ||
-        cleanProd.includes('7+') ||
-        cleanProd.includes('5-10')
+        p.includes('8+') ||
+        p.includes('714') ||
+        p.includes('612') ||
+        p.includes('7+') ||
+        p.includes('510') ||
+        p.includes('410')
       );
     }
 
-    return cleanProd.includes(cleanFilter.split(' ')[0]);
+    return p.includes(f);
   }
+
+  const isAgeActive = (val: string, label: string) => {
+    if (!val && !selectedAge) return true;
+    if (!selectedAge) return false;
+    const cleanSel = selectedAge.toLowerCase().replace(/[\s\-_+]+/g, '');
+    const cleanVal = val.toLowerCase().replace(/[\s\-_+]+/g, '');
+    const cleanLab = label.toLowerCase().replace(/[\s\-_+]+/g, '');
+    return cleanSel === cleanVal || cleanSel === cleanLab || cleanSel.includes(cleanVal);
+  };
 
   const applyFilters = (newParams: Record<string, string>) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -122,8 +158,8 @@ export default function ShopClient({ initialProducts, categories }: ShopClientPr
     filteredProducts = filteredProducts.filter(
       (p) =>
         p.name.toLowerCase().includes(q) ||
-        p.shortDesc.toLowerCase().includes(q) ||
-        p.description.toLowerCase().includes(q)
+        p.shortDesc?.toLowerCase().includes(q) ||
+        p.description?.toLowerCase().includes(q)
     );
   }
 
@@ -161,20 +197,20 @@ export default function ShopClient({ initialProducts, categories }: ShopClientPr
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-6">
       
       {/* Page Header */}
       <div className="space-y-2">
         <h1 className="text-3xl sm:text-4xl font-extrabold text-[#0d1b1e]">
           Shop Findo
         </h1>
-        <p className="text-sm text-slate-500">
+        <p className="text-xs sm:text-sm text-slate-500">
           Thoughtfully chosen, screen-free products for curious young minds.
         </p>
       </div>
 
       {/* Filter & Search Bar Controls */}
-      <div className="bg-white p-4 sm:p-5 rounded-xl border border-slate-200/80 shadow-xs space-y-4">
+      <div className="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/80 shadow-xs space-y-3.5">
         
         {/* Top Row: Search input + Mobile Filter Trigger + Sort dropdown */}
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
@@ -189,8 +225,8 @@ export default function ShopClient({ initialProducts, categories }: ShopClientPr
                 setSearch(e.target.value);
                 applyFilters({ q: e.target.value });
               }}
-              placeholder="Search products..."
-              className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-slate-200 bg-[#fafbf8] text-sm text-[#0d1b1e] placeholder-slate-400 focus:outline-none focus:border-[#5a9e2f]"
+              placeholder="Search products by name, kit, or topic..."
+              className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 bg-[#fafbf8] text-xs sm:text-sm text-[#0d1b1e] placeholder-slate-400 focus:outline-none focus:border-[#5a9e2f]"
             />
             {search && (
               <button
@@ -209,7 +245,7 @@ export default function ShopClient({ initialProducts, categories }: ShopClientPr
             {/* Mobile Filter Button */}
             <button
               onClick={() => setMobileFilterOpen(!mobileFilterOpen)}
-              className="lg:hidden flex-1 sm:flex-none py-2.5 px-4 rounded-lg border border-slate-200 bg-white font-semibold text-xs text-[#0d1b1e] flex items-center justify-center gap-2 hover:bg-slate-50"
+              className="lg:hidden flex-1 sm:flex-none py-2.5 px-4 rounded-xl border border-slate-200 bg-white font-semibold text-xs text-[#0d1b1e] flex items-center justify-center gap-2 hover:bg-slate-50"
             >
               <SlidersHorizontal className="w-4 h-4 text-[#5a9e2f]" />
               <span>Filters</span>
@@ -223,7 +259,7 @@ export default function ShopClient({ initialProducts, categories }: ShopClientPr
                   setSort(e.target.value);
                   applyFilters({ sort: e.target.value });
                 }}
-                className="w-full appearance-none bg-white border border-slate-200 rounded-lg py-2.5 px-3.5 pr-8 text-xs font-semibold text-[#0d1b1e] focus:outline-none focus:border-[#5a9e2f]"
+                className="w-full appearance-none bg-white border border-slate-200 rounded-xl py-2.5 px-3.5 pr-8 text-xs font-semibold text-[#0d1b1e] focus:outline-none focus:border-[#5a9e2f]"
               >
                 <option value="featured">Sort: Featured</option>
                 <option value="newest">Sort: Newest</option>
@@ -241,10 +277,7 @@ export default function ShopClient({ initialProducts, categories }: ShopClientPr
             Shop by Age:
           </span>
           {ageRanges.map((a) => {
-            const isActive =
-              (a.value === '' && !selectedAge) ||
-              selectedAge === a.value ||
-              selectedAge === a.label;
+            const active = isAgeActive(a.value, a.label);
             return (
               <button
                 key={a.label}
@@ -252,8 +285,8 @@ export default function ShopClient({ initialProducts, categories }: ShopClientPr
                   setSelectedAge(a.value);
                   applyFilters({ age: a.value });
                 }}
-                className={`shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold transition-all flex items-center gap-1 ${
-                  isActive
+                className={`shrink-0 px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all flex items-center gap-1.5 ${
+                  active
                     ? 'bg-[#5a9e2f] text-white shadow-xs'
                     : 'bg-[#f4f7f2] text-slate-700 hover:bg-slate-200/80 border border-slate-200/60'
                 }`}
@@ -263,6 +296,86 @@ export default function ShopClient({ initialProducts, categories }: ShopClientPr
             );
           })}
         </div>
+
+        {/* Active Filter Chips Bar */}
+        {(selectedCategory || selectedPurpose || selectedAge || maxPrice || inStockOnly || search) && (
+          <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-slate-100 text-xs">
+            <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+              Active:
+            </span>
+
+            {selectedAge && (
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-800 font-semibold border border-emerald-200 text-[11px]">
+                <span>Age: {selectedAge}</span>
+                <button
+                  onClick={() => {
+                    setSelectedAge('');
+                    applyFilters({ age: '' });
+                  }}
+                  className="hover:text-emerald-950 font-bold ml-0.5"
+                  title="Remove age filter"
+                >
+                  ✕
+                </button>
+              </span>
+            )}
+
+            {selectedCategory && (
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-blue-50 text-blue-800 font-semibold border border-blue-200 text-[11px]">
+                <span>Category: {categories.find((c) => c.slug === selectedCategory)?.name || selectedCategory}</span>
+                <button
+                  onClick={() => {
+                    setSelectedCategory('');
+                    applyFilters({ category: '' });
+                  }}
+                  className="hover:text-blue-950 font-bold ml-0.5"
+                  title="Remove category filter"
+                >
+                  ✕
+                </button>
+              </span>
+            )}
+
+            {selectedPurpose && (
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-purple-50 text-purple-800 font-semibold border border-purple-200 text-[11px]">
+                <span>Purpose: {selectedPurpose}</span>
+                <button
+                  onClick={() => {
+                    setSelectedPurpose('');
+                    applyFilters({ purpose: '' });
+                  }}
+                  className="hover:text-purple-950 font-bold ml-0.5"
+                  title="Remove purpose filter"
+                >
+                  ✕
+                </button>
+              </span>
+            )}
+
+            {search && (
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-50 text-amber-800 font-semibold border border-amber-200 text-[11px]">
+                <span>&quot;{search}&quot;</span>
+                <button
+                  onClick={() => {
+                    setSearch('');
+                    applyFilters({ q: '' });
+                  }}
+                  className="hover:text-amber-950 font-bold ml-0.5"
+                  title="Clear search"
+                >
+                  ✕
+                </button>
+              </span>
+            )}
+
+            <button
+              onClick={clearAllFilters}
+              className="text-[11px] font-bold text-red-500 hover:text-red-700 underline ml-auto"
+            >
+              Reset Filters
+            </button>
+          </div>
+        )}
 
         {/* Desktop Filter Options Bar */}
         <div className="hidden lg:grid grid-cols-5 gap-3 pt-3 border-t border-slate-100 text-xs">
@@ -380,17 +493,17 @@ export default function ShopClient({ initialProducts, categories }: ShopClientPr
         </div>
 
         {filteredProducts.length === 0 ? (
-          <div className="text-center py-16 bg-white rounded-xl border border-slate-200 p-8 space-y-4">
+          <div className="text-center py-16 bg-white rounded-2xl border border-slate-200 p-8 space-y-4 shadow-xs">
             <div className="w-12 h-12 bg-slate-100 text-slate-400 rounded-full flex items-center justify-center mx-auto text-xl font-bold">
               ?
             </div>
-            <h3 className="text-lg font-bold text-[#0d1b1e]">We couldn’t find what you’re looking for.</h3>
+            <h3 className="text-lg font-bold text-[#0d1b1e]">We couldn&apos;t find products matching these filters.</h3>
             <p className="text-xs text-slate-500 max-w-sm mx-auto">
-              Try adjusting your search terms or clearing your selected filters.
+              Try adjusting your search terms or clearing your selected age/category filters.
             </p>
             <button
               onClick={clearAllFilters}
-              className="py-2.5 px-6 rounded-lg bg-[#5a9e2f] text-white text-xs font-bold hover:bg-[#488224] transition-colors"
+              className="py-2.5 px-6 rounded-xl bg-[#5a9e2f] text-white text-xs font-bold hover:bg-[#488224] transition-colors shadow-xs"
             >
               Browse All Products
             </button>
@@ -404,31 +517,32 @@ export default function ShopClient({ initialProducts, categories }: ShopClientPr
         )}
       </div>
 
-      {/* Mobile Filter Modal / Drawer */}
+      {/* Mobile Filter Drawer / Bottom Sheet */}
       {mobileFilterOpen && (
-        <div className="fixed inset-0 z-50 overflow-hidden lg:hidden">
+        <div className="fixed inset-0 z-50 lg:hidden flex flex-col justify-end">
           <div
-            className="fixed inset-0 bg-[#0d1b1e]/60 backdrop-blur-xs transition-opacity animate-in fade-in"
+            className="fixed inset-0 bg-[#0d1b1e]/60 backdrop-blur-xs transition-opacity"
             onClick={() => setMobileFilterOpen(false)}
           />
 
-          <div className="fixed inset-x-0 bottom-0 max-h-[85vh] bg-white rounded-t-3xl shadow-2xl flex flex-col animate-in slide-in-from-bottom duration-300">
+          <div className="relative bg-white rounded-t-3xl shadow-2xl max-h-[85vh] flex flex-col overflow-hidden animate-in slide-in-from-bottom duration-200">
             {/* Modal Header */}
-            <div className="p-4 px-6 border-b border-slate-100 flex items-center justify-between">
+            <div className="p-4 sm:p-5 border-b border-slate-100 flex items-center justify-between bg-[#fafbf8]">
               <div className="flex items-center gap-2">
-                <SlidersHorizontal className="w-5 h-5 text-[#5a9e2f]" />
-                <h3 className="text-base font-bold text-[#0d1b1e]">Filter Products</h3>
+                <SlidersHorizontal className="w-4 h-4 text-[#5a9e2f]" />
+                <h3 className="font-extrabold text-[#0d1b1e] text-sm">Filter Products</h3>
               </div>
               <button
                 onClick={() => setMobileFilterOpen(false)}
-                className="p-1.5 rounded-full hover:bg-slate-100 text-slate-400 hover:text-slate-600"
+                className="w-8 h-8 rounded-full bg-slate-200/60 flex items-center justify-center text-slate-500 hover:text-[#0d1b1e]"
               >
-                <X className="w-5 h-5" />
+                <X className="w-4 h-4" />
               </button>
             </div>
 
-            {/* Modal Content */}
-            <div className="p-5 overflow-y-auto space-y-5 custom-scrollbar text-xs">
+            {/* Modal Body */}
+            <div className="p-5 space-y-6 overflow-y-auto custom-scrollbar text-xs">
+              
               {/* Category */}
               <div>
                 <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">
@@ -512,7 +626,7 @@ export default function ShopClient({ initialProducts, categories }: ShopClientPr
                 </label>
                 <div className="flex flex-wrap gap-2">
                   {ageRanges.map((a) => {
-                    const isSelected = (!a.value && !selectedAge) || selectedAge === a.value || selectedAge === a.label;
+                    const isSelected = isAgeActive(a.value, a.label);
                     return (
                       <button
                         key={a.label}
