@@ -12,6 +12,27 @@ export default function AdminSettingsClient({ initialSettings }: { initialSettin
   const [flatShippingRate, setFlatShippingRate] = useState(initialSettings.flatShippingRate ?? 79);
   const [storeNotice, setStoreNotice] = useState(initialSettings.storeNotice || '');
 
+  React.useEffect(() => {
+    fetch('/api/settings', { cache: 'no-store' })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.settings) {
+          if (data.settings.supportEmail) setSupportEmail(data.settings.supportEmail);
+          if (data.settings.whatsappNumber) setWhatsappNumber(data.settings.whatsappNumber);
+          if (typeof data.settings.freeShippingThreshold === 'number') {
+            setFreeShippingThreshold(data.settings.freeShippingThreshold);
+          }
+          if (typeof data.settings.flatShippingRate === 'number') {
+            setFlatShippingRate(data.settings.flatShippingRate);
+          }
+          if (data.settings.storeNotice !== undefined) {
+            setStoreNotice(data.settings.storeNotice || '');
+          }
+        }
+      })
+      .catch((err) => console.error('Failed to sync settings in admin client:', err));
+  }, []);
+
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState('');

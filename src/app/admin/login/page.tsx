@@ -7,7 +7,7 @@ import { Lock, Mail, ArrowRight, ShieldCheck, Sparkles } from 'lucide-react';
 
 export default function AdminLoginPage() {
   const router = useRouter();
-  const [email, setEmail] = useState('admin@findo.com');
+  const [email, setEmail] = useState('findohub7@gmail.com');
   const [password, setPassword] = useState('admin123');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -60,7 +60,7 @@ export default function AdminLoginPage() {
             <span>Default Seed Credentials:</span>
           </div>
           <p className="text-[#0d1b1e]">
-            <strong>Email:</strong> admin@findo.com
+            <strong>Email:</strong> findohub7@gmail.com
           </p>
           <p className="text-[#0d1b1e]">
             <strong>Password:</strong> admin123
@@ -83,7 +83,7 @@ export default function AdminLoginPage() {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="admin@findo.com"
+              placeholder="findohub7@gmail.com"
               className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-xs font-medium text-[#0d1b1e] focus:outline-none focus:border-[#5a9e2f]"
             />
           </div>
