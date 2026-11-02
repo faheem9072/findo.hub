@@ -46,6 +46,33 @@ export default async function HomePage() {
     { title: 'BUILD HABITS', slug: 'BUILD HABITS', desc: 'Routine planners & habit boards' },
   ];
 
+  const ageGroups = [
+    {
+      age: '0-3 Years',
+      stage: 'Toddlers & Sensory',
+      description: 'Tactile shapes, sensory sorters & early motor skill essentials.',
+      icon: '👶',
+    },
+    {
+      age: '3-5 Years',
+      stage: 'Preschool & Routine',
+      description: 'Habit trackers, drawing pads, magnetic boards & basic logic.',
+      icon: '🎨',
+    },
+    {
+      age: '6-8 Years',
+      stage: 'Growing Explorers',
+      description: 'Tower stacking, construction sets, creative art & word builders.',
+      icon: '🧩',
+    },
+    {
+      age: '8+ Years',
+      stage: 'STEM & Science Labs',
+      description: 'Robotics, solar kits, chemistry & crystal labs, advanced puzzles.',
+      icon: '🔬',
+    },
+  ];
+
   return (
     <div className="space-y-16 sm:space-y-24 pb-20">
 
@@ -114,6 +141,61 @@ export default async function HomePage() {
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {featuredProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
+      </section>
+
+      {/* SECTION — SHOP BY AGE */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-2">
+          <div>
+            <span className="text-xs font-bold text-[#5a9e2f] uppercase tracking-widest bg-[#eef8ea] px-3.5 py-1 rounded-full inline-block mb-2">
+              Age-Wise Discovery
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0d1b1e]">
+              Shop by Child's Age
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-500 mt-1">
+              Curated screen-free essentials matched specifically to your child's developmental milestones.
+            </p>
+          </div>
+          <Link
+            href="/shop"
+            className="text-xs font-bold text-[#5a9e2f] hover:underline flex items-center gap-1 self-start sm:self-auto"
+          >
+            <span>Explore All Ages</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+          {ageGroups.map((group) => (
+            <Link
+              key={group.age}
+              href={`/shop?age=${encodeURIComponent(group.age)}`}
+              className="group p-5 sm:p-6 rounded-2xl bg-white border border-slate-200/80 hover:border-[#5a9e2f] hover:shadow-md transition-all flex flex-col justify-between"
+            >
+              <div className="space-y-3">
+                <div className="w-11 h-11 rounded-xl bg-[#eef8ea] text-[#5a9e2f] flex items-center justify-center font-bold text-xl group-hover:scale-110 transition-transform">
+                  {group.icon}
+                </div>
+                <div>
+                  <span className="text-[10px] font-bold text-[#5a9e2f] uppercase tracking-wider">
+                    {group.stage}
+                  </span>
+                  <h3 className="text-lg sm:text-xl font-extrabold text-[#0d1b1e] group-hover:text-[#5a9e2f] transition-colors mt-0.5">
+                    {group.age}
+                  </h3>
+                  <p className="text-xs text-slate-500 mt-1 leading-relaxed line-clamp-2">
+                    {group.description}
+                  </p>
+                </div>
+              </div>
+              <div className="pt-4 mt-3 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-[#5a9e2f]">
+                <span>View Products</span>
+                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+              </div>
+            </Link>
           ))}
         </div>
       </section>

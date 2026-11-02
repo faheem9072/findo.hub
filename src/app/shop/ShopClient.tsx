@@ -24,7 +24,72 @@ export default function ShopClient({ initialProducts, categories }: ShopClientPr
   const [mobileFilterOpen, setMobileFilterOpen] = useState(false);
 
   const purposes = ['PLAY', 'LEARN', 'CREATE', 'EXPLORE', 'BUILD HABITS'];
-  const ageRanges = ['0-2 Years', '3-6 Years', '6-9 Years', '9+ Years'];
+  const ageRanges = [
+    { label: 'All Ages', value: '' },
+    { label: '0 - 3 Years', value: '0-3 Years', desc: 'Toddlers & Sensory' },
+    { label: '3 - 5 Years', value: '3-5 Years', desc: 'Preschool & Routine' },
+    { label: '6 - 8 Years', value: '6-8 Years', desc: 'Puzzles & Construction' },
+    { label: '8+ Years', value: '8+ Years', desc: 'STEM & Science Labs' },
+  ];
+
+  function matchAgeRange(productAge: string | undefined | null, filterAge: string): boolean {
+    if (!filterAge || filterAge === 'All Ages') return true;
+    if (!productAge) return false;
+
+    const cleanFilter = filterAge.trim().toLowerCase();
+    const cleanProd = productAge.trim().toLowerCase();
+
+    if (cleanProd === cleanFilter || cleanProd.includes(cleanFilter) || cleanFilter.includes(cleanProd)) {
+      return true;
+    }
+
+    // 0 - 3 Years (Toddlers)
+    if (cleanFilter.includes('0-3') || cleanFilter.includes('0 - 3')) {
+      return (
+        cleanProd.includes('1-3') ||
+        cleanProd.includes('0-2') ||
+        cleanProd.includes('0-3') ||
+        cleanProd.startsWith('1') ||
+        cleanProd.startsWith('2')
+      );
+    }
+
+    // 3 - 5 Years (Preschool)
+    if (cleanFilter.includes('3-5') || cleanFilter.includes('3 - 5')) {
+      return (
+        cleanProd.includes('3-6') ||
+        cleanProd.includes('3-8') ||
+        cleanProd.includes('4-8') ||
+        cleanProd.includes('3-5')
+      );
+    }
+
+    // 6 - 8 Years (Growing Explorers)
+    if (cleanFilter.includes('6-8') || cleanFilter.includes('6 - 8')) {
+      return (
+        cleanProd.includes('3-8') ||
+        cleanProd.includes('4-8') ||
+        cleanProd.includes('5-10') ||
+        cleanProd.includes('4-10') ||
+        cleanProd.includes('6-12') ||
+        cleanProd.includes('7-14') ||
+        cleanProd.includes('7+')
+      );
+    }
+
+    // 8+ Years (Science & STEM Labs)
+    if (cleanFilter.includes('8+') || cleanFilter.includes('8 +')) {
+      return (
+        cleanProd.includes('8+') ||
+        cleanProd.includes('7-14') ||
+        cleanProd.includes('6-12') ||
+        cleanProd.includes('7+') ||
+        cleanProd.includes('5-10')
+      );
+    }
+
+    return cleanProd.includes(cleanFilter.split(' ')[0]);
+  }
 
   const applyFilters = (newParams: Record<string, string>) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -73,9 +138,7 @@ export default function ShopClient({ initialProducts, categories }: ShopClientPr
   }
 
   if (selectedAge) {
-    filteredProducts = filteredProducts.filter(
-      (p) => p.ageRange?.toLowerCase().includes(selectedAge.toLowerCase().split(' ')[0])
-    );
+    filteredProducts = filteredProducts.filter((p) => matchAgeRange(p.ageRange, selectedAge));
   }
 
   if (maxPrice) {
@@ -172,6 +235,35 @@ export default function ShopClient({ initialProducts, categories }: ShopClientPr
           </div>
         </div>
 
+        {/* Quick Age Segment Selector */}
+        <div className="pt-2 flex items-center gap-2 overflow-x-auto scrollbar-none pb-1 border-t border-slate-100">
+          <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider shrink-0 mr-1 flex items-center gap-1">
+            Shop by Age:
+          </span>
+          {ageRanges.map((a) => {
+            const isActive =
+              (a.value === '' && !selectedAge) ||
+              selectedAge === a.value ||
+              selectedAge === a.label;
+            return (
+              <button
+                key={a.label}
+                onClick={() => {
+                  setSelectedAge(a.value);
+                  applyFilters({ age: a.value });
+                }}
+                className={`shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold transition-all flex items-center gap-1 ${
+                  isActive
+                    ? 'bg-[#5a9e2f] text-white shadow-xs'
+                    : 'bg-[#f4f7f2] text-slate-700 hover:bg-slate-200/80 border border-slate-200/60'
+                }`}
+              >
+                <span>{a.label}</span>
+              </button>
+            );
+          })}
+        </div>
+
         {/* Desktop Filter Options Bar */}
         <div className="hidden lg:grid grid-cols-5 gap-3 pt-3 border-t border-slate-100 text-xs">
           
@@ -229,8 +321,8 @@ export default function ShopClient({ initialProducts, categories }: ShopClientPr
               className="w-full bg-white border border-slate-200 rounded-lg py-2 px-2.5 text-xs text-[#0d1b1e]"
             >
               <option value="">All Ages</option>
-              {ageRanges.map((a) => (
-                <option key={a} value={a}>{a}</option>
+              {ageRanges.filter(a => a.value !== '').map((a) => (
+                <option key={a.label} value={a.value}>{a.label}</option>
               ))}
             </select>
           </div>
@@ -419,35 +511,25 @@ export default function ShopClient({ initialProducts, categories }: ShopClientPr
                   Age Range
                 </label>
                 <div className="flex flex-wrap gap-2">
-                  <button
-                    onClick={() => {
-                      setSelectedAge('');
-                      applyFilters({ age: '' });
-                    }}
-                    className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-colors ${
-                      !selectedAge
-                        ? 'bg-[#5a9e2f] text-white'
-                        : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
-                    }`}
-                  >
-                    All Ages
-                  </button>
-                  {ageRanges.map((a) => (
-                    <button
-                      key={a}
-                      onClick={() => {
-                        setSelectedAge(a);
-                        applyFilters({ age: a });
-                      }}
-                      className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-colors ${
-                        selectedAge === a
-                          ? 'bg-[#5a9e2f] text-white'
-                          : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
-                      }`}
-                    >
-                      {a}
-                    </button>
-                  ))}
+                  {ageRanges.map((a) => {
+                    const isSelected = (!a.value && !selectedAge) || selectedAge === a.value || selectedAge === a.label;
+                    return (
+                      <button
+                        key={a.label}
+                        onClick={() => {
+                          setSelectedAge(a.value);
+                          applyFilters({ age: a.value });
+                        }}
+                        className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-colors ${
+                          isSelected
+                            ? 'bg-[#5a9e2f] text-white'
+                            : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                        }`}
+                      >
+                        {a.label}
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
 

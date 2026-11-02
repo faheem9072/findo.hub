@@ -120,6 +120,47 @@ export default function Navbar({ onOpenSearch }: { onOpenSearch?: () => void }) 
           >
             Shop All Products
           </Link>
+
+          {/* Shop by Age in Mobile Menu */}
+          <div className="pt-2 pb-1 border-t border-slate-100">
+            <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-2">
+              Shop by Age
+            </span>
+            <div className="grid grid-cols-2 gap-2 text-xs">
+              <Link
+                href="/shop?age=0-3%20Years"
+                onClick={() => setMobileMenuOpen(false)}
+                className="p-2.5 rounded-xl bg-[#fafbf8] border border-slate-200/70 text-slate-700 font-semibold hover:border-[#5a9e2f] flex items-center gap-1.5"
+              >
+                <span>👶</span>
+                <span>0 - 3 Years</span>
+              </Link>
+              <Link
+                href="/shop?age=3-5%20Years"
+                onClick={() => setMobileMenuOpen(false)}
+                className="p-2.5 rounded-xl bg-[#fafbf8] border border-slate-200/70 text-slate-700 font-semibold hover:border-[#5a9e2f] flex items-center gap-1.5"
+              >
+                <span>🎨</span>
+                <span>3 - 5 Years</span>
+              </Link>
+              <Link
+                href="/shop?age=6-8%20Years"
+                onClick={() => setMobileMenuOpen(false)}
+                className="p-2.5 rounded-xl bg-[#fafbf8] border border-slate-200/70 text-slate-700 font-semibold hover:border-[#5a9e2f] flex items-center gap-1.5"
+              >
+                <span>🧩</span>
+                <span>6 - 8 Years</span>
+              </Link>
+              <Link
+                href="/shop?age=8%2B%20Years"
+                onClick={() => setMobileMenuOpen(false)}
+                className="p-2.5 rounded-xl bg-[#fafbf8] border border-slate-200/70 text-slate-700 font-semibold hover:border-[#5a9e2f] flex items-center gap-1.5"
+              >
+                <span>🔬</span>
+                <span>8+ Years</span>
+              </Link>
+            </div>
+          </div>
           <Link
             href="/account"
             onClick={() => setMobileMenuOpen(false)}

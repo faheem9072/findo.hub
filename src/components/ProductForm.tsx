@@ -257,11 +257,18 @@ export default function ProductForm({ initialData, categories }: ProductFormProp
               onChange={handleChange}
               className="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-semibold focus:outline-none focus:border-[#5a9e2f]"
             >
-              <option value="0-2 Years">0 - 2 Years</option>
-              <option value="1-5 Years">1 - 5 Years</option>
-              <option value="2-6 Years">2 - 6 Years</option>
-              <option value="3-8 Years">3 - 8 Years</option>
-              <option value="0-10 Years">0 - 10 Years</option>
+              <option value="1-3 Years">1 - 3 Years (Toddlers & Sensory)</option>
+              <option value="3-6 Years">3 - 6 Years (Preschool & Early Learners)</option>
+              <option value="3-8 Years">3 - 8 Years (Habits & Construction)</option>
+              <option value="4-8 Years">4 - 8 Years (Words & Creative Art)</option>
+              <option value="5-10 Years">5 - 10 Years (Building & Design)</option>
+              <option value="6-12 Years">6 - 12 Years (Middle STEM & Science)</option>
+              <option value="7-14 Years">7 - 14 Years (Mechanical & Logic)</option>
+              <option value="8+ Years">8+ Years (Science Labs & Robotics)</option>
+              <option value="All Ages">All Ages</option>
+              {!['1-3 Years', '3-6 Years', '3-8 Years', '4-8 Years', '5-10 Years', '6-12 Years', '7-14 Years', '8+ Years', 'All Ages'].includes(formData.ageRange) && (
+                <option value={formData.ageRange}>{formData.ageRange}</option>
+              )}
             </select>
           </div>
 
