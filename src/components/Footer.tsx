@@ -5,7 +5,7 @@ import { MessageCircle, Mail, Phone } from 'lucide-react';
 
 export default function Footer() {
   return (
-    <footer className="bg-[#0d1b1e] text-slate-300 pt-16 pb-12">
+    <footer className="bg-[#0d1b1e] text-slate-300 pt-16 pb-28 md:pb-14">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 pb-12 border-b border-slate-800">
           
@@ -49,7 +49,7 @@ export default function Footer() {
                 <span>findohub7@gmail.com</span>
               </a>
               <a
-                href="https://instagram.com"
+                href="https://www.instagram.com/findo.hub?psln=MWx5bGlnYzVjdXAwYQ=="
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 text-xs hover:text-[#5a9e2f] transition-colors bg-white/5 hover:bg-white/10 px-2.5 py-1.5 rounded-lg border border-white/10"
@@ -85,13 +85,13 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+        {/* Bottom Bar: Copyright & Designed and Developed by KORE */}
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-4 text-center sm:text-left">
           <p>© {new Date().getFullYear()} FINDO. All rights reserved.</p>
-          <p className="flex items-center gap-1 text-slate-400">
+          <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs text-slate-300">
             <span>Designed and Developed by</span>
-            <span className="text-[#5a9e2f] font-bold tracking-wider">KORE</span>
-          </p>
+            <span className="text-[#5a9e2f] font-extrabold tracking-wider">KORE</span>
+          </div>
         </div>
       </div>
     </footer>
