@@ -600,6 +600,16 @@ export default function CheckoutPage() {
                 </>
               )}
             </button>
+            <p className="text-[11px] text-center text-slate-400 font-medium pt-1">
+              By placing this order, you agree to Findo&apos;s{' '}
+              <Link href="/terms" target="_blank" className="text-[#5a9e2f] hover:underline font-semibold">
+                Terms & Conditions
+              </Link>{' '}
+              and{' '}
+              <Link href="/privacy" target="_blank" className="text-[#5a9e2f] hover:underline font-semibold">
+                Privacy Policy
+              </Link>.
+            </p>
           </form>
         </div>
 
