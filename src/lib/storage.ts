@@ -80,34 +80,24 @@ export async function uploadImage(
   folder = 'products',
   onProgress?: UploadProgressCallback
 ): Promise<string> {
-  if (isFirebaseConfigured() && storage) {
-    try {
-      return await uploadImageToFirebase(file, folder, onProgress);
-    } catch (err) {
-      console.warn('Firebase Storage upload failed, falling back to local compression:', err);
-    }
-  }
-
-  // Automatic high-quality browser compression fallback
-  if (onProgress) onProgress(40);
-  const dataUrl = await compressImageToBase64(file);
-  if (onProgress) onProgress(100);
-  return dataUrl;
+  return await uploadImageToFirebase(file, folder, onProgress);
 }
 
 /**
- * Uploads a file to Firebase Storage under a designated path (default: 'products')
- * and returns the public download URL.
+ * Uploads a file to Firebase Storage if configured, or gracefully
+ * compresses it to Base64 so the admin is NEVER blocked by missing credentials.
  */
 export async function uploadImageToFirebase(
   file: File,
   folder = 'products',
   onProgress?: UploadProgressCallback
 ): Promise<string> {
+  // If Firebase is not configured, automatically fall back to fast, high-quality browser compression!
   if (!isFirebaseConfigured() || !storage) {
-    throw new Error(
-      'Firebase is not configured yet. Please add your Firebase configuration to .env before uploading.'
-    );
+    if (onProgress) onProgress(40);
+    const dataUrl = await compressImageToBase64(file);
+    if (onProgress) onProgress(100);
+    return dataUrl;
   }
 
   // Validate file type
@@ -115,43 +105,48 @@ export async function uploadImageToFirebase(
     throw new Error('Only image files (JPEG, PNG, WebP, etc.) are supported.');
   }
 
-  // Validate file size (max 10MB)
-  const maxSize = 10 * 1024 * 1024;
-  if (file.size > maxSize) {
-    throw new Error('Image size must be less than 10MB.');
+  try {
+    const cleanName = file.name.replace(/[^a-zA-Z0-9.-]/g, '_');
+    const filePath = `${folder}/${Date.now()}_${cleanName}`;
+    const storageRef = ref(storage, filePath);
+
+    const uploadTask = uploadBytesResumable(storageRef, file, {
+      contentType: file.type,
+    });
+
+    return await new Promise((resolve, reject) => {
+      uploadTask.on(
+        'state_changed',
+        (snapshot) => {
+          const progress = Math.round(
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          );
+          if (onProgress) {
+            onProgress(progress);
+          }
+        },
+        async (error) => {
+          console.warn('Firebase Storage upload error, falling back to local compression:', error);
+          try {
+            const fallback = await compressImageToBase64(file);
+            resolve(fallback);
+          } catch (err) {
+            reject(err);
+          }
+        },
+        async () => {
+          try {
+            const downloadUrl = await getDownloadURL(uploadTask.snapshot.ref);
+            resolve(downloadUrl);
+          } catch {
+            const fallback = await compressImageToBase64(file);
+            resolve(fallback);
+          }
+        }
+      );
+    });
+  } catch (err) {
+    console.warn('Firebase upload initialization failed, falling back to local compression:', err);
+    return await compressImageToBase64(file);
   }
-
-  const cleanName = file.name.replace(/[^a-zA-Z0-9.-]/g, '_');
-  const filePath = `${folder}/${Date.now()}_${cleanName}`;
-  const storageRef = ref(storage, filePath);
-
-  const uploadTask = uploadBytesResumable(storageRef, file, {
-    contentType: file.type,
-  });
-
-  return new Promise((resolve, reject) => {
-    uploadTask.on(
-      'state_changed',
-      (snapshot) => {
-        const progress = Math.round(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        );
-        if (onProgress) {
-          onProgress(progress);
-        }
-      },
-      (error) => {
-        console.error('Firebase Storage upload error:', error);
-        reject(error);
-      },
-      async () => {
-        try {
-          const downloadUrl = await getDownloadURL(uploadTask.snapshot.ref);
-          resolve(downloadUrl);
-        } catch (err) {
-          reject(err);
-        }
-      }
-    );
-  });
 }
