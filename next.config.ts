@@ -5,17 +5,14 @@ const nextConfig: NextConfig = {
     JWT_SECRET: process.env.JWT_SECRET || "findo_secure_jwt_token_secret_key_2026_kids",
   },
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'images.unsplash.com',
+        hostname: '**',
       },
       {
-        protocol: 'https',
-        hostname: 'res.cloudinary.com',
-      },
-      {
-        protocol: 'https',
+        protocol: 'http',
         hostname: '**',
       },
     ],

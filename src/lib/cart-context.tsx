@@ -145,7 +145,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         parsedImage = imgs[0];
       }
     } catch {
-      if (typeof product.images === 'string' && product.images.startsWith('http')) {
+      if (typeof product.images === 'string' && (product.images.startsWith('http') || product.images.startsWith('data:') || product.images.startsWith('/'))) {
         parsedImage = product.images;
       }
     }

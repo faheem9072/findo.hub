@@ -230,7 +230,10 @@ export default function AdminProductsClient({
             try {
               const imgs = typeof p.images === 'string' ? JSON.parse(p.images) : p.images;
               if (Array.isArray(imgs) && imgs.length > 0) img = imgs[0];
-            } catch {}
+              else if (typeof imgs === 'string' && imgs) img = imgs;
+            } catch {
+              if (typeof p.images === 'string' && p.images) img = p.images;
+            }
 
             return (
               <div key={p.id} className="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs space-y-3">
@@ -431,7 +434,10 @@ export default function AdminProductsClient({
                 try {
                   const imgs = typeof p.images === 'string' ? JSON.parse(p.images) : p.images;
                   if (Array.isArray(imgs) && imgs.length > 0) img = imgs[0];
-                } catch {}
+              else if (typeof imgs === 'string' && imgs) img = imgs;
+                } catch {
+              if (typeof p.images === 'string' && p.images) img = p.images;
+            }
 
                 return (
                   <tr key={p.id} className="hover:bg-slate-50 transition-colors">

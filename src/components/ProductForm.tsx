@@ -4,7 +4,7 @@ import React, { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { ArrowLeft, Save, Plus, X, Image as ImageIcon, Sparkles, UploadCloud, Loader2 } from 'lucide-react';
-import { uploadImageToFirebase } from '@/lib/storage';
+import { uploadImage } from '@/lib/storage';
 
 interface ProductFormProps {
   initialData?: any;
@@ -91,7 +91,7 @@ export default function ProductForm({ initialData, categories }: ProductFormProp
       setUploadProgress(0);
       setError('');
 
-      const url = await uploadImageToFirebase(file, 'products', (progress) => {
+      const url = await uploadImage(file, 'products', (progress) => {
         setUploadProgress(progress);
       });
 
@@ -104,7 +104,7 @@ export default function ProductForm({ initialData, categories }: ProductFormProp
       }
     } catch (err: any) {
       console.error('Upload failed:', err);
-      setError(err?.message || 'Failed to upload image to Firebase Storage.');
+      setError(err?.message || 'Failed to process image. Please try again.');
     } finally {
       setUploadingIndex(null);
       setUploadProgress(0);
@@ -356,7 +356,7 @@ export default function ProductForm({ initialData, categories }: ProductFormProp
             <ImageIcon className="w-4 h-4 text-[#5a9e2f]" />
             <span>Product Images</span>
             <span className="text-[10px] font-semibold bg-emerald-50 text-[#5a9e2f] border border-emerald-200 px-2 py-0.5 rounded-full">
-              Firebase Storage / URL
+              Device Upload / Direct URL
             </span>
           </h3>
 
@@ -389,7 +389,7 @@ export default function ProductForm({ initialData, categories }: ProductFormProp
               ) : (
                 <>
                   <UploadCloud className="w-3.5 h-3.5" />
-                  <span>Upload to Firebase</span>
+                  <span>Upload Image</span>
                 </>
               )}
             </button>
@@ -410,7 +410,7 @@ export default function ProductForm({ initialData, categories }: ProductFormProp
             <div key={idx} className="flex items-center gap-3">
               <div className="relative w-12 h-12 rounded-xl overflow-hidden border border-slate-200 bg-slate-50 shrink-0">
                 {url ? (
-                  <Image src={url} alt={`Preview ${idx}`} fill className="object-cover" />
+                  <Image src={url} alt={`Preview ${idx}`} fill className="object-cover" unoptimized />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center text-slate-300 text-[10px]">
                     Preview
@@ -420,9 +420,10 @@ export default function ProductForm({ initialData, categories }: ProductFormProp
 
               <input
                 type="text"
-                value={url}
+                value={url?.startsWith('data:') ? `[Uploaded from device - ${Math.round(url.length / 1024)} KB]` : url}
+                readOnly={Boolean(url?.startsWith('data:'))}
                 onChange={(e) => handleImageChange(idx, e.target.value)}
-                placeholder="Paste Image URL or click Upload button above"
+                placeholder={url?.startsWith('data:') ? 'Custom image uploaded from device' : 'Paste Image URL or click Upload button above'}
                 className="flex-1 px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-mono text-[#0d1b1e] focus:outline-none focus:border-[#5a9e2f]"
               />
 

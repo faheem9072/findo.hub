@@ -52,7 +52,11 @@ export default function ProductDetailClient({
     if (!Array.isArray(parsedImages) || parsedImages.length === 0) {
       parsedImages = ['/logo.jpeg'];
     }
-  } catch {}
+  } catch {
+    if (typeof product.images === 'string' && product.images) {
+      parsedImages = [product.images];
+    }
+  }
 
   let parsedBadges: string[] = [];
   try {

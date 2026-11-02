@@ -31,7 +31,11 @@ export default function ProductCard({ product }: ProductCardProps) {
   let parsedImages: string[] = ['/logo.jpeg'];
   try {
     parsedImages = typeof product.images === 'string' ? JSON.parse(product.images) : product.images;
-  } catch {}
+  } catch {
+    if (typeof product.images === 'string' && product.images) {
+      parsedImages = [product.images];
+    }
+  }
   const mainImage = parsedImages[0] || '/logo.jpeg';
 
   const discountPercent =
