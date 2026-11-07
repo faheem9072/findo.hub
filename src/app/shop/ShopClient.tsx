@@ -199,12 +199,15 @@ export default function ShopClient({ initialProducts, categories }: ShopClientPr
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-6">
       
-      {/* Page Header */}
-      <div className="space-y-2">
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-[#0d1b1e]">
-          Shop Findo
+      {/* Editorial Page Header */}
+      <div className="space-y-2 pt-2 border-b border-[#0d1b1e]/10 pb-6">
+        <span className="font-mono text-[10px] font-bold text-[#5a9e2f] uppercase tracking-widest bg-[#eef8ea] px-3.5 py-1 rounded-full inline-block">
+          + [ FINDO STORE / CATALOG ]
+        </span>
+        <h1 className="text-3xl sm:text-5xl font-black text-[#0d1b1e] tracking-tight uppercase">
+          Catalog
         </h1>
-        <p className="text-xs sm:text-sm text-slate-500">
+        <p className="text-xs sm:text-sm text-slate-500 font-mono">
           Thoughtfully chosen, screen-free products for curious young minds.
         </p>
       </div>

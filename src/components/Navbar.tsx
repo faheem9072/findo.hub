@@ -13,47 +13,49 @@ export default function Navbar({ onOpenSearch }: { onOpenSearch?: () => void }) 
   const { cartCount, setIsCartOpen } = useCart();
 
   const navLinks = [
-    { name: 'Shop', href: '/shop' },
+    { name: 'Catalog', href: '/shop' },
+    { name: 'Age Groups', href: '/#age-groups' },
     { name: 'About', href: '/about' },
+    { name: 'FAQ', href: '/faq' },
     { name: 'Contact', href: '/contact' },
   ];
 
   return (
-    <header className="sticky top-0 z-40 w-full bg-white/95 backdrop-blur-md border-b border-slate-100 transition-all">
+    <header className="sticky top-0 z-40 w-full bg-[#fafbf8]/95 backdrop-blur-md border-b border-[#0d1b1e]/10 transition-all">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-18 sm:h-20">
           
-          {/* FINDO Logo */}
-          <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-full overflow-hidden border border-[#5a9e2f]/30 shadow-xs">
+          {/* FINDO Logo with Squirrel Mascot */}
+          <Link href="/" className="flex items-center gap-3 group">
+            <div className="relative w-10 h-10 sm:w-11 sm:h-11 rounded-full overflow-hidden border-2 border-[#5a9e2f]/40 shadow-xs bg-white p-0.5 group-hover:scale-105 transition-transform">
               <Image
-                src="/logo.jpeg"
-                alt="FINDO Logo"
+                src="/logo.png"
+                alt="FINDO — Find Smart Play"
                 fill
-                className="object-cover"
+                className="object-contain"
                 priority
               />
             </div>
             <div className="flex flex-col">
-              <span className="text-xl sm:text-2xl font-extrabold tracking-tight text-[#0d1b1e] leading-none">
+              <span className="text-xl sm:text-2xl font-black tracking-tight text-[#0d1b1e] leading-none">
                 FINDO<span className="text-[#5a9e2f]">.</span>
               </span>
-              <span className="text-[9px] tracking-wider text-slate-400 font-medium uppercase mt-0.5 hidden sm:block">
+              <span className="text-[9px] tracking-widest text-[#5a9e2f] font-bold uppercase mt-1 hidden sm:block">
                 Find Smart Play
               </span>
             </div>
           </Link>
 
-          {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center gap-8">
+          {/* Desktop Navigation Links — Editorial Caps */}
+          <nav className="hidden md:flex items-center gap-8 text-xs font-bold tracking-widest uppercase">
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
               return (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`text-sm font-medium transition-colors hover:text-[#5a9e2f] ${
-                    isActive ? 'text-[#5a9e2f] font-semibold' : 'text-[#0d1b1e]'
+                  className={`transition-colors hover:text-[#5a9e2f] ${
+                    isActive ? 'text-[#5a9e2f] underline underline-offset-8 decoration-2' : 'text-[#0d1b1e]'
                   }`}
                 >
                   {link.name}
@@ -63,48 +65,46 @@ export default function Navbar({ onOpenSearch }: { onOpenSearch?: () => void }) 
           </nav>
 
           {/* Header Action Icons */}
-          <div className="flex items-center gap-2 sm:gap-4">
+          <div className="flex items-center gap-2 sm:gap-3">
             {/* Search Trigger */}
             <button
               onClick={onOpenSearch}
-              className="p-2.5 text-slate-700 hover:text-[#5a9e2f] hover:bg-slate-50 rounded-full transition-all"
+              className="p-2 sm:px-3 sm:py-2 text-slate-700 hover:text-[#5a9e2f] hover:bg-white rounded-full transition-all flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider"
               aria-label="Search products"
               title="Search products"
             >
-              <Search className="w-5 h-5" />
+              <Search className="w-4 h-4" />
+              <span className="hidden lg:inline text-[11px]">Search</span>
             </button>
 
             {/* Account Icon */}
             <Link
               href="/account"
-              className="p-2.5 text-slate-700 hover:text-[#5a9e2f] hover:bg-slate-50 rounded-full transition-all hidden sm:flex items-center gap-1"
+              className="p-2 sm:px-3 sm:py-2 text-slate-700 hover:text-[#5a9e2f] hover:bg-white rounded-full transition-all hidden sm:flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider"
               aria-label="My Account"
               title="My Account"
             >
-              <User className="w-5 h-5" />
+              <User className="w-4 h-4" />
+              <span className="hidden lg:inline text-[11px]">Account</span>
             </Link>
 
-            {/* Cart Icon with Live Count */}
+            {/* Editorial Cart Bag (e.g. BAG (0)) */}
             <button
               onClick={() => setIsCartOpen(true)}
-              className="relative p-2.5 text-slate-800 hover:text-[#5a9e2f] hover:bg-slate-50 rounded-full transition-all flex items-center justify-center"
+              className="relative py-2 px-3 sm:px-4 text-[#0d1b1e] hover:text-white hover:bg-[#0d1b1e] rounded-full border border-[#0d1b1e]/20 transition-all flex items-center gap-2 text-xs font-bold uppercase tracking-widest bg-white shadow-2xs"
               aria-label="Shopping Cart"
             >
-              <ShoppingBag className="w-5 h-5" />
-              {cartCount > 0 && (
-                <span className="absolute -top-0.5 -right-0.5 bg-[#5a9e2f] text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
-                  {cartCount}
-                </span>
-              )}
+              <ShoppingBag className="w-4 h-4 text-[#5a9e2f]" />
+              <span>Bag ({cartCount})</span>
             </button>
 
             {/* Mobile Hamburger Trigger */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2.5 text-slate-800 hover:bg-slate-50 rounded-lg"
+              className="md:hidden p-2 text-slate-800 hover:bg-white rounded-lg border border-slate-200"
               aria-label="Toggle navigation menu"
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
           </div>
         </div>

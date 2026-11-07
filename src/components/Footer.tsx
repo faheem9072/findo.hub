@@ -12,16 +12,21 @@ export default function Footer() {
           {/* Brand Info */}
           <div className="md:col-span-5 space-y-4">
             <Link href="/" className="flex items-center gap-2.5">
-              <div className="relative w-9 h-9 rounded-full overflow-hidden border border-[#5a9e2f]/50">
-                <Image src="/logo.jpeg" alt="FINDO Logo" fill className="object-cover" />
+              <div className="relative w-10 h-10 rounded-full overflow-hidden border border-[#5a9e2f]/50 bg-white p-0.5 shadow-sm">
+                <Image src="/logo.png" alt="FINDO — Find Smart Play" fill className="object-contain" />
               </div>
-              <span className="text-xl font-extrabold tracking-tight text-white">
-                FINDO<span className="text-[#5a9e2f]">.</span>
-              </span>
+              <div className="flex flex-col">
+                <span className="text-xl font-extrabold tracking-tight text-white leading-none">
+                  FINDO<span className="text-[#5a9e2f]">.</span>
+                </span>
+                <span className="text-[9px] tracking-widest text-[#5a9e2f] font-bold uppercase mt-1">
+                  Find Smart Play
+                </span>
+              </div>
             </Link>
             
             <p className="text-sm text-slate-400 leading-relaxed max-w-sm">
-              Thoughtfully chosen products for curious kids.
+              Thoughtfully curated screen-free essentials matched specifically to developmental milestones.
             </p>
 
             <div className="pt-2 flex flex-wrap items-center gap-2.5 text-slate-400">
