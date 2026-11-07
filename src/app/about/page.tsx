@@ -18,7 +18,7 @@ export default function AboutPage() {
           Our Brand Mission
         </span>
         <h1 className="text-4xl sm:text-5xl font-extrabold text-white">
-          Find What You Need For Smart Parenting
+          Find Smart Play For Growing Minds
         </h1>
         <p className="text-base text-slate-300 max-w-2xl mx-auto leading-relaxed">
           At Findo, we build products that make kids smile, spark early learning, and give parents peace of mind through thoughtful innovation.

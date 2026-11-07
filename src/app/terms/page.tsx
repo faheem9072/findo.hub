@@ -425,7 +425,7 @@ export default function TermsPage() {
         </div>
 
         <div className="text-center pt-4 border-t border-slate-800 text-xs text-slate-400">
-          Thank you for choosing Findo! — <em>Find what you need.</em>
+          Thank you for choosing Findo! — <em>Find smart play.</em>
         </div>
       </section>
     </div>

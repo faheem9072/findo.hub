@@ -84,7 +84,7 @@ export default async function HomePage() {
             {/* Left Copy */}
             <div className="lg:col-span-6 space-y-6 text-center lg:text-left">
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#0d1b1e] tracking-tight leading-tight">
-                Find What You Need.
+                Find Smart Play.
               </h1>
 
               <p className="text-lg sm:text-xl text-slate-600 font-normal leading-relaxed max-w-lg mx-auto lg:mx-0">

@@ -39,7 +39,7 @@ export default function Navbar({ onOpenSearch }: { onOpenSearch?: () => void }) 
                 FINDO<span className="text-[#5a9e2f]">.</span>
               </span>
               <span className="text-[9px] tracking-wider text-slate-400 font-medium uppercase mt-0.5 hidden sm:block">
-                Find What You Need
+                Find Smart Play
               </span>
             </div>
           </Link>
@@ -195,7 +195,7 @@ export default function Navbar({ onOpenSearch }: { onOpenSearch?: () => void }) 
             <span>Instagram (@findo.hub)</span>
           </a>
           <div className="pt-4 border-t border-slate-100 flex justify-between items-center text-xs text-slate-400">
-            <span>FINDO • Find What You Need</span>
+            <span>FINDO • Find Smart Play</span>
             <Link href="/admin" onClick={() => setMobileMenuOpen(false)} className="underline hover:text-[#5a9e2f]">
               Admin Portal
             </Link>

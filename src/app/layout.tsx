@@ -11,7 +11,7 @@ const quicksand = Quicksand({
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'),
-  title: 'Findo — Find What You Need | Unique Kids Products Brand',
+  title: 'Findo — Find Smart Play | Unique Kids Products Brand',
   description:
     'Discover unique, high-quality, and child-safe products for kids. From smart magic drawing tablets to 360° anti-spill bowls and silicone sleep buddy nightlights!',
   keywords: [
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   authors: [{ name: 'Findo Brand' }],
   openGraph: {
     title: 'Findo — Unique Kids Category Products',
-    description: 'Find What You Need — Unique, child-safe, and screen-free kids essentials.',
+    description: 'Find Smart Play — Unique, child-safe, and screen-free kids essentials.',
     url: 'https://findo-store.vercel.app',
     siteName: 'Findo',
     images: [
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Findo — Find What You Need',
+    title: 'Findo — Find Smart Play',
     description: 'Unique kids products brand for smart parenting.',
     images: ['/logo.jpeg'],
   },

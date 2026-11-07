@@ -557,7 +557,7 @@ export default function PrivacyPage() {
             We aim to acknowledge privacy-related complaints within 48 hours and address them within the applicable legal timeframe.
           </p>
           <p className="text-slate-600 font-semibold pt-1">
-            Thank you for trusting Findo. &mdash; <span className="text-[#5a9e2f]">Find what you need.</span>
+            Thank you for trusting Findo. &mdash; <span className="text-[#5a9e2f]">Find smart play.</span>
           </p>
         </div>
 
