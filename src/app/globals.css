@@ -23,10 +23,15 @@
 }
 
 body {
-  background-color: #fafbf8;
-  color: #0d1b1e;
+  background-color: #070e10;
+  color: #f1f5f9;
   font-family: var(--font-quicksand), system-ui, -apple-system, sans-serif;
   overflow-x: hidden;
+}
+
+::selection {
+  background-color: #5a9e2f;
+  color: #ffffff;
 }
 
 /* Friendly smooth shadows & rounded corners */
@@ -94,4 +99,25 @@ body {
 .animate-letter-3 { animation: letter-wobble 3.2s ease-in-out infinite 0.5s; }
 .animate-letter-4 { animation: letter-wobble 3.2s ease-in-out infinite 0.7s; }
 .animate-letter-5 { animation: letter-wobble 3.2s ease-in-out infinite 0.9s; }
+
+/* Neon 3D Glow & Typography (Mogo Style) */
+.text-glow-green {
+  text-shadow: 0 0 30px rgba(90, 158, 47, 0.75), 0 0 60px rgba(114, 191, 68, 0.4);
+}
+.box-glow-green {
+  box-shadow: 0 0 45px -5px rgba(90, 158, 47, 0.45), 0 0 20px -2px rgba(114, 191, 68, 0.3);
+}
+.dark-glass-card {
+  background: rgba(16, 34, 38, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.dark-glass-card:hover {
+  border-color: rgba(90, 158, 47, 0.6);
+  box-shadow: 0 16px 45px -10px rgba(90, 158, 47, 0.35);
+  transform: translateY(-4px);
+}
+
 

@@ -22,9 +22,10 @@ export interface ProductCardProps {
     reviewCount?: number;
     category?: { name: string; slug: string };
   };
+  variant?: 'light' | 'dark';
 }
 
-export default function ProductCard({ product }: ProductCardProps) {
+export default function ProductCard({ product, variant = 'dark' }: ProductCardProps) {
   const { addToCart } = useCart();
   const [added, setAdded] = React.useState(false);
   const [liked, setLiked] = useState(false);
@@ -58,12 +59,26 @@ export default function ProductCard({ product }: ProductCardProps) {
     setLiked(!liked);
   };
 
+  const isDark = variant === 'dark';
+
   return (
-    <div className="group bg-white rounded-2xl border border-slate-200/90 overflow-hidden flex flex-col justify-between h-full transition-all hover:border-[#5a9e2f] hover:shadow-md p-3 sm:p-4">
+    <div
+      className={`group rounded-2xl overflow-hidden flex flex-col justify-between h-full transition-all duration-300 p-3 sm:p-4 ${
+        isDark
+          ? 'bg-[#0f1f22]/90 border border-white/10 hover:border-[#5a9e2f] hover:shadow-[0_12px_35px_rgba(90,158,47,0.3)]'
+          : 'bg-white border border-slate-200/90 hover:border-[#5a9e2f] hover:shadow-md'
+      }`}
+    >
       <div>
-        {/* VORS-Style Top Metadata Header: Category / Age Badge on Left, Wishlist Heart on Right */}
-        <div className="flex items-center justify-between pb-2.5 text-[10px] font-bold uppercase tracking-wider text-slate-500">
-          <span className="px-2 py-0.5 rounded-md bg-slate-100/90 border border-slate-200/80 text-slate-600 truncate max-w-[130px]">
+        {/* Top Metadata Header: Category / Age Badge on Left, Wishlist Heart on Right */}
+        <div className="flex items-center justify-between pb-2.5 text-[10px] font-bold uppercase tracking-wider">
+          <span
+            className={`px-2 py-0.5 rounded-md truncate max-w-[130px] ${
+              isDark
+                ? 'bg-white/5 border border-white/10 text-slate-300'
+                : 'bg-slate-100/90 border border-slate-200/80 text-slate-600'
+            }`}
+          >
             {product.ageRange ? `[ ${product.ageRange} ]` : `[ ${product.category?.name || 'FINDO'} ]`}
           </span>
           <button
@@ -83,7 +98,11 @@ export default function ProductCard({ product }: ProductCardProps) {
         {/* Product Image Stage */}
         <Link
           href={`/product/${product.slug}`}
-          className="block relative aspect-square bg-[#fafbf8] rounded-xl overflow-hidden border border-slate-100 group-hover:border-[#5a9e2f]/20 transition-colors"
+          className={`block relative aspect-square rounded-xl overflow-hidden transition-colors ${
+            isDark
+              ? 'bg-[#070e10] border border-white/5 group-hover:border-[#5a9e2f]/40'
+              : 'bg-[#fafbf8] border border-slate-100 group-hover:border-[#5a9e2f]/20'
+          }`}
         >
           <Image
             src={mainImage}
@@ -95,7 +114,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 
           {discountPercent && (
             <div className="absolute top-2.5 left-2.5 z-10">
-              <span className="bg-[#0d1b1e] text-white text-[10px] font-bold px-2 py-0.5 rounded-md uppercase tracking-wider">
+              <span className="bg-[#5a9e2f] text-white text-[10px] font-black px-2 py-0.5 rounded-md uppercase tracking-wider shadow-sm">
                 -{discountPercent}%
               </span>
             </div>
@@ -108,42 +127,54 @@ export default function ProductCard({ product }: ProductCardProps) {
             <span className="text-[9px] font-bold text-[#5a9e2f] uppercase tracking-widest truncate">
               {product.category?.name || 'SCREEN-FREE'}
             </span>
-            <div className="flex items-center gap-1 text-amber-500 font-semibold text-xs shrink-0">
+            <div className="flex items-center gap-1 text-amber-400 font-semibold text-xs shrink-0">
               <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
-              <span className="text-slate-700 text-[11px] font-bold">{product.rating || 4.9}</span>
+              <span className={`text-[11px] font-bold ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
+                {product.rating || 4.9}
+              </span>
             </div>
           </div>
 
           <Link href={`/product/${product.slug}`} className="block group-hover:text-[#5a9e2f] transition-colors">
-            <h3 className="font-extrabold text-[#0d1b1e] text-xs sm:text-sm uppercase tracking-wide leading-snug line-clamp-1">
+            <h3
+              className={`font-black text-xs sm:text-sm uppercase tracking-wide leading-snug line-clamp-1 ${
+                isDark ? 'text-white' : 'text-[#0d1b1e]'
+              }`}
+            >
               {product.name}
             </h3>
           </Link>
 
-          <p className="text-[11px] text-slate-500 line-clamp-1 leading-relaxed">
+          <p className={`text-[11px] line-clamp-1 leading-relaxed ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
             {product.shortDesc}
           </p>
         </div>
       </div>
 
       {/* Pricing & Add to Cart */}
-      <div className="pt-3 mt-3 border-t border-slate-100 flex items-center justify-between gap-1.5">
+      <div
+        className={`pt-3 mt-3 border-t flex items-center justify-between gap-1.5 ${
+          isDark ? 'border-white/10' : 'border-slate-100'
+        }`}
+      >
         <div className="flex items-baseline gap-1.5">
-          <span className="text-base sm:text-lg font-black text-[#0d1b1e]">₹{product.price}</span>
+          <span className={`text-base sm:text-lg font-black ${isDark ? 'text-[#72bf44]' : 'text-[#0d1b1e]'}`}>
+            ₹{product.price}
+          </span>
           {product.compareAtPrice && product.compareAtPrice > product.price && (
-            <span className="text-xs text-slate-400 line-through">₹{product.compareAtPrice}</span>
+            <span className="text-xs text-slate-500 line-through">₹{product.compareAtPrice}</span>
           )}
         </div>
 
         <button
           onClick={handleAddToCart}
           disabled={product.stock <= 0}
-          className={`py-1.5 sm:py-2 px-3 sm:px-4 rounded-xl font-bold text-xs uppercase tracking-wider flex items-center gap-1.5 transition-all shrink-0 ${
+          className={`py-1.5 sm:py-2 px-3 sm:px-4 rounded-xl font-black text-xs uppercase tracking-wider flex items-center gap-1.5 transition-all shrink-0 ${
             product.stock <= 0
-              ? 'bg-slate-100 text-slate-400 cursor-not-allowed'
+              ? 'bg-slate-800 text-slate-500 cursor-not-allowed'
               : added
-              ? 'bg-[#0d1b1e] text-emerald-400 shadow-sm'
-              : 'bg-[#5a9e2f] hover:bg-[#488224] text-white shadow-xs'
+              ? 'bg-white text-[#0d1b1e] shadow-md font-black'
+              : 'bg-[#5a9e2f] hover:bg-[#488224] text-white shadow-sm hover:shadow-[0_0_15px_rgba(90,158,47,0.5)]'
           }`}
         >
           {product.stock <= 0 ? (
