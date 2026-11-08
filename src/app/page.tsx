@@ -1,10 +1,13 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowRight, Sparkles, Lightbulb, Smile, MonitorOff, ShieldCheck, Flame, Compass, Star } from 'lucide-react';
+import { ArrowRight, Sparkles, Lightbulb, Smile, MonitorOff } from 'lucide-react';
 import prisma from '@/lib/prisma';
 import ProductCard from '@/components/ProductCard';
-import HeroEarshot from '@/components/HeroEarshot';
+import HeroHamleysSlider from '@/components/HeroHamleysSlider';
+import ShopByAgeSlider from '@/components/ShopByAgeSlider';
+import DealsProductSlider from '@/components/DealsProductSlider';
+import FloatingMascotBuddy from '@/components/FloatingMascotBuddy';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0; // Live real-time updates for newly added/edited products
@@ -129,48 +132,17 @@ async function getHomePageData() {
 export default async function HomePage() {
   const { featuredProducts, catalogProducts } = await getHomePageData();
 
-  const expressiveDimensions = [
-    {
-      num: '01',
-      title: 'Sensory Valley',
-      stage: 'Sensory & Montessori (0–3 Y)',
-      desc: 'Tactile shapes, Montessori geometric sorters, and early tactile motor skill essentials.',
-      icon: '👶',
-      badge: 'Sensory Focus',
-      color: '#5a9e2f',
-      href: '/shop?age=0-3%20Years',
-    },
-    {
-      num: '02',
-      title: 'Routine Village',
-      stage: 'Habits & Preschool (3–5 Y)',
-      desc: 'Interactive daily habit boards, morning routine sliders, and smart savings trackers.',
-      icon: '🎨',
-      badge: 'Best Seller',
-      color: '#0284c7',
-      href: '/shop?age=3-5%20Years',
-    },
-    {
-      num: '03',
-      title: 'Creative Forest',
-      stage: 'Puzzles & Art (6–8 Y)',
-      desc: 'Instant print kids digital cameras, 3D magnetic sticks, and Magna Play art kits.',
-      icon: '🧩',
-      badge: 'Creative Art',
-      color: '#8b5cf6',
-      href: '/shop?age=6-8%20Years',
-    },
-    {
-      num: '04',
-      title: 'Science Citadel',
-      stage: 'STEM & Labs (8+ Y)',
-      desc: 'Super chemistry labs, working solar systems, 6-in-1 solar robots, and 450X microscopes.',
-      icon: '🔬',
-      badge: 'STEM Science',
-      color: '#10b981',
-      href: '/shop?age=8%2B%20Years',
-    },
-  ];
+  // Create Deals items list with offer discounts
+  const dealProducts = (catalogProducts.length > 0 ? catalogProducts : FALLBACK_PRODUCTS).map((p) => ({
+    id: p.id,
+    name: p.name,
+    slug: p.slug,
+    price: p.price,
+    compareAtPrice: p.compareAtPrice || Math.round(p.price * 1.5),
+    images: typeof p.images === 'string' ? p.images : JSON.stringify(p.images),
+    ageRange: p.ageRange || 'All Ages',
+    stock: p.stock,
+  }));
 
   const curatedCoordinates = [
     { num: '01', name: 'Habit Tracker Board', age: '3-8 Y', price: '₹229', img: '/images/habit-tracker.jpg', href: '/product/findo-kids-daily-routine-habit-tracker-board' },
@@ -184,111 +156,27 @@ export default async function HomePage() {
   ];
 
   return (
-    <div className="bg-[#fafbf8] text-slate-900 min-h-screen space-y-16 sm:space-y-24 pb-28">
+    <div className="bg-[#fafbf8] text-slate-900 min-h-screen space-y-12 sm:space-y-16 pb-28">
 
-      {/* 1. EARSHOT RUNNER HERO SECTION WITH SQUIRREL MASCOT */}
-      <HeroEarshot />
+      {/* 1. HAMLEYS-STYLE HERO PROMOTIONAL BANNER SLIDER WITH OFFER CALLOUTS */}
+      <HeroHamleysSlider />
 
-      {/* 2. AGE WORLDS & DEVELOPMENTAL MILESTONES */}
-      <section id="age-worlds" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto space-y-3 mb-10 sm:mb-14">
-          <div className="inline-flex items-center gap-2 font-mono text-xs font-black uppercase tracking-widest text-[#5a9e2f] bg-[#5a9e2f]/10 border border-[#5a9e2f]/30 px-3.5 py-1.5 rounded-full shadow-xs">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>DISCOVERY WORLDS • AGES 0 TO 8+ YEARS</span>
-          </div>
+      {/* 2. HAMLEYS "SHOP BY AGE" HORIZONTAL SLIDER (From User Reference Image 1) */}
+      <ShopByAgeSlider />
 
-          <h2 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight leading-tight">
-            Designed for Curious Explorers.<br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#5a9e2f] via-[#0284c7] to-[#8b5cf6]">
-              Tactile Play That Replaces Mindless Screens.
-            </span>
-          </h2>
-
-          <p className="text-sm sm:text-base text-slate-600 font-normal leading-relaxed max-w-2xl mx-auto">
-            Explore carefully curated developmental worlds crafted to celebrate each child’s natural curiosity — from tactile sensory discovery to creative labs.
-          </p>
-        </div>
-
-        {/* 4 Interactive Age World Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {expressiveDimensions.map((dim) => (
-            <Link
-              key={dim.num}
-              href={dim.href}
-              className="group earshot-card p-6 sm:p-7 rounded-3xl flex flex-col justify-between relative overflow-hidden bg-white shadow-xs"
-            >
-              <div className="space-y-4">
-                <div className="flex items-center justify-between font-mono text-xs text-slate-500">
-                  <span className="font-black text-[#5a9e2f]">({dim.num})</span>
-                  <span className="text-[10px] px-2.5 py-0.5 rounded-full bg-slate-100 border border-slate-200 text-slate-700 font-bold uppercase tracking-wider">
-                    {dim.badge}
-                  </span>
-                </div>
-
-                <div className="w-14 h-14 rounded-2xl bg-[#5a9e2f]/10 border border-[#5a9e2f]/20 flex items-center justify-center font-bold text-3xl group-hover:scale-110 group-hover:rotate-6 transition-all shadow-sm">
-                  {dim.icon}
-                </div>
-
-                <div>
-                  <span className="font-mono text-[10px] font-bold text-[#5a9e2f] uppercase tracking-wider block">
-                    {dim.stage}
-                  </span>
-                  <h3 className="text-xl font-black text-slate-900 group-hover:text-[#5a9e2f] transition-colors mt-1">
-                    {dim.title}
-                  </h3>
-                  <p className="text-xs text-slate-600 mt-2 leading-relaxed">
-                    {dim.desc}
-                  </p>
-                </div>
-              </div>
-
-              <div className="pt-6 mt-6 border-t border-slate-100 flex items-center justify-between font-mono text-xs font-black text-[#5a9e2f] uppercase tracking-wider">
-                <span>Explore World</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform" />
-              </div>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      {/* 3. NEW ARRIVALS SPOTLIGHT (FEATURED COLLECTION) */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between mb-8 pb-4 border-b border-slate-200">
-          <div className="space-y-1">
-            <span className="font-mono text-xs uppercase tracking-widest text-[#5a9e2f] font-bold block">
-              + [ FEATURED RELEASES ]
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-black uppercase tracking-wider text-slate-900">
-              Trending Discoveries
-            </h2>
-          </div>
-          <Link
-            href="/shop"
-            className="font-mono text-xs font-bold uppercase tracking-wider text-[#5a9e2f] hover:underline flex items-center gap-1 group"
-          >
-            <span>See all catalog</span>
-            <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-          </Link>
-        </div>
-
-        {/* 4-Column Product Cards with Clean Bright Theme */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-          {featuredProducts.slice(0, 4).map((product) => (
-            <ProductCard key={product.id} product={product} variant="light" />
-          ))}
-        </div>
-      </section>
+      {/* 3. DEALS OF THE DAY / OFFER PRICES HORIZONTAL PRODUCT SLIDER ("products inghane neenghuka offer price und enn paranghitt") */}
+      <DealsProductSlider products={dealProducts} />
 
       {/* 4. THE ICONIC LETTER-INTEGRATED "C A [product] A L [product] O G" SECTION */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Giant Clean CATALOG Header with Real Integrated Product Cutouts */}
-        <div className="text-center py-8 sm:py-14 border border-slate-200 select-none bg-white rounded-3xl shadow-xs px-4">
-          <div className="flex items-center justify-center gap-1 sm:gap-3 text-6xl sm:text-8xl md:text-9xl lg:text-[11rem] font-black tracking-tighter text-slate-950 leading-none">
+        <div className="text-center py-8 sm:py-12 border border-slate-200 select-none bg-white rounded-3xl shadow-xs px-4">
+          <div className="flex items-center justify-center gap-1 sm:gap-3 text-6xl sm:text-8xl md:text-9xl lg:text-[10rem] font-black tracking-tighter text-slate-950 leading-none">
             <span>C</span>
             <span>A</span>
             {/* Integrated Circular Product Visual 1 */}
-            <div className="relative w-12 h-12 sm:w-20 sm:h-20 md:w-28 md:h-28 lg:w-36 lg:h-36 rounded-full overflow-hidden border-2 sm:border-4 border-[#5a9e2f] shadow-md bg-white shrink-0 mx-1 animate-pulse-subtle">
+            <div className="relative w-12 h-12 sm:w-20 sm:h-20 md:w-26 md:h-26 lg:w-32 lg:h-32 rounded-full overflow-hidden border-2 sm:border-4 border-[#5a9e2f] shadow-md bg-white shrink-0 mx-1 animate-pulse-subtle">
               <Image
                 src="/images/habit-tracker.jpg"
                 alt="Findo Habit Tracker"
@@ -299,7 +187,7 @@ export default async function HomePage() {
             <span>A</span>
             <span>L</span>
             {/* Integrated Circular Product Visual 2 */}
-            <div className="relative w-12 h-12 sm:w-20 sm:h-20 md:w-28 md:h-28 lg:w-36 lg:h-36 rounded-full overflow-hidden border-2 sm:border-4 border-[#0284c7] shadow-md bg-white shrink-0 mx-1 animate-pulse-subtle">
+            <div className="relative w-12 h-12 sm:w-20 sm:h-20 md:w-26 md:h-26 lg:w-32 lg:h-32 rounded-full overflow-hidden border-2 sm:border-4 border-[#0284c7] shadow-md bg-white shrink-0 mx-1 animate-pulse-subtle">
               <Image
                 src="/images/tangram-woodiness.jpg"
                 alt="Montessori Puzzle"
@@ -504,7 +392,7 @@ export default async function HomePage() {
 
       {/* 7. FINAL HEROIC CALL TO ACTION */}
       <section className="max-w-5xl mx-auto px-4 text-center">
-        <div className="p-10 sm:p-16 rounded-3xl bg-gradient-to-br from-[#18392b] via-[#0d2218] to-[#08150f] text-white shadow-xl relative overflow-hidden border border-[#5a9e2f]/40">
+        <div className="p-10 sm:p-14 rounded-3xl bg-gradient-to-br from-[#18392b] via-[#0d2218] to-[#08150f] text-white shadow-xl relative overflow-hidden border border-[#5a9e2f]/40">
           <div className="absolute -right-16 -bottom-16 w-64 h-64 bg-[#5a9e2f]/25 rounded-full blur-3xl pointer-events-none" />
           <span className="font-mono text-xs uppercase tracking-widest text-[#72bf44] font-black block mb-3">
             + [ FIND SMART PLAY ]
@@ -521,7 +409,7 @@ export default async function HomePage() {
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               href="/shop"
-              className="inline-flex items-center gap-2 py-4 px-10 rounded-full bg-[#5a9e2f] hover:bg-[#488224] text-white font-mono text-xs font-black uppercase tracking-widest transition-all shadow-[0_0_30px_rgba(90,158,47,0.5)] hover:scale-105"
+              className="inline-flex items-center gap-2 py-3.5 px-9 rounded-full bg-[#5a9e2f] hover:bg-[#488224] text-white font-mono text-xs font-black uppercase tracking-widest transition-all shadow-[0_0_30px_rgba(90,158,47,0.5)] hover:scale-105"
             >
               <span>Explore Complete Catalog</span>
               <ArrowRight className="w-4 h-4" />
@@ -529,6 +417,9 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* 8. CUTE FLOATING MASCOT BUDDY (Waving Squirrel Helper) */}
+      <FloatingMascotBuddy />
 
     </div>
   );
