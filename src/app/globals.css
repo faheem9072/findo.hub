@@ -23,8 +23,8 @@
 }
 
 body {
-  background-color: #070e10;
-  color: #f1f5f9;
+  background-color: #fafbf8;
+  color: #0f172a;
   font-family: var(--font-quicksand), system-ui, -apple-system, sans-serif;
   overflow-x: hidden;
 }
@@ -45,9 +45,9 @@ body {
 
 /* Glassmorphism Navigation */
 .glass-nav {
-  background-color: rgba(250, 251, 248, 0.88);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background-color: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
 }
 
 /* Badge Pulse Animation */
@@ -73,7 +73,7 @@ body {
   animation-play-state: paused;
 }
 
-/* Editorial Floating Animations */
+/* Floating Animations */
 @keyframes float-slow {
   0%, 100% { transform: translateY(0px) rotate(0deg); }
   50% { transform: translateY(-8px) rotate(1.5deg); }
@@ -89,35 +89,97 @@ body {
   animation: float-reverse 4.5s ease-in-out infinite;
 }
 
-/* Kinetic letter bounce */
-@keyframes letter-wobble {
-  0%, 100% { transform: translateY(0) scale(1); }
-  50% { transform: translateY(-6px) scale(1.03); }
+/* Running mascot bounce & stride (Earshot running physics) */
+@keyframes runner-stride {
+  0% {
+    transform: translateY(0px) rotate(0deg) scale(1);
+  }
+  25% {
+    transform: translateY(-9px) rotate(-1.8deg) scale(0.98);
+  }
+  50% {
+    transform: translateY(-2px) rotate(0deg) scale(1.02);
+  }
+  75% {
+    transform: translateY(-11px) rotate(1.8deg) scale(0.98);
+  }
+  100% {
+    transform: translateY(0px) rotate(0deg) scale(1);
+  }
 }
-.animate-letter-1 { animation: letter-wobble 3.2s ease-in-out infinite 0.1s; }
-.animate-letter-2 { animation: letter-wobble 3.2s ease-in-out infinite 0.3s; }
-.animate-letter-3 { animation: letter-wobble 3.2s ease-in-out infinite 0.5s; }
-.animate-letter-4 { animation: letter-wobble 3.2s ease-in-out infinite 0.7s; }
-.animate-letter-5 { animation: letter-wobble 3.2s ease-in-out infinite 0.9s; }
 
-/* Neon 3D Glow & Typography (Mogo Style) */
-.text-glow-green {
-  text-shadow: 0 0 30px rgba(90, 158, 47, 0.75), 0 0 60px rgba(114, 191, 68, 0.4);
+@keyframes runner-shadow {
+  0%, 100% {
+    transform: translateX(-50%) scale(1);
+    opacity: 0.35;
+  }
+  25%, 75% {
+    transform: translateX(-50%) scale(0.8);
+    opacity: 0.18;
+  }
+  50% {
+    transform: translateX(-50%) scale(1.06);
+    opacity: 0.42;
+  }
 }
-.box-glow-green {
-  box-shadow: 0 0 45px -5px rgba(90, 158, 47, 0.45), 0 0 20px -2px rgba(114, 191, 68, 0.3);
+
+@keyframes dust-puff {
+  0% {
+    opacity: 0.85;
+    transform: translate(0, 0) scale(0.6);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-18px, -14px) scale(1.8);
+  }
 }
-.dark-glass-card {
-  background: rgba(16, 34, 38, 0.75);
+
+@keyframes dust-puff-delay {
+  0% {
+    opacity: 0.85;
+    transform: translate(0, 0) scale(0.6);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(18px, -16px) scale(2.0);
+  }
+}
+
+.animate-runner-stride {
+  animation: runner-stride 0.65s infinite ease-in-out;
+}
+
+.animate-runner-shadow {
+  animation: runner-shadow 0.65s infinite ease-in-out;
+}
+
+.animate-dust-puff {
+  animation: dust-puff 0.65s infinite ease-out;
+}
+
+.animate-dust-puff-delay {
+  animation: dust-puff-delay 0.65s infinite ease-out 0.32s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Earshot Bright Glass Card */
+.earshot-card {
+  background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(226, 232, 240, 0.9);
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.dark-glass-card:hover {
-  border-color: rgba(90, 158, 47, 0.6);
-  box-shadow: 0 16px 45px -10px rgba(90, 158, 47, 0.35);
+.earshot-card:hover {
+  border-color: rgba(90, 158, 47, 0.5);
+  box-shadow: 0 16px 36px -8px rgba(90, 158, 47, 0.18);
   transform: translateY(-4px);
 }
-
-

@@ -5,7 +5,7 @@ import { MessageCircle, Mail, Phone } from 'lucide-react';
 
 export default function Footer() {
   return (
-    <footer className="bg-[#040809] border-t border-white/10 text-slate-300 pt-16 pb-32 sm:pb-16">
+    <footer className="bg-[#0b171a] border-t border-slate-800 text-slate-300 pt-16 pb-40 sm:pb-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 pb-12 border-b border-slate-800">
           
@@ -92,12 +92,12 @@ export default function Footer() {
 
         {/* Bottom Bar: Copyright & Directly Below It "Designed and Developed by KORE" */}
         <div className="pt-8 flex flex-col items-center justify-center text-center space-y-2">
-          <p className="text-xs text-slate-400">
+          <p className="text-xs text-slate-400 font-medium">
             © {new Date().getFullYear()} FINDO. All rights reserved.
           </p>
-          <p className="flex items-center justify-center gap-1.5 text-xs text-slate-300">
+          <p className="flex items-center justify-center gap-2 text-xs text-slate-200 font-medium">
             <span>Designed and Developed by</span>
-            <span className="text-[#5a9e2f] font-extrabold tracking-wider text-sm">KORE</span>
+            <span className="text-[#5a9e2f] font-black tracking-widest text-sm uppercase">KORE</span>
           </p>
         </div>
       </div>
