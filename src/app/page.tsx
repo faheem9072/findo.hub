@@ -9,26 +9,121 @@ import HeroEarshot from '@/components/HeroEarshot';
 export const dynamic = 'force-dynamic';
 export const revalidate = 0; // Live real-time updates for newly added/edited products
 
-async function getHomePageData() {
-  const [featuredProducts, allProducts] = await Promise.all([
-    prisma.product.findMany({
-      where: { isFeatured: true, isPublished: true },
-      take: 8,
-      orderBy: { createdAt: 'desc' },
-      include: { category: true },
-    }),
-    prisma.product.findMany({
-      where: { isPublished: true },
-      take: 12,
-      orderBy: { createdAt: 'desc' },
-      include: { category: true },
-    }),
-  ]);
+const FALLBACK_PRODUCTS = [
+  {
+    id: 'fb-1',
+    name: 'Findo Kids Daily Routine Habit Tracker Board',
+    slug: 'findo-kids-daily-routine-habit-tracker-board',
+    shortDesc: 'Daily morning & evening habit checklist slider board for kids.',
+    price: 229,
+    compareAtPrice: 399,
+    stock: 25,
+    images: JSON.stringify(['/images/habit-tracker.jpg']),
+    ageRange: '3-5 Years',
+    isFeatured: true,
+    isPublished: true,
+    category: { name: 'Preschool & Routine', slug: 'preschool-routine' },
+  },
+  {
+    id: 'fb-2',
+    name: 'Tetra Tower Balance Stacking Game',
+    slug: 'tetra-tower-balance-game',
+    shortDesc: 'Exciting stacking and balancing game for focus and motor skills.',
+    price: 239,
+    compareAtPrice: 399,
+    stock: 20,
+    images: JSON.stringify(['/images/tetra-tower.jpg']),
+    ageRange: '3-5 Years',
+    isFeatured: true,
+    isPublished: true,
+    category: { name: 'Puzzles & Activity', slug: 'puzzles-activity' },
+  },
+  {
+    id: 'fb-3',
+    name: 'Findo DIY Instant Print Kids Camera',
+    slug: 'findo-diy-instant-print-camera',
+    shortDesc: 'Zero-ink instant thermal printing camera with video and photo effects.',
+    price: 1319,
+    compareAtPrice: 1999,
+    stock: 15,
+    images: JSON.stringify(['/images/instant-print-camera.jpg']),
+    ageRange: '6-8 Years',
+    isFeatured: true,
+    isPublished: true,
+    category: { name: 'Puzzles & Activity', slug: 'puzzles-activity' },
+  },
+  {
+    id: 'fb-4',
+    name: 'Super Chemistry Lab Experiment Set',
+    slug: 'super-chemistry-lab',
+    shortDesc: 'Exciting hands-on STEM experiments and safe chemical reactions.',
+    price: 975,
+    compareAtPrice: 1499,
+    stock: 12,
+    images: JSON.stringify(['/images/super-chemistry-lab.jpg']),
+    ageRange: '8+ Years',
+    isFeatured: true,
+    isPublished: true,
+    category: { name: 'STEM & Educational', slug: 'stem-educational' },
+  },
+  {
+    id: 'fb-5',
+    name: 'Montessori Geometric Tangram Puzzle',
+    slug: 'montessori-geometric-puzzle',
+    shortDesc: 'Chunky wooden shape sorter puzzle for early motor development.',
+    price: 219,
+    compareAtPrice: 349,
+    stock: 30,
+    images: JSON.stringify(['/images/tangram-woodiness.jpg']),
+    ageRange: '0-3 Years',
+    isFeatured: true,
+    isPublished: true,
+    category: { name: 'Montessori & Sensory', slug: 'montessori-sensory' },
+  },
+  {
+    id: 'fb-6',
+    name: 'Educational Optical Microscope 450X',
+    slug: 'educational-microscope',
+    shortDesc: 'Real working optical microscope with slides and specimen tools.',
+    price: 849,
+    compareAtPrice: 1299,
+    stock: 10,
+    images: JSON.stringify(['/images/educational-microscope.jpg']),
+    ageRange: '8+ Years',
+    isFeatured: true,
+    isPublished: true,
+    category: { name: 'STEM & Educational', slug: 'stem-educational' },
+  },
+];
 
-  return {
-    featuredProducts: featuredProducts.length >= 4 ? featuredProducts : allProducts.slice(0, 8),
-    catalogProducts: allProducts,
-  };
+async function getHomePageData() {
+  try {
+    const [featuredProducts, allProducts] = await Promise.all([
+      prisma.product.findMany({
+        where: { isFeatured: true, isPublished: true },
+        take: 8,
+        orderBy: { createdAt: 'desc' },
+        include: { category: true },
+      }),
+      prisma.product.findMany({
+        where: { isPublished: true },
+        take: 12,
+        orderBy: { createdAt: 'desc' },
+        include: { category: true },
+      }),
+    ]);
+
+    return {
+      featuredProducts: featuredProducts.length > 0 ? featuredProducts : FALLBACK_PRODUCTS.slice(0, 4),
+      catalogProducts: allProducts.length > 0 ? allProducts : FALLBACK_PRODUCTS,
+    };
+  } catch (error) {
+    console.warn('Database temporarily unreachable during build/render, using fallback:', error);
+    return {
+      featuredProducts: FALLBACK_PRODUCTS.slice(0, 4),
+      catalogProducts: FALLBACK_PRODUCTS,
+    };
+  }
 }
 
 export default async function HomePage() {
