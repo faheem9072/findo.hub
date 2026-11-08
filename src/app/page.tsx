@@ -167,86 +167,61 @@ export default async function HomePage() {
       {/* 3. DEALS OF THE DAY / OFFER PRICES HORIZONTAL PRODUCT SLIDER ("products inghane neenghuka offer price und enn paranghitt") */}
       <DealsProductSlider products={dealProducts} />
 
-      {/* 4. THE ICONIC LETTER-INTEGRATED "C A [product] A L [product] O G" SECTION */}
+      {/* 4. FEATURED PRODUCTS COLLECTION */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
-        {/* Giant Clean CATALOG Header with Real Integrated Product Cutouts */}
-        <div className="text-center py-8 sm:py-12 border border-slate-200 select-none bg-white rounded-3xl shadow-xs px-4">
-          <div className="flex items-center justify-center gap-1 sm:gap-3 text-6xl sm:text-8xl md:text-9xl lg:text-[10rem] font-black tracking-tighter text-slate-950 leading-none">
-            <span>C</span>
-            <span>A</span>
-            {/* Integrated Circular Product Visual 1 */}
-            <div className="relative w-12 h-12 sm:w-20 sm:h-20 md:w-26 md:h-26 lg:w-32 lg:h-32 rounded-full overflow-hidden border-2 sm:border-4 border-[#5a9e2f] shadow-md bg-white shrink-0 mx-1 animate-pulse-subtle">
-              <Image
-                src="/images/habit-tracker.jpg"
-                alt="Findo Habit Tracker"
-                fill
-                className="object-cover"
-              />
-            </div>
-            <span>A</span>
-            <span>L</span>
-            {/* Integrated Circular Product Visual 2 */}
-            <div className="relative w-12 h-12 sm:w-20 sm:h-20 md:w-26 md:h-26 lg:w-32 lg:h-32 rounded-full overflow-hidden border-2 sm:border-4 border-[#0284c7] shadow-md bg-white shrink-0 mx-1 animate-pulse-subtle">
-              <Image
-                src="/images/tangram-woodiness.jpg"
-                alt="Montessori Puzzle"
-                fill
-                className="object-cover"
-              />
-            </div>
-            <span>O</span>
-            <span>G</span>
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6 pb-4 border-b border-slate-200">
+          <div>
+            <span className="text-xs uppercase font-mono tracking-widest text-[#5a9e2f] font-bold block">
+              Find Smart Play
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+              Featured Toys & Best Sellers
+            </h2>
           </div>
 
-          {/* Sub-Nav: Filter + & Sort by */}
-          <div className="mt-8 pt-6 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs uppercase tracking-wider">
-            <div className="flex items-center gap-2 overflow-x-auto scrollbar-none w-full sm:w-auto pb-1">
-              <span className="font-bold text-slate-400 mr-2">Filter +</span>
-              <Link
-                href="/shop"
-                className="px-3.5 py-1.5 rounded-full bg-[#5a9e2f] text-white font-black text-[11px] shadow-xs"
-              >
-                All Products
-              </Link>
-              <Link
-                href="/shop?age=0-3%20Years"
-                className="px-3.5 py-1.5 rounded-full bg-slate-100 border border-slate-200 text-slate-700 hover:border-[#5a9e2f] hover:text-[#5a9e2f] text-[11px] transition-colors"
-              >
-                0-3 Y
-              </Link>
-              <Link
-                href="/shop?age=3-5%20Years"
-                className="px-3.5 py-1.5 rounded-full bg-slate-100 border border-slate-200 text-slate-700 hover:border-[#5a9e2f] hover:text-[#5a9e2f] text-[11px] transition-colors"
-              >
-                3-5 Y
-              </Link>
-              <Link
-                href="/shop?age=6-8%20Years"
-                className="px-3.5 py-1.5 rounded-full bg-slate-100 border border-slate-200 text-slate-700 hover:border-[#5a9e2f] hover:text-[#5a9e2f] text-[11px] transition-colors"
-              >
-                6-8 Y
-              </Link>
-              <Link
-                href="/shop?age=8%2B%20Years"
-                className="px-3.5 py-1.5 rounded-full bg-slate-100 border border-slate-200 text-slate-700 hover:border-[#5a9e2f] hover:text-[#5a9e2f] text-[11px] transition-colors"
-              >
-                8+ Y
-              </Link>
-            </div>
-
+          <div className="flex items-center gap-2 overflow-x-auto scrollbar-none pb-1">
             <Link
               href="/shop"
-              className="text-[#5a9e2f] font-bold hover:underline flex items-center gap-1 self-end sm:self-auto"
+              className="px-4 py-1.5 rounded-full bg-[#5a9e2f] text-white font-bold text-xs shadow-xs shrink-0"
             >
-              <span>Explore Complete Catalog ({catalogProducts.length})</span>
+              All Toys
+            </Link>
+            <Link
+              href="/shop?age=0-3%20Years"
+              className="px-3.5 py-1.5 rounded-full bg-white border border-slate-200 text-slate-700 hover:border-[#5a9e2f] hover:text-[#5a9e2f] text-xs font-medium transition-colors shrink-0"
+            >
+              0-3 Y
+            </Link>
+            <Link
+              href="/shop?age=3-5%20Years"
+              className="px-3.5 py-1.5 rounded-full bg-white border border-slate-200 text-slate-700 hover:border-[#5a9e2f] hover:text-[#5a9e2f] text-xs font-medium transition-colors shrink-0"
+            >
+              3-5 Y
+            </Link>
+            <Link
+              href="/shop?age=6-8%20Years"
+              className="px-3.5 py-1.5 rounded-full bg-white border border-slate-200 text-slate-700 hover:border-[#5a9e2f] hover:text-[#5a9e2f] text-xs font-medium transition-colors shrink-0"
+            >
+              6-8 Y
+            </Link>
+            <Link
+              href="/shop?age=8%2B%20Years"
+              className="px-3.5 py-1.5 rounded-full bg-white border border-slate-200 text-slate-700 hover:border-[#5a9e2f] hover:text-[#5a9e2f] text-xs font-medium transition-colors shrink-0"
+            >
+              8+ Y
+            </Link>
+            <Link
+              href="/shop"
+              className="ml-2 text-xs font-bold text-[#5a9e2f] hover:underline flex items-center gap-1 shrink-0"
+            >
+              <span>View All ({catalogProducts.length})</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>
         </div>
 
         {/* Catalog Products Showcase */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mt-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {catalogProducts.slice(0, 8).map((product) => (
             <ProductCard key={product.id} product={product} variant="light" />
           ))}
