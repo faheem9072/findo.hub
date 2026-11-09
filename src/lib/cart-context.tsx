@@ -43,8 +43,8 @@ interface CartContextType {
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
-export const DEFAULT_FREE_SHIPPING_THRESHOLD = 999;
-export const DEFAULT_FLAT_SHIPPING_RATE = 79;
+export const DEFAULT_FREE_SHIPPING_THRESHOLD = 0;
+export const DEFAULT_FLAT_SHIPPING_RATE = 0;
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [cart, setCart] = useState<CartItem[]>([]);
@@ -206,8 +206,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
   const subtotal = cart.reduce((total, item) => total + item.price * item.quantity, 0);
-  const freeShippingRemaining = Math.max(0, freeShippingThreshold - subtotal);
-  const shippingFee = cart.length === 0 ? 0 : subtotal >= freeShippingThreshold ? 0 : flatShippingRate;
+  const freeShippingRemaining = flatShippingRate === 0 ? 0 : Math.max(0, freeShippingThreshold - subtotal);
+  const shippingFee = cart.length === 0 || flatShippingRate === 0 || subtotal >= freeShippingThreshold ? 0 : flatShippingRate;
 
   return (
     <CartContext.Provider

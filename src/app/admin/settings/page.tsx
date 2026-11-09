@@ -16,9 +16,9 @@ export default async function AdminSettingsPage() {
       id: 'default',
       whatsappNumber: '+917025387764',
       supportEmail: 'findohub7@gmail.com',
-      freeShippingThreshold: 999,
-      flatShippingRate: 79,
-      storeNotice: 'Free Shipping across India on orders above ₹999!',
+      freeShippingThreshold: 0,
+      flatShippingRate: 0,
+      storeNotice: '🎉 FREE SHIPPING ALL OVER INDIA ON ALL ORDERS!',
       updatedAt: new Date(),
     };
   }

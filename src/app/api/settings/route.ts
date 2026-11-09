@@ -19,9 +19,9 @@ export async function GET() {
           id: 'default',
           whatsappNumber: '+917025387764',
           supportEmail: 'findohub7@gmail.com',
-          freeShippingThreshold: 999,
-          flatShippingRate: 79,
-          storeNotice: 'Free Shipping across India on orders above ₹999!',
+          freeShippingThreshold: 0,
+          flatShippingRate: 0,
+          storeNotice: '🎉 FREE SHIPPING ON ALL ORDERS ACROSS INDIA!',
         },
       });
     }
@@ -52,11 +52,11 @@ export async function PUT(request: Request) {
     const body = await request.json();
     const { whatsappNumber, supportEmail, freeShippingThreshold, flatShippingRate, storeNotice } = body;
 
-    const parsedThreshold = freeShippingThreshold !== undefined ? parseFloat(String(freeShippingThreshold)) : 999;
-    const parsedShippingRate = flatShippingRate !== undefined ? parseFloat(String(flatShippingRate)) : 79;
+    const parsedThreshold = freeShippingThreshold !== undefined ? parseFloat(String(freeShippingThreshold)) : 0;
+    const parsedShippingRate = flatShippingRate !== undefined ? parseFloat(String(flatShippingRate)) : 0;
 
-    const finalThreshold = isNaN(parsedThreshold) ? 999 : parsedThreshold;
-    const finalShippingRate = isNaN(parsedShippingRate) ? 79 : parsedShippingRate;
+    const finalThreshold = isNaN(parsedThreshold) ? 0 : parsedThreshold;
+    const finalShippingRate = isNaN(parsedShippingRate) ? 0 : parsedShippingRate;
 
     const settings = await prisma.setting.upsert({
       where: { id: 'default' },

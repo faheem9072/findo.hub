@@ -8,8 +8,8 @@ export default function AdminSettingsClient({ initialSettings }: { initialSettin
   const router = useRouter();
   const [whatsappNumber, setWhatsappNumber] = useState(initialSettings.whatsappNumber || '');
   const [supportEmail, setSupportEmail] = useState(initialSettings.supportEmail || '');
-  const [freeShippingThreshold, setFreeShippingThreshold] = useState(initialSettings.freeShippingThreshold ?? 999);
-  const [flatShippingRate, setFlatShippingRate] = useState(initialSettings.flatShippingRate ?? 79);
+  const [freeShippingThreshold, setFreeShippingThreshold] = useState(initialSettings.freeShippingThreshold ?? 0);
+  const [flatShippingRate, setFlatShippingRate] = useState(initialSettings.flatShippingRate ?? 0);
   const [storeNotice, setStoreNotice] = useState(initialSettings.storeNotice || '');
 
   React.useEffect(() => {
@@ -124,7 +124,7 @@ export default function AdminSettingsClient({ initialSettings }: { initialSettin
                 onChange={(e) => setFreeShippingThreshold(e.target.value)}
                 className="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#5a9e2f] outline-none"
               />
-              <p className="text-[10px] text-slate-400 mt-1">Orders at or above this subtotal get free shipping.</p>
+              <p className="text-[10px] text-slate-400 mt-1">Orders at or above this subtotal get free shipping (0 = all orders qualify).</p>
             </div>
 
             <div>
@@ -135,7 +135,7 @@ export default function AdminSettingsClient({ initialSettings }: { initialSettin
                 onChange={(e) => setFlatShippingRate(e.target.value)}
                 className="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#5a9e2f] outline-none"
               />
-              <p className="text-[10px] text-slate-400 mt-1">Applied when order total is below threshold.</p>
+              <p className="text-[10px] text-slate-400 mt-1">Set to 0 for storewide 100% Free Shipping.</p>
             </div>
           </div>
         </div>
@@ -154,7 +154,7 @@ export default function AdminSettingsClient({ initialSettings }: { initialSettin
               value={storeNotice}
               onChange={(e) => setStoreNotice(e.target.value)}
               className="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#5a9e2f] outline-none"
-              placeholder="e.g. Free Shipping across India on orders above ₹999!"
+              placeholder="e.g. 🎉 FREE SHIPPING ALL OVER INDIA ON ALL ORDERS!"
             />
           </div>
         </div>

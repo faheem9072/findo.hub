@@ -150,10 +150,10 @@ export async function POST(request: Request) {
     }
 
     const settings = await prisma.setting.findUnique({ where: { id: 'default' } });
-    const freeShippingThreshold = settings?.freeShippingThreshold ?? 999;
-    const flatShippingRate = settings?.flatShippingRate ?? 79;
+    const freeShippingThreshold = settings?.freeShippingThreshold ?? 0;
+    const flatShippingRate = settings?.flatShippingRate ?? 0;
 
-    const shippingFee = subtotal >= freeShippingThreshold ? 0 : flatShippingRate;
+    const shippingFee = flatShippingRate === 0 || subtotal >= freeShippingThreshold ? 0 : flatShippingRate;
     const totalAmount = Math.max(0, subtotal - discountAmount + shippingFee);
 
     const orderNumber = 'FND-' + Math.floor(100000 + Math.random() * 900000);

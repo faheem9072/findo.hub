@@ -353,7 +353,7 @@ export default function HeroHamleysSlider() {
         </div>
         <div className="flex items-center gap-2">
           <span className="text-[#5a9e2f]">🚚</span>
-          <span>Fast India Shipping • Flat ₹79</span>
+          <span>FREE Shipping All Over India</span>
         </div>
         <div className="flex items-center gap-2">
           <span className="text-[#5a9e2f]">💬</span>

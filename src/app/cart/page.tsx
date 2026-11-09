@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Trash2, Plus, Minus, ArrowRight, ShoppingBag, ShieldCheck } from 'lucide-react';
+import { Trash2, Plus, Minus, ArrowRight, ShoppingBag, ShieldCheck, Truck } from 'lucide-react';
 import { useCart } from '@/lib/cart-context';
 
 export default function CartPage() {
@@ -114,15 +114,15 @@ export default function CartPage() {
           <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-6 shadow-xs">
             <h2 className="text-lg font-extrabold text-[#0d1b1e]">Order Summary</h2>
 
-            {freeShippingRemaining > 0 ? (
-              <div className="p-3 bg-[#fafbf8] rounded-xl border border-slate-200 text-xs text-slate-600">
-                Add <strong className="text-[#5a9e2f]">₹{freeShippingRemaining}</strong> more to qualify for <strong>FREE Shipping</strong>!
-              </div>
-            ) : (
-              <div className="p-3 bg-[#eef8ea] rounded-xl border border-emerald-200 text-xs text-emerald-800 font-bold">
-                🎉 You&apos;ve unlocked FREE Shipping!
-              </div>
-            )}
+            <div className="p-3 bg-[#eef8ea] rounded-xl border border-emerald-200 text-xs text-emerald-800 font-bold flex items-center justify-between">
+              <span className="flex items-center gap-2">
+                <Truck className="w-4 h-4 text-[#5a9e2f] shrink-0" />
+                <span>🎉 FREE Shipping on all orders across India!</span>
+              </span>
+              <span className="text-[#5a9e2f] font-extrabold uppercase text-[10px] bg-white px-2 py-0.5 rounded-full border border-emerald-300">
+                ₹0 FREE
+              </span>
+            </div>
 
             <div className="space-y-3 border-t border-slate-100 pt-4 text-xs font-medium text-slate-600">
               <div className="flex justify-between">

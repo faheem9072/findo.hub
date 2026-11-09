@@ -37,7 +37,7 @@ export default function ShippingReturnsPage() {
         <div className="space-y-4 text-xs text-slate-600 leading-relaxed">
           <div className="p-4 bg-[#eef8ea] rounded-2xl flex items-center justify-between text-[#0d1b1e] font-bold">
             <span>Free Express Delivery:</span>
-            <span className="text-[#5a9e2f]">On all orders above ₹999</span>
+            <span className="text-[#5a9e2f]">FREE on all orders across India!</span>
           </div>
 
           <div className="space-y-2">

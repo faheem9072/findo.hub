@@ -50,26 +50,16 @@ export default function CartDrawer() {
             </button>
           </div>
 
-          {/* Free Shipping Progress Indicator */}
+          {/* Free Shipping Banner */}
           <div className="bg-[#eef8ea] p-3.5 border-b border-emerald-200 text-xs">
-            <div className="flex items-center justify-between mb-1.5 font-medium text-[#0d1b1e]">
-              <span className="flex items-center gap-1.5">
-                <Truck className="w-4 h-4 text-[#5a9e2f]" />
-                {freeShippingRemaining > 0 ? (
-                  <>
-                    Add <strong className="text-[#5a9e2f]">₹{freeShippingRemaining.toFixed(0)}</strong> more for FREE Shipping!
-                  </>
-                ) : (
-                  <span className="text-[#5a9e2f] font-bold">🎉 Congratulations! You qualify for FREE Delivery!</span>
-                )}
+            <div className="flex items-center justify-between font-bold text-[#2d6a1e]">
+              <span className="flex items-center gap-2">
+                <Truck className="w-4 h-4 text-[#5a9e2f] shrink-0" />
+                <span>🎉 FREE SHIPPING on all orders across India!</span>
               </span>
-              <span className="font-bold text-slate-500">{progressPercentage.toFixed(0)}%</span>
-            </div>
-            <div className="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
-              <div
-                className="bg-[#5a9e2f] h-full transition-all duration-300 rounded-full"
-                style={{ width: `${progressPercentage}%` }}
-              />
+              <span className="bg-[#5a9e2f] text-white text-[10px] uppercase font-extrabold px-2 py-0.5 rounded-full shadow-xs">
+                100% Free
+              </span>
             </div>
           </div>
 

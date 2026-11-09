@@ -234,7 +234,7 @@ export default function ProductDetailClient({
       title: 'Shipping Information',
       icon: Truck,
       content:
-        'Ships within 24 hours from our Indian fulfillment centers. Free standard shipping across India on orders above ₹999. Express delivery options available at checkout.',
+        'Ships within 24 hours from our Indian fulfillment centers. Free standard shipping across India on all orders. Express delivery options available at checkout.',
     },
     {
       id: 'returns',
@@ -374,7 +374,7 @@ export default function ProductDetailClient({
                   )}
                 </div>
                 <p className="text-xs text-[#5a9e2f] font-semibold mt-0.5">
-                  Taxes included. Free delivery on orders over ₹999.
+                  Taxes included. FREE delivery on all orders across India!
                 </p>
               </div>
 

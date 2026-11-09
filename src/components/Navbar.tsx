@@ -21,7 +21,15 @@ export default function Navbar({ onOpenSearch }: { onOpenSearch?: () => void }) 
   ];
 
   return (
-    <header className="sticky top-0 z-40 w-full bg-white/90 backdrop-blur-md border-b border-slate-200/80 transition-all text-slate-800 shadow-xs">
+    <header className="sticky top-0 z-40 w-full bg-white/95 backdrop-blur-md border-b border-slate-200/80 transition-all text-slate-800 shadow-xs">
+      {/* Top Free Shipping Announcement Bar */}
+      <div className="bg-[#0d1b1e] text-white py-1.5 px-4 text-center text-[10px] sm:text-xs font-bold tracking-wide flex items-center justify-center gap-2 border-b border-white/10">
+        <span className="text-[#5a9e2f] animate-pulse">🚚</span>
+        <span>FREE SHIPPING ALL OVER INDIA ON ALL ORDERS</span>
+        <span className="hidden sm:inline text-white/40">•</span>
+        <span className="hidden sm:inline text-[#5a9e2f] font-semibold">CASH ON DELIVERY AVAILABLE</span>
+      </div>
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-18 sm:h-20">
           
