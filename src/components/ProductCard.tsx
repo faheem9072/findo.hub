@@ -119,6 +119,19 @@ export default function ProductCard({ product, variant = 'dark' }: ProductCardPr
               </span>
             </div>
           )}
+
+          {/* TOP SELLING Badge for Habit Tracker & DIY Camera */}
+          {(product.slug?.includes('habit') ||
+            product.slug?.includes('camera') ||
+            product.name?.toLowerCase().includes('habit tracker') ||
+            product.name?.toLowerCase().includes('camera') ||
+            product.badges?.includes('TOP')) && (
+            <div className="absolute top-2.5 right-2.5 z-10">
+              <span className="bg-gradient-to-r from-amber-500 to-rose-600 text-white text-[9px] font-black px-2 py-0.5 rounded-full uppercase tracking-wider shadow-md">
+                🔥 TOP SELLING
+              </span>
+            </div>
+          )}
         </Link>
 
         {/* Product Meta & Title */}

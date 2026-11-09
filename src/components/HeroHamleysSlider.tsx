@@ -36,41 +36,41 @@ const SLIDES: SlideData[] = [
     bgGradient: 'from-[#fff7ed] via-[#ffedd5] to-[#fed7aa]/60',
     accentColor: '#ea580c',
     productImg: '/images/tangram-woodiness.jpg',
-    productName: 'Montessori Geometric Puzzle',
+    productName: 'Montessori Geometric Puzzle Set',
     mrp: '₹349',
     offerPrice: '₹219',
     discount: '37% OFF',
   },
   {
     id: 'slide-2',
-    badge: '✨ PARENTS NO.1 CHOICE',
+    badge: '🔥 TOP SELLING • PARENTS NO.1 CHOICE',
     title: 'BUILD BETTER HABITS',
-    highlight: 'FLAT 40% OFF*',
-    offerText: 'ON DAILY ROUTINE TRACKERS & SLIDERS',
+    highlight: 'FLAT 42% OFF*',
+    offerText: 'DAILY ROUTINE CHECKLIST & SLIDERS',
     desc: 'Help your children wake up, brush, study, and tidy up with zero screen tantrums.',
-    ctaText: 'EXPLORE ROUTINE KITS',
-    ctaLink: '/shop?category=preschool-routine',
+    ctaText: 'BUY HABIT TRACKER',
+    ctaLink: '/product/habit-tracker',
     bgGradient: 'from-[#f0fdf4] via-[#dcfce7] to-[#bbf7d0]/60',
     accentColor: '#16a34a',
     productImg: '/images/habit-tracker.jpg',
-    productName: 'Daily Routine Habit Tracker',
+    productName: 'Daily Routine Habit Tracker Board',
     mrp: '₹399',
     offerPrice: '₹229',
     discount: '42% OFF',
   },
   {
     id: 'slide-3',
-    badge: '🔬 YOUNG EXPLORERS SPECIAL',
+    badge: '🔥 TOP SELLING • HOT ARRIVAL',
     title: 'SPARK BIG IDEAS',
     highlight: 'UP TO 45% OFF*',
-    offerText: 'ON STEM EXPERIMENTS & INSTANT CAMERAS',
-    desc: 'Instant print zero-ink cameras, 450X microscopes and safe chemistry labs.',
-    ctaText: 'DISCOVER STEM TOYS',
-    ctaLink: '/shop?category=stem-educational',
+    offerText: 'ZERO-INK DIY INSTANT PRINT CAMERA',
+    desc: 'Instant thermal printing camera with video, photo effects and zero ink refills.',
+    ctaText: 'BUY INSTANT CAMERA',
+    ctaLink: '/product/kids-instant-print-digital-camera',
     bgGradient: 'from-[#eff6ff] via-[#dbeafe] to-[#bfdbfe]/60',
     accentColor: '#0284c7',
     productImg: '/images/instant-print-camera.jpg',
-    productName: 'DIY Instant Print Kids Camera',
+    productName: 'Findo DIY Instant Print Kids Camera',
     mrp: '₹1,999',
     offerPrice: '₹1,319',
     discount: '34% OFF',
@@ -199,7 +199,10 @@ export default function HeroHamleysSlider() {
 
                 {/* Right Visual Stage: Clean, Uncluttered Product Card (NO SQUIRREL) */}
                 <div className="md:col-span-5 relative flex items-center justify-center">
-                  <div className="relative w-64 h-64 lg:w-80 lg:h-80 rounded-3xl overflow-hidden bg-white shadow-xl border-4 border-white p-3 group hover:scale-105 transition-transform duration-500">
+                  <Link
+                    href={slide.ctaLink}
+                    className="block relative w-64 h-64 lg:w-80 lg:h-80 rounded-3xl overflow-hidden bg-white shadow-xl border-4 border-white p-3 group hover:scale-105 transition-transform duration-500 cursor-pointer"
+                  >
                     <Image
                       src={slide.productImg}
                       alt={slide.productName}
@@ -220,7 +223,7 @@ export default function HeroHamleysSlider() {
                         {slide.productName}
                       </span>
                     </div>
-                  </div>
+                  </Link>
                 </div>
 
               </div>
@@ -230,7 +233,7 @@ export default function HeroHamleysSlider() {
               <div className="flex md:hidden flex-col justify-between h-full text-center items-center py-1">
                 
                 {/* 1. Mobile Header & Offer */}
-                <div className="space-y-1 w-full px-2">
+                <Link href={slide.ctaLink} className="space-y-1 w-full px-2 block cursor-pointer">
                   <div className="inline-flex items-center gap-1.5 bg-white/95 backdrop-blur-md px-3 py-1 rounded-full shadow-xs border border-white mx-auto">
                     <Sparkles className="w-3 h-3" style={{ color: slide.accentColor }} />
                     <span className="font-heading text-[11px] font-bold tracking-wider uppercase" style={{ color: slide.accentColor }}>
@@ -249,10 +252,13 @@ export default function HeroHamleysSlider() {
                   <p className="text-[11px] font-semibold text-slate-600 truncate max-w-xs mx-auto">
                     {slide.offerText}
                   </p>
-                </div>
+                </Link>
 
                 {/* 2. Mobile Clean Product Card (Fully Visible, High Contrast, Centered, NO SQUIRREL) */}
-                <div className="my-2 relative w-48 h-48 xs:w-52 xs:h-52 rounded-2xl overflow-hidden bg-white shadow-md border-3 border-white p-2">
+                <Link
+                  href={slide.ctaLink}
+                  className="my-2 relative w-48 h-48 xs:w-52 xs:h-52 rounded-2xl overflow-hidden bg-white shadow-md border-3 border-white p-2 block cursor-pointer"
+                >
                   <Image
                     src={slide.productImg}
                     alt={slide.productName}
@@ -273,7 +279,7 @@ export default function HeroHamleysSlider() {
                       {slide.productName}
                     </span>
                   </div>
-                </div>
+                </Link>
 
                 {/* 3. Mobile Price & CTA */}
                 <div className="w-full flex flex-col items-center gap-2 pb-5">

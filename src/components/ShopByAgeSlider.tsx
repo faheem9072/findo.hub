@@ -507,29 +507,25 @@ export default function ShopByAgeSlider({ allProducts = [] }: { allProducts?: Pr
           {AGE_CATEGORIES.map((item) => {
             const isSelected = item.id === selectedAgeId;
             return (
-              <button
+              <Link
                 key={item.id}
-                onClick={() => setSelectedAgeId(item.id)}
-                type="button"
-                className={`shrink-0 w-36 sm:w-44 flex flex-col items-center text-center rounded-2xl overflow-hidden bg-white border-2 transition-all duration-300 ${
+                href={item.href}
+                className={`shrink-0 w-36 sm:w-44 flex flex-col items-center text-center rounded-2xl overflow-hidden bg-white border-2 transition-all duration-300 group/card ${
                   isSelected
-                    ? 'border-[#5a9e2f] ring-4 ring-[#5a9e2f]/20 shadow-xl -translate-y-1.5 scale-105'
-                    : 'border-slate-200/90 shadow-xs hover:border-[#5a9e2f]/60 hover:shadow-md'
+                    ? 'border-[#5a9e2f] ring-4 ring-[#5a9e2f]/20 shadow-xl -translate-y-1 scale-102'
+                    : 'border-slate-200/90 shadow-xs hover:border-[#5a9e2f] hover:shadow-md hover:-translate-y-1'
                 }`}
               >
                 {/* Ribbon Header Tag (Hamleys Red/Burgundy/Green Style Ribbon) */}
-                <div className={`w-full py-1.5 px-1 text-center ${isSelected ? 'bg-[#5a9e2f]' : item.ribbonColor} text-white shadow-xs transition-colors`}>
-                  <div className="flex items-center justify-center gap-1">
-                    {isSelected && <Check className="w-3 h-3 stroke-[3]" />}
-                    <span className="font-heading text-[11px] sm:text-xs font-black tracking-wider uppercase block">
-                      {item.age}
-                    </span>
-                  </div>
+                <div className={`w-full py-1.5 px-1 text-center ${item.ribbonColor} text-white shadow-xs`}>
+                  <span className="font-heading text-[11px] sm:text-xs font-black tracking-wider uppercase block">
+                    {item.age}
+                  </span>
                 </div>
 
                 {/* Card Body with Warm Gradient & Toy Photo */}
                 <div className={`w-full h-32 sm:h-40 bg-gradient-to-b ${item.bgGradient} flex items-center justify-center p-2.5 relative overflow-hidden`}>
-                  <div className="relative w-22 h-22 sm:w-26 sm:h-26 rounded-xl overflow-hidden drop-shadow-md transition-transform duration-300">
+                  <div className="relative w-22 h-22 sm:w-26 sm:h-26 rounded-xl overflow-hidden drop-shadow-md group-hover/card:scale-110 transition-transform duration-300">
                     <Image
                       src={item.img}
                       alt={item.title}
@@ -544,16 +540,17 @@ export default function ShopByAgeSlider({ allProducts = [] }: { allProducts?: Pr
                   </span>
                 </div>
 
-                {/* Card Footer: Title & Tap Hint */}
-                <div className="p-2.5 w-full bg-white space-y-0.5 border-t border-slate-100">
-                  <h3 className={`font-heading text-xs font-bold truncate ${isSelected ? 'text-[#5a9e2f]' : 'text-slate-900'}`}>
+                {/* Card Footer: Title & Explore Link */}
+                <div className="p-2.5 w-full bg-white space-y-1 border-t border-slate-100">
+                  <h3 className="font-heading text-xs font-bold truncate text-slate-900 group-hover/card:text-[#5a9e2f] transition-colors">
                     {item.title}
                   </h3>
-                  <span className={`text-[10px] font-bold block truncate ${isSelected ? 'text-[#5a9e2f]' : 'text-slate-400'}`}>
-                    {isSelected ? '✓ Showing Toys Below' : 'Tap to View Toys'}
+                  <span className="font-heading text-[11px] font-bold text-[#5a9e2f] flex items-center justify-center gap-1 group-hover/card:underline">
+                    <span>View Toys</span>
+                    <ArrowRight className="w-3 h-3 group-hover/card:translate-x-0.5 transition-transform" />
                   </span>
                 </div>
-              </button>
+              </Link>
             );
           })}
         </div>
@@ -573,15 +570,15 @@ export default function ShopByAgeSlider({ allProducts = [] }: { allProducts?: Pr
       {/* "SHOP BY AGE ITHNTE THAZHE ORU AGES NTEDUM ADUKUMBOL VARUNILLA" -> SOLVED! */}
       <div className="mt-8 bg-gradient-to-b from-white to-slate-50/60 rounded-3xl p-4 sm:p-8 border border-slate-200 shadow-sm transition-all duration-500 animate-fade-in">
         
-        {/* Dynamic Age Header */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-5 border-b border-slate-200">
+        {/* Dynamic Age Header with Quick Selector Pills */}
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-4 border-b border-slate-200">
           <div>
             <div className="inline-flex items-center gap-1.5 text-[#5a9e2f] text-xs font-bold uppercase tracking-wider">
               <span>{activeCategory.icon}</span>
-              <span className="font-heading">Selected Age: {activeCategory.age}</span>
+              <span className="font-heading">Age Category: {activeCategory.age}</span>
             </div>
             <h3 className="font-heading text-2xl sm:text-3xl font-black text-slate-900 tracking-tight mt-0.5">
-              Best Toys for {activeCategory.age} ({activeCategory.title})
+              Top Toys for {activeCategory.age} ({activeCategory.title})
             </h3>
             <p className="text-xs sm:text-sm text-slate-500 font-medium mt-0.5">
               {activeCategory.desc}
@@ -597,13 +594,37 @@ export default function ShopByAgeSlider({ allProducts = [] }: { allProducts?: Pr
           </Link>
         </div>
 
+        {/* Quick Age Filter Pills so user can also switch preview right here */}
+        <div className="flex items-center gap-2 overflow-x-auto scrollbar-none pt-3 pb-1">
+          <span className="text-xs font-bold text-slate-400 mr-1 shrink-0 font-heading">Switch Age:</span>
+          {AGE_CATEGORIES.map((cat) => (
+            <button
+              key={cat.id}
+              onClick={() => setSelectedAgeId(cat.id)}
+              type="button"
+              className={`font-heading shrink-0 px-3 py-1 rounded-full text-xs font-bold transition-all ${
+                cat.id === selectedAgeId
+                  ? 'bg-[#5a9e2f] text-white shadow-xs'
+                  : 'bg-white border border-slate-200 text-slate-700 hover:border-[#5a9e2f] hover:text-[#5a9e2f]'
+              }`}
+            >
+              {cat.shortLabel}
+            </button>
+          ))}
+        </div>
+
         {/* Dynamic Products Grid for this Age */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6 mt-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6 mt-5">
           {filteredProducts.map((product) => {
             const img = parseFirstImage(product.images);
             const comparePrice = product.compareAtPrice || Math.round(product.price * 1.5);
             const discountPercent = Math.round(((comparePrice - product.price) / comparePrice) * 100);
             const isAdded = addedId === product.id;
+            const isTopSelling =
+              product.slug?.includes('habit') ||
+              product.slug?.includes('camera') ||
+              product.name?.toLowerCase().includes('habit tracker') ||
+              product.name?.toLowerCase().includes('camera');
 
             return (
               <div
@@ -617,10 +638,19 @@ export default function ShopByAgeSlider({ allProducts = [] }: { allProducts?: Pr
                   </span>
                 )}
 
-                {/* Age Pill Badge */}
-                <span className="font-heading absolute top-3 right-3 z-10 bg-emerald-50 text-[#5a9e2f] border border-emerald-200 text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded-full">
-                  {product.ageRange || activeCategory.age}
-                </span>
+                {/* TOP SELLING Badge for Habit Tracker & DIY Camera */}
+                {isTopSelling && (
+                  <span className="font-heading absolute top-3 right-3 z-10 bg-gradient-to-r from-amber-500 to-rose-600 text-white text-[9px] font-black px-2 py-0.5 rounded-full uppercase tracking-wider shadow-md">
+                    🔥 TOP SELLING
+                  </span>
+                )}
+
+                {/* Age Pill Badge (if not top selling to avoid overlap) */}
+                {!isTopSelling && (
+                  <span className="font-heading absolute top-3 right-3 z-10 bg-emerald-50 text-[#5a9e2f] border border-emerald-200 text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded-full">
+                    {product.ageRange || activeCategory.age}
+                  </span>
+                )}
 
                 {/* Product Photo */}
                 <Link href={`/product/${product.slug}`} className="block relative w-full aspect-square rounded-xl overflow-hidden bg-slate-50 my-2 group-hover:scale-105 transition-transform duration-300">

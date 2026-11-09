@@ -15,53 +15,55 @@ export const revalidate = 0; // Live real-time updates for newly added/edited pr
 const FALLBACK_PRODUCTS = [
   {
     id: 'fb-1',
-    name: 'Findo Kids Daily Routine Habit Tracker Board',
-    slug: 'findo-kids-daily-routine-habit-tracker-board',
+    name: 'Findo Kids Daily Routine & Habit Tracker Board',
+    slug: 'habit-tracker',
     shortDesc: 'Daily morning & evening habit checklist slider board for kids.',
     price: 229,
-    compareAtPrice: 399,
+    compareAtPrice: 349,
     stock: 25,
     images: JSON.stringify(['/images/habit-tracker.jpg']),
-    ageRange: '3-5 Years',
+    ageRange: '3-8 Years',
     isFeatured: true,
     isPublished: true,
+    badges: 'TOP SELLING',
     category: { name: 'Preschool & Routine', slug: 'preschool-routine' },
   },
   {
     id: 'fb-2',
-    name: 'Tetra Tower Balance Stacking Game',
-    slug: 'tetra-tower-balance-game',
+    name: 'Tetra Tower Stacking & Balance Game (Building Blocks)',
+    slug: 'balance-tower',
     shortDesc: 'Exciting stacking and balancing game for focus and motor skills.',
     price: 239,
-    compareAtPrice: 399,
+    compareAtPrice: 385,
     stock: 20,
     images: JSON.stringify(['/images/tetra-tower.jpg']),
-    ageRange: '3-5 Years',
+    ageRange: '2-5 Years',
     isFeatured: true,
     isPublished: true,
     category: { name: 'Puzzles & Activity', slug: 'puzzles-activity' },
   },
   {
     id: 'fb-3',
-    name: 'Findo DIY Instant Print Kids Camera',
-    slug: 'findo-diy-instant-print-camera',
+    name: 'Findo DIY Instant Print Kids Digital Camera',
+    slug: 'kids-instant-print-digital-camera',
     shortDesc: 'Zero-ink instant thermal printing camera with video and photo effects.',
     price: 1319,
-    compareAtPrice: 1999,
+    compareAtPrice: 1600,
     stock: 15,
     images: JSON.stringify(['/images/instant-print-camera.jpg']),
-    ageRange: '6-8 Years',
+    ageRange: '4-10 Years',
     isFeatured: true,
     isPublished: true,
+    badges: 'TOP SELLING',
     category: { name: 'Puzzles & Activity', slug: 'puzzles-activity' },
   },
   {
     id: 'fb-4',
-    name: 'Super Chemistry Lab Experiment Set',
-    slug: 'super-chemistry-lab',
+    name: 'Explore STEM My Super Chemistry Lab Kit',
+    slug: 'my-super-chemistry-lab',
     shortDesc: 'Exciting hands-on STEM experiments and safe chemical reactions.',
     price: 975,
-    compareAtPrice: 1499,
+    compareAtPrice: 1100,
     stock: 12,
     images: JSON.stringify(['/images/super-chemistry-lab.jpg']),
     ageRange: '8+ Years',
@@ -71,28 +73,28 @@ const FALLBACK_PRODUCTS = [
   },
   {
     id: 'fb-5',
-    name: 'Montessori Geometric Tangram Puzzle',
-    slug: 'montessori-geometric-puzzle',
+    name: 'Tangram Woodiness Montessori Geometric Puzzle Set',
+    slug: 'tangram-wooden-puzzle-set',
     shortDesc: 'Chunky wooden shape sorter puzzle for early motor development.',
     price: 219,
-    compareAtPrice: 349,
+    compareAtPrice: 306,
     stock: 30,
     images: JSON.stringify(['/images/tangram-woodiness.jpg']),
-    ageRange: '0-3 Years',
+    ageRange: '2-5 Years',
     isFeatured: true,
     isPublished: true,
     category: { name: 'Montessori & Sensory', slug: 'montessori-sensory' },
   },
   {
     id: 'fb-6',
-    name: 'Educational Optical Microscope 450X',
-    slug: 'educational-microscope',
+    name: 'Findo Kids Educational Microscope Science Kit (100X-450X)',
+    slug: 'kids-educational-microscope-science-kit',
     shortDesc: 'Real working optical microscope with slides and specimen tools.',
-    price: 849,
-    compareAtPrice: 1299,
+    price: 949,
+    compareAtPrice: 1050,
     stock: 10,
     images: JSON.stringify(['/images/educational-microscope.jpg']),
-    ageRange: '8+ Years',
+    ageRange: '6-12 Years',
     isFeatured: true,
     isPublished: true,
     category: { name: 'STEM & Educational', slug: 'stem-educational' },
@@ -145,14 +147,14 @@ export default async function HomePage() {
   }));
 
   const curatedCoordinates = [
-    { num: '01', name: 'Habit Tracker Board', age: '3-8 Y', price: '₹229', img: '/images/habit-tracker.jpg', href: '/product/findo-kids-daily-routine-habit-tracker-board' },
-    { num: '02', name: 'Tetra Tower Balance', age: '2-5 Y', price: '₹239', img: '/images/tetra-tower.jpg', href: '/product/tetra-tower-balance-game' },
-    { num: '03', name: 'Instant Print Camera', age: '4-10 Y', price: '₹1,319', img: '/images/instant-print-camera.jpg', href: '/product/findo-diy-instant-print-camera' },
-    { num: '04', name: 'Super Chemistry Lab', age: '8+ Y', price: '₹975', img: '/images/super-chemistry-lab.jpg', href: '/product/super-chemistry-lab' },
-    { num: '05', name: 'Montessori Tangram', age: '2-5 Y', price: '₹219', img: '/images/tangram-woodiness.jpg', href: '/product/montessori-geometric-puzzle' },
-    { num: '06', name: 'Educational Microscope', age: '6-12 Y', price: '₹849', img: '/images/science-lab-3in1.jpg', href: '/product/educational-microscope' },
-    { num: '07', name: 'Ekta Magna Play', age: '4-8 Y', price: '₹549', img: '/images/magna-play-magnets.jpg', href: '/product/magna-play-art-kit' },
-    { num: '08', name: 'Solar System Model', age: '6-12 Y', price: '₹490', img: '/images/solar-system-diy.jpg', href: '/product/solar-system-model-kit' },
+    { num: '01', name: 'Habit Tracker Board', age: '3-8 Y', price: '₹229', img: '/images/habit-tracker.jpg', href: '/product/habit-tracker', badge: '🔥 TOP SELLING' },
+    { num: '02', name: 'Tetra Tower Balance', age: '2-5 Y', price: '₹239', img: '/images/tetra-tower.jpg', href: '/product/balance-tower' },
+    { num: '03', name: 'Instant Print Camera', age: '4-10 Y', price: '₹1,319', img: '/images/instant-print-camera.jpg', href: '/product/kids-instant-print-digital-camera', badge: '🔥 TOP SELLING' },
+    { num: '04', name: 'Super Chemistry Lab', age: '8+ Y', price: '₹975', img: '/images/super-chemistry-lab.jpg', href: '/product/my-super-chemistry-lab' },
+    { num: '05', name: 'Montessori Tangram', age: '2-5 Y', price: '₹219', img: '/images/tangram-woodiness.jpg', href: '/product/tangram-wooden-puzzle-set' },
+    { num: '06', name: 'Educational Microscope', age: '6-12 Y', price: '₹949', img: '/images/educational-microscope.jpg', href: '/product/kids-educational-microscope-science-kit' },
+    { num: '07', name: 'Ekta Magna Play', age: '4-8 Y', price: '₹549', img: '/images/magna-play-magnets.jpg', href: '/product/ekta-magna-play-magnetic-art-puzzle' },
+    { num: '08', name: 'Solar System Model', age: '6-12 Y', price: '₹490', img: '/images/solar-system-diy.jpg', href: '/product/diy-working-solar-system-model' },
   ];
 
   return (
@@ -252,7 +254,13 @@ export default async function HomePage() {
             >
               <div className="w-full flex items-center justify-between text-[11px] text-slate-500 font-bold">
                 <span className="font-heading font-black text-[#5a9e2f]">#{item.num}</span>
-                <span className="font-heading text-slate-500 bg-white px-2 py-0.5 rounded-full border border-slate-200">{item.age}</span>
+                {item.badge ? (
+                  <span className="font-heading text-[10px] font-black bg-rose-600 text-white px-2 py-0.5 rounded-full shadow-xs">
+                    {item.badge}
+                  </span>
+                ) : (
+                  <span className="font-heading text-slate-500 bg-white px-2 py-0.5 rounded-full border border-slate-200">{item.age}</span>
+                )}
               </div>
 
               <div className="relative w-28 h-28 my-3 rounded-xl overflow-hidden group-hover:scale-110 transition-transform duration-300">

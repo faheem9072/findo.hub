@@ -128,6 +128,18 @@ export default function DealsProductSlider({ products }: { products: DealProduct
                       fill
                       className="object-contain p-2"
                     />
+
+                    {/* TOP SELLING Badge for Habit Tracker & DIY Camera */}
+                    {(p.slug?.includes('habit') ||
+                      p.slug?.includes('camera') ||
+                      p.name?.toLowerCase().includes('habit tracker') ||
+                      p.name?.toLowerCase().includes('camera')) && (
+                      <div className="absolute top-2 right-2 z-10">
+                        <span className="font-heading bg-gradient-to-r from-amber-500 to-rose-600 text-white text-[9px] font-black px-2 py-0.5 rounded-full uppercase tracking-wider shadow-md">
+                          🔥 TOP SELLING
+                        </span>
+                      </div>
+                    )}
                   </Link>
 
                   {/* Title */}
