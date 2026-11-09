@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Quicksand } from 'next/font/google';
+import { Quicksand, Fredoka } from 'next/font/google';
 import './globals.css';
 import ClientShell from '@/components/ClientShell';
 
@@ -7,6 +7,14 @@ const quicksand = Quicksand({
   subsets: ['latin'],
   variable: '--font-quicksand',
   weight: ['400', '500', '600', '700'],
+  display: 'swap',
+});
+
+const fredoka = Fredoka({
+  subsets: ['latin'],
+  variable: '--font-fredoka',
+  weight: ['400', '500', '600', '700'],
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
@@ -67,7 +75,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${quicksand.variable} h-full antialiased`}>
+    <html lang="en" className={`${quicksand.variable} ${fredoka.variable} h-full antialiased`}>
       <body className="min-h-full font-sans bg-[#fafbf8] text-[#0d1b1e]">
         <ClientShell>{children}</ClientShell>
       </body>

@@ -161,8 +161,8 @@ export default async function HomePage() {
       {/* 1. HAMLEYS-STYLE HERO PROMOTIONAL BANNER SLIDER WITH OFFER CALLOUTS */}
       <HeroHamleysSlider />
 
-      {/* 2. HAMLEYS "SHOP BY AGE" HORIZONTAL SLIDER (From User Reference Image 1) */}
-      <ShopByAgeSlider />
+      {/* 2. HAMLEYS "SHOP BY AGE" HORIZONTAL SLIDER WITH INSTANT ON-PAGE AGE FILTERING */}
+      <ShopByAgeSlider allProducts={catalogProducts} />
 
       {/* 3. DEALS OF THE DAY / OFFER PRICES HORIZONTAL PRODUCT SLIDER ("products inghane neenghuka offer price und enn paranghitt") */}
       <DealsProductSlider products={dealProducts} />
@@ -171,10 +171,10 @@ export default async function HomePage() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6 pb-4 border-b border-slate-200">
           <div>
-            <span className="text-xs uppercase font-mono tracking-widest text-[#5a9e2f] font-bold block">
+            <span className="font-heading text-xs uppercase tracking-wider text-[#5a9e2f] font-bold block">
               Find Smart Play
             </span>
-            <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+            <h2 className="font-heading text-2xl sm:text-4xl font-black text-slate-900 tracking-tight">
               Featured Toys & Best Sellers
             </h2>
           </div>
@@ -182,37 +182,37 @@ export default async function HomePage() {
           <div className="flex items-center gap-2 overflow-x-auto scrollbar-none pb-1">
             <Link
               href="/shop"
-              className="px-4 py-1.5 rounded-full bg-[#5a9e2f] text-white font-bold text-xs shadow-xs shrink-0"
+              className="font-heading px-4 py-1.5 rounded-full bg-[#5a9e2f] text-white font-bold text-xs shadow-xs shrink-0"
             >
               All Toys
             </Link>
             <Link
               href="/shop?age=0-3%20Years"
-              className="px-3.5 py-1.5 rounded-full bg-white border border-slate-200 text-slate-700 hover:border-[#5a9e2f] hover:text-[#5a9e2f] text-xs font-medium transition-colors shrink-0"
+              className="font-heading px-3.5 py-1.5 rounded-full bg-white border border-slate-200 text-slate-700 hover:border-[#5a9e2f] hover:text-[#5a9e2f] text-xs font-bold transition-colors shrink-0"
             >
               0-3 Y
             </Link>
             <Link
               href="/shop?age=3-5%20Years"
-              className="px-3.5 py-1.5 rounded-full bg-white border border-slate-200 text-slate-700 hover:border-[#5a9e2f] hover:text-[#5a9e2f] text-xs font-medium transition-colors shrink-0"
+              className="font-heading px-3.5 py-1.5 rounded-full bg-white border border-slate-200 text-slate-700 hover:border-[#5a9e2f] hover:text-[#5a9e2f] text-xs font-bold transition-colors shrink-0"
             >
               3-5 Y
             </Link>
             <Link
               href="/shop?age=6-8%20Years"
-              className="px-3.5 py-1.5 rounded-full bg-white border border-slate-200 text-slate-700 hover:border-[#5a9e2f] hover:text-[#5a9e2f] text-xs font-medium transition-colors shrink-0"
+              className="font-heading px-3.5 py-1.5 rounded-full bg-white border border-slate-200 text-slate-700 hover:border-[#5a9e2f] hover:text-[#5a9e2f] text-xs font-bold transition-colors shrink-0"
             >
               6-8 Y
             </Link>
             <Link
               href="/shop?age=8%2B%20Years"
-              className="px-3.5 py-1.5 rounded-full bg-white border border-slate-200 text-slate-700 hover:border-[#5a9e2f] hover:text-[#5a9e2f] text-xs font-medium transition-colors shrink-0"
+              className="font-heading px-3.5 py-1.5 rounded-full bg-white border border-slate-200 text-slate-700 hover:border-[#5a9e2f] hover:text-[#5a9e2f] text-xs font-bold transition-colors shrink-0"
             >
               8+ Y
             </Link>
             <Link
               href="/shop"
-              className="ml-2 text-xs font-bold text-[#5a9e2f] hover:underline flex items-center gap-1 shrink-0"
+              className="font-heading ml-2 text-xs font-bold text-[#5a9e2f] hover:underline flex items-center gap-1 shrink-0"
             >
               <span>View All ({catalogProducts.length})</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -231,34 +231,28 @@ export default async function HomePage() {
       {/* 5. "(HAVE FUN EXPLORING) Yeah! Curated Picks" COORDINATE GRID */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center space-y-2 mb-10">
-          <span className="font-mono text-xs uppercase tracking-widest text-[#5a9e2f] font-bold block">
-            (HAVE FUN EXPLORING)
+          <span className="font-heading text-xs uppercase tracking-wider text-[#5a9e2f] font-bold block">
+            ★ Have Fun Exploring
           </span>
-          <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
-            Yeah! Top Discoveries
+          <h2 className="font-heading text-3xl sm:text-5xl font-black text-slate-900 tracking-tight">
+            Top Discoveries
           </h2>
-          <p className="text-xs sm:text-sm text-slate-500 font-mono">
-            Hover & tap each discovery coordinate to explore child-safe favorites.
+          <p className="text-xs sm:text-sm text-slate-500 font-medium">
+            Hand-tested developmental favorites for screen-free play
           </p>
         </div>
 
-        {/* 8-Item Coordinate Grid with Bright Editorial aesthetic */}
+        {/* 8-Item Discovery Grid */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 border border-slate-200 p-4 sm:p-6 bg-white rounded-3xl relative shadow-xs">
-
-          <span className="absolute top-3 left-3 font-mono text-xs text-slate-300 select-none">+</span>
-          <span className="absolute top-3 right-3 font-mono text-xs text-slate-300 select-none">+</span>
-          <span className="absolute bottom-3 left-3 font-mono text-xs text-slate-300 select-none">+</span>
-          <span className="absolute bottom-3 right-3 font-mono text-xs text-slate-300 select-none">+</span>
-
           {curatedCoordinates.map((item) => (
             <Link
               key={item.num}
               href={item.href}
               className="group p-4 rounded-2xl bg-slate-50/70 border border-slate-200 hover:border-[#5a9e2f] hover:bg-white hover:shadow-md transition-all flex flex-col justify-between items-center text-center relative overflow-hidden"
             >
-              <div className="w-full flex items-center justify-between font-mono text-[10px] text-slate-500">
-                <span className="font-black text-[#5a9e2f]">({item.num})</span>
-                <span className="text-slate-400">{item.age}</span>
+              <div className="w-full flex items-center justify-between text-[11px] text-slate-500 font-bold">
+                <span className="font-heading font-black text-[#5a9e2f]">#{item.num}</span>
+                <span className="font-heading text-slate-500 bg-white px-2 py-0.5 rounded-full border border-slate-200">{item.age}</span>
               </div>
 
               <div className="relative w-28 h-28 my-3 rounded-xl overflow-hidden group-hover:scale-110 transition-transform duration-300">
@@ -271,10 +265,10 @@ export default async function HomePage() {
               </div>
 
               <div className="w-full pt-2 border-t border-slate-100">
-                <h4 className="font-mono text-xs font-bold text-slate-800 group-hover:text-[#5a9e2f] transition-colors truncate">
+                <h4 className="font-heading text-xs font-bold text-slate-800 group-hover:text-[#5a9e2f] transition-colors truncate">
                   {item.name}
                 </h4>
-                <span className="font-mono text-xs font-black text-[#5a9e2f] block mt-0.5">
+                <span className="font-heading text-xs font-black text-[#5a9e2f] block mt-0.5">
                   {item.price}
                 </span>
               </div>
@@ -286,10 +280,10 @@ export default async function HomePage() {
       {/* 6. CORE MANIFESTO 4-PILLAR GRID */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 border-t border-b border-slate-200">
         <div className="text-center mb-10 space-y-2">
-          <span className="font-mono text-[11px] uppercase tracking-widest text-[#5a9e2f] font-bold">
-            + [ CORE STANDARDS ]
+          <span className="font-heading text-xs uppercase tracking-wider text-[#5a9e2f] font-bold">
+            ★ Core Standards
           </span>
-          <h2 className="text-2xl sm:text-3xl font-black text-slate-900">
+          <h2 className="font-heading text-2xl sm:text-4xl font-black text-slate-900">
             Made for curious minds.
           </h2>
         </div>
@@ -299,14 +293,14 @@ export default async function HomePage() {
             href="/shop?purpose=LEARN"
             className="p-6 space-y-3 rounded-2xl bg-white border border-slate-200 hover:border-[#5a9e2f] hover:shadow-md transition-all group block"
           >
-            <span className="font-mono text-[10px] text-slate-400 block font-bold">(01)</span>
+            <span className="font-heading text-xs text-slate-400 block font-bold">(01)</span>
             <div className="w-12 h-12 rounded-full bg-[#5a9e2f]/10 border border-[#5a9e2f]/30 text-[#5a9e2f] flex items-center justify-center mx-auto group-hover:scale-110 transition-transform shadow-xs">
               <Lightbulb className="w-5 h-5" />
             </div>
-            <h3 className="font-black text-slate-900 text-sm group-hover:text-[#5a9e2f] transition-colors">
+            <h3 className="font-heading font-black text-slate-900 text-sm group-hover:text-[#5a9e2f] transition-colors">
               Learn through play
             </h3>
-            <span className="font-mono text-[11px] text-[#5a9e2f] flex items-center justify-center gap-1 group-hover:underline">
+            <span className="font-heading text-xs text-[#5a9e2f] font-bold flex items-center justify-center gap-1 group-hover:underline">
               <span>View STEM & Logic</span>
               <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
             </span>
@@ -316,14 +310,14 @@ export default async function HomePage() {
             href={`/shop?purpose=${encodeURIComponent('BUILD HABITS')}`}
             className="p-6 space-y-3 rounded-2xl bg-white border border-slate-200 hover:border-[#5a9e2f] hover:shadow-md transition-all group block"
           >
-            <span className="font-mono text-[10px] text-slate-400 block font-bold">(02)</span>
+            <span className="font-heading text-xs text-slate-400 block font-bold">(02)</span>
             <div className="w-12 h-12 rounded-full bg-[#5a9e2f]/10 border border-[#5a9e2f]/30 text-[#5a9e2f] flex items-center justify-center mx-auto group-hover:scale-110 transition-transform shadow-xs">
               <Smile className="w-5 h-5" />
             </div>
-            <h3 className="font-black text-slate-900 text-sm group-hover:text-[#5a9e2f] transition-colors">
+            <h3 className="font-heading font-black text-slate-900 text-sm group-hover:text-[#5a9e2f] transition-colors">
               Build better habits
             </h3>
-            <span className="font-mono text-[11px] text-[#5a9e2f] flex items-center justify-center gap-1 group-hover:underline">
+            <span className="font-heading text-xs text-[#5a9e2f] font-bold flex items-center justify-center gap-1 group-hover:underline">
               <span>Trackers & Planners</span>
               <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
             </span>
@@ -333,14 +327,14 @@ export default async function HomePage() {
             href="/shop?purpose=CREATE"
             className="p-6 space-y-3 rounded-2xl bg-white border border-slate-200 hover:border-[#5a9e2f] hover:shadow-md transition-all group block"
           >
-            <span className="font-mono text-[10px] text-slate-400 block font-bold">(03)</span>
+            <span className="font-heading text-xs text-slate-400 block font-bold">(03)</span>
             <div className="w-12 h-12 rounded-full bg-[#5a9e2f]/10 border border-[#5a9e2f]/30 text-[#5a9e2f] flex items-center justify-center mx-auto group-hover:scale-110 transition-transform shadow-xs">
               <Sparkles className="w-5 h-5" />
             </div>
-            <h3 className="font-black text-slate-900 text-sm group-hover:text-[#5a9e2f] transition-colors">
+            <h3 className="font-heading font-black text-slate-900 text-sm group-hover:text-[#5a9e2f] transition-colors">
               Explore creativity
             </h3>
-            <span className="font-mono text-[11px] text-[#5a9e2f] flex items-center justify-center gap-1 group-hover:underline">
+            <span className="font-heading text-xs text-[#5a9e2f] font-bold flex items-center justify-center gap-1 group-hover:underline">
               <span>Art & Puzzles</span>
               <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
             </span>
@@ -350,14 +344,14 @@ export default async function HomePage() {
             href="/shop?purpose=PLAY"
             className="p-6 space-y-3 rounded-2xl bg-white border border-slate-200 hover:border-[#5a9e2f] hover:shadow-md transition-all group block"
           >
-            <span className="font-mono text-[10px] text-slate-400 block font-bold">(04)</span>
+            <span className="font-heading text-xs text-slate-400 block font-bold">(04)</span>
             <div className="w-12 h-12 rounded-full bg-[#5a9e2f]/10 border border-[#5a9e2f]/30 text-[#5a9e2f] flex items-center justify-center mx-auto group-hover:scale-110 transition-transform shadow-xs">
               <MonitorOff className="w-5 h-5" />
             </div>
-            <h3 className="font-black text-slate-900 text-sm group-hover:text-[#5a9e2f] transition-colors">
+            <h3 className="font-heading font-black text-slate-900 text-sm group-hover:text-[#5a9e2f] transition-colors">
               Screen-free fun
             </h3>
-            <span className="font-mono text-[11px] text-[#5a9e2f] flex items-center justify-center gap-1 group-hover:underline">
+            <span className="font-heading text-xs text-[#5a9e2f] font-bold flex items-center justify-center gap-1 group-hover:underline">
               <span>Active Play</span>
               <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
             </span>
@@ -367,24 +361,24 @@ export default async function HomePage() {
 
       {/* 7. FINAL HEROIC CALL TO ACTION */}
       <section className="max-w-5xl mx-auto px-4 text-center">
-        <div className="p-10 sm:p-14 rounded-3xl bg-gradient-to-br from-[#18392b] via-[#0d2218] to-[#08150f] text-white shadow-xl relative overflow-hidden border border-[#5a9e2f]/40">
+        <div className="p-8 sm:p-14 rounded-3xl bg-gradient-to-br from-[#18392b] via-[#0d2218] to-[#08150f] text-white shadow-xl relative overflow-hidden border border-[#5a9e2f]/40">
           <div className="absolute -right-16 -bottom-16 w-64 h-64 bg-[#5a9e2f]/25 rounded-full blur-3xl pointer-events-none" />
-          <span className="font-mono text-xs uppercase tracking-widest text-[#72bf44] font-black block mb-3">
-            + [ FIND SMART PLAY ]
+          <span className="font-heading text-xs uppercase tracking-wider text-[#72bf44] font-bold block mb-2">
+            ★ Find Smart Play
           </span>
-          <h3 className="text-3xl sm:text-5xl font-black leading-tight tracking-tight">
+          <h3 className="font-heading text-3xl sm:text-5xl font-black leading-tight tracking-tight">
             More than toys.<br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#84d94b] to-[#5a9e2f]">
               Little tools for growing minds.
             </span>
           </h3>
-          <p className="mt-4 text-sm text-slate-300 max-w-lg mx-auto font-mono">
+          <p className="mt-3 text-sm text-slate-300 max-w-lg mx-auto font-medium">
             Join thousands of parents choosing screen-free discovery across India.
           </p>
-          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               href="/shop"
-              className="inline-flex items-center gap-2 py-3.5 px-9 rounded-full bg-[#5a9e2f] hover:bg-[#488224] text-white font-mono text-xs font-black uppercase tracking-widest transition-all shadow-[0_0_30px_rgba(90,158,47,0.5)] hover:scale-105"
+              className="font-heading inline-flex items-center gap-2 py-3 px-8 rounded-full bg-[#5a9e2f] hover:bg-[#488224] text-white text-xs font-bold uppercase tracking-wider transition-all shadow-[0_0_30px_rgba(90,158,47,0.5)] hover:scale-105"
             >
               <span>Explore Complete Catalog</span>
               <ArrowRight className="w-4 h-4" />
