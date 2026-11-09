@@ -62,7 +62,18 @@ export default function CartPage() {
                   >
                     {item.name}
                   </Link>
-                  <p className="text-xs text-slate-400">Price: ₹{item.price}</p>
+                  <div className="flex items-center gap-2 mt-0.5">
+                    <p className="text-xs text-slate-500 font-bold">₹{item.price}</p>
+                    {(item.deliveryFee ?? 0) > 0 ? (
+                      <span className="text-[10px] font-bold text-amber-800 bg-amber-50 border border-amber-200 px-1.5 py-0.5 rounded">
+                        +₹{item.deliveryFee} Delivery
+                      </span>
+                    ) : (
+                      <span className="text-[10px] font-bold text-[#2d6a1e] bg-emerald-50 border border-emerald-200 px-1.5 py-0.5 rounded">
+                        Free Delivery
+                      </span>
+                    )}
+                  </div>
 
                   <div className="flex items-center gap-3 pt-2">
                     <div className="flex items-center border border-slate-200 rounded-lg bg-white overflow-hidden text-xs">
@@ -114,15 +125,27 @@ export default function CartPage() {
           <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-6 shadow-xs">
             <h2 className="text-lg font-extrabold text-[#0d1b1e]">Order Summary</h2>
 
-            <div className="p-3 bg-[#eef8ea] rounded-xl border border-emerald-200 text-xs text-emerald-800 font-bold flex items-center justify-between">
-              <span className="flex items-center gap-2">
-                <Truck className="w-4 h-4 text-[#5a9e2f] shrink-0" />
-                <span>🎉 FREE Shipping on all orders across India!</span>
-              </span>
-              <span className="text-[#5a9e2f] font-extrabold uppercase text-[10px] bg-white px-2 py-0.5 rounded-full border border-emerald-300">
-                ₹0 FREE
-              </span>
-            </div>
+            {shippingFee === 0 ? (
+              <div className="p-3 bg-[#eef8ea] rounded-xl border border-emerald-200 text-xs text-[#2d6a1e] font-bold flex items-center justify-between">
+                <span className="flex items-center gap-2">
+                  <Truck className="w-4 h-4 text-[#5a9e2f] shrink-0" />
+                  <span>🎉 FREE Delivery on this order!</span>
+                </span>
+                <span className="text-[#5a9e2f] font-extrabold uppercase text-[10px] bg-white px-2 py-0.5 rounded-full border border-emerald-300">
+                  ₹0 FREE
+                </span>
+              </div>
+            ) : (
+              <div className="p-3 bg-amber-50 rounded-xl border border-amber-200 text-xs text-amber-900 font-bold flex items-center justify-between">
+                <span className="flex items-center gap-2">
+                  <Truck className="w-4 h-4 text-amber-600 shrink-0" />
+                  <span>Standard Delivery Fee:</span>
+                </span>
+                <span className="text-amber-800 font-extrabold text-xs">
+                  ₹{shippingFee}
+                </span>
+              </div>
+            )}
 
             <div className="space-y-3 border-t border-slate-100 pt-4 text-xs font-medium text-slate-600">
               <div className="flex justify-between">

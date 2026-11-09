@@ -9,6 +9,7 @@ export interface CartItem {
   slug: string;
   price: number;
   compareAtPrice?: number | null;
+  deliveryFee?: number;
   image: string;
   quantity: number;
   ageRange?: string;
@@ -23,6 +24,7 @@ interface CartContextType {
     slug: string;
     price: number;
     compareAtPrice?: number | null;
+    deliveryFee?: number;
     images: string;
     ageRange?: string;
     stock: number;
@@ -99,6 +101,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
                         ...item,
                         price: latest.price,
                         compareAtPrice: latest.compareAtPrice,
+                        deliveryFee: latest.deliveryFee !== undefined ? Number(latest.deliveryFee) : 0,
                         stock: latest.stock,
                         name: latest.name,
                       };
@@ -134,6 +137,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     slug: string;
     price: number;
     compareAtPrice?: number | null;
+    deliveryFee?: number;
     images: string;
     ageRange?: string;
     stock: number;
@@ -159,6 +163,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
           ...updated[existingIndex],
           price: product.price,
           compareAtPrice: product.compareAtPrice,
+          deliveryFee: product.deliveryFee !== undefined ? Number(product.deliveryFee) : updated[existingIndex].deliveryFee || 0,
           quantity: newQty,
         };
         return updated;
@@ -172,6 +177,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
             slug: product.slug,
             price: product.price,
             compareAtPrice: product.compareAtPrice,
+            deliveryFee: product.deliveryFee !== undefined ? Number(product.deliveryFee) : 0,
             image: parsedImage,
             quantity: quantityToAdd,
             ageRange: product.ageRange,
@@ -206,8 +212,15 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
   const subtotal = cart.reduce((total, item) => total + item.price * item.quantity, 0);
-  const freeShippingRemaining = flatShippingRate === 0 ? 0 : Math.max(0, freeShippingThreshold - subtotal);
-  const shippingFee = cart.length === 0 || flatShippingRate === 0 || subtotal >= freeShippingThreshold ? 0 : flatShippingRate;
+  
+  // Calculate delivery fee:
+  // If products have individual deliveryFee, take the max delivery fee among products in the cart (or flatShippingRate if set).
+  // If an order subtotal reaches freeShippingThreshold (and threshold > 0), shipping is 0.
+  const maxProductDeliveryFee = cart.reduce((max, item) => Math.max(max, Number(item.deliveryFee || 0)), 0);
+  const effectiveShippingRate = Math.max(flatShippingRate, maxProductDeliveryFee);
+  const freeShippingRemaining = freeShippingThreshold > 0 ? Math.max(0, freeShippingThreshold - subtotal) : 0;
+  const isFreeThresholdMet = freeShippingThreshold > 0 && subtotal >= freeShippingThreshold;
+  const shippingFee = cart.length === 0 || isFreeThresholdMet ? 0 : effectiveShippingRate;
 
   return (
     <CartContext.Provider

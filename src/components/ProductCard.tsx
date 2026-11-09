@@ -14,6 +14,7 @@ export interface ProductCardProps {
     shortDesc: string;
     price: number;
     compareAtPrice?: number | null;
+    deliveryFee?: number;
     stock: number;
     images: string;
     ageRange?: string;
@@ -170,13 +171,18 @@ export default function ProductCard({ product, variant = 'dark' }: ProductCardPr
           isDark ? 'border-white/10' : 'border-slate-100'
         }`}
       >
-        <div className="flex items-baseline gap-1.5">
-          <span className={`text-base sm:text-lg font-black ${isDark ? 'text-[#72bf44]' : 'text-[#0d1b1e]'}`}>
-            ₹{product.price}
+        <div className="flex flex-col">
+          <div className="flex items-baseline gap-1.5">
+            <span className={`text-base sm:text-lg font-black ${isDark ? 'text-[#72bf44]' : 'text-[#0d1b1e]'}`}>
+              ₹{product.price}
+            </span>
+            {product.compareAtPrice && product.compareAtPrice > product.price && (
+              <span className="text-xs text-slate-500 line-through">₹{product.compareAtPrice}</span>
+            )}
+          </div>
+          <span className={`text-[9px] font-bold ${product.deliveryFee && product.deliveryFee > 0 ? (isDark ? 'text-amber-400' : 'text-amber-700') : (isDark ? 'text-emerald-400' : 'text-[#5a9e2f]')}`}>
+            {product.deliveryFee && product.deliveryFee > 0 ? `+₹${product.deliveryFee} Deliv.` : 'Free Delivery'}
           </span>
-          {product.compareAtPrice && product.compareAtPrice > product.price && (
-            <span className="text-xs text-slate-500 line-through">₹{product.compareAtPrice}</span>
-          )}
         </div>
 
         <button

@@ -97,7 +97,7 @@ export async function POST(request: Request) {
     const productIds = items.map((item: any) => item.productId).filter(Boolean);
     const existingProducts = await prisma.product.findMany({
       where: { id: { in: productIds } },
-      select: { id: true, name: true, price: true },
+      select: { id: true, name: true, price: true, deliveryFee: true },
     });
     const existingProductIds = new Set(existingProducts.map((p) => p.id));
     const fallbackProduct = existingProducts[0] || (await prisma.product.findFirst());
@@ -153,7 +153,10 @@ export async function POST(request: Request) {
     const freeShippingThreshold = settings?.freeShippingThreshold ?? 0;
     const flatShippingRate = settings?.flatShippingRate ?? 0;
 
-    const shippingFee = flatShippingRate === 0 || subtotal >= freeShippingThreshold ? 0 : flatShippingRate;
+    const maxProductDeliveryFee = existingProducts.reduce((max, p) => Math.max(max, Number(p.deliveryFee || 0)), 0);
+    const baseShippingRate = Math.max(flatShippingRate, maxProductDeliveryFee);
+    const isFreeThresholdMet = freeShippingThreshold > 0 && subtotal >= freeShippingThreshold;
+    const shippingFee = isFreeThresholdMet ? 0 : baseShippingRate;
     const totalAmount = Math.max(0, subtotal - discountAmount + shippingFee);
 
     const orderNumber = 'FND-' + Math.floor(100000 + Math.random() * 900000);

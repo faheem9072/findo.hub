@@ -28,6 +28,7 @@ model Product {
   shortDesc      String
   price          Float
   compareAtPrice Float?
+  deliveryFee    Float       @default(0)
   stock          Int         @default(15)
   sku            String      @default("")
   categoryId     String

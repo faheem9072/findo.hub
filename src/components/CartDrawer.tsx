@@ -50,18 +50,32 @@ export default function CartDrawer() {
             </button>
           </div>
 
-          {/* Free Shipping Banner */}
-          <div className="bg-[#eef8ea] p-3.5 border-b border-emerald-200 text-xs">
-            <div className="flex items-center justify-between font-bold text-[#2d6a1e]">
-              <span className="flex items-center gap-2">
-                <Truck className="w-4 h-4 text-[#5a9e2f] shrink-0" />
-                <span>🎉 FREE SHIPPING on all orders across India!</span>
-              </span>
-              <span className="bg-[#5a9e2f] text-white text-[10px] uppercase font-extrabold px-2 py-0.5 rounded-full shadow-xs">
-                100% Free
-              </span>
+          {/* Shipping Banner */}
+          {shippingFee === 0 ? (
+            <div className="bg-[#eef8ea] p-3.5 border-b border-emerald-200 text-xs">
+              <div className="flex items-center justify-between font-bold text-[#2d6a1e]">
+                <span className="flex items-center gap-2">
+                  <Truck className="w-4 h-4 text-[#5a9e2f] shrink-0" />
+                  <span>🎉 FREE SHIPPING on all items in your cart!</span>
+                </span>
+                <span className="bg-[#5a9e2f] text-white text-[10px] uppercase font-extrabold px-2 py-0.5 rounded-full shadow-xs">
+                  100% Free
+                </span>
+              </div>
             </div>
-          </div>
+          ) : (
+            <div className="bg-amber-50 p-3.5 border-b border-amber-200 text-xs">
+              <div className="flex items-center justify-between font-bold text-amber-900">
+                <span className="flex items-center gap-2">
+                  <Truck className="w-4 h-4 text-amber-600 shrink-0" />
+                  <span>Standard Delivery: ₹{shippingFee}</span>
+                </span>
+                <span className="bg-amber-600 text-white text-[10px] uppercase font-extrabold px-2 py-0.5 rounded-full shadow-xs">
+                  +₹{shippingFee}
+                </span>
+              </div>
+            </div>
+          )}
 
           {/* Cart Items List */}
           <div className="flex-1 overflow-y-auto p-5 space-y-4 custom-scrollbar">
@@ -109,11 +123,20 @@ export default function CartDrawer() {
                     </div>
 
                     <div className="flex items-center justify-between mt-2">
-                      {/* Price */}
-                      <div className="flex items-baseline gap-1.5">
+                      {/* Price & Delivery */}
+                      <div className="flex items-center gap-2">
                         <span className="text-sm font-bold text-[#0d1b1e]">₹{item.price}</span>
                         {item.compareAtPrice && item.compareAtPrice > item.price && (
                           <span className="text-xs text-slate-400 line-through">₹{item.compareAtPrice}</span>
+                        )}
+                        {(item.deliveryFee ?? 0) > 0 ? (
+                          <span className="text-[9px] font-bold text-amber-800 bg-amber-50 border border-amber-200 px-1.5 py-0.5 rounded">
+                            +₹{item.deliveryFee} Deliv.
+                          </span>
+                        ) : (
+                          <span className="text-[9px] font-bold text-[#2d6a1e] bg-emerald-50 border border-emerald-200 px-1.5 py-0.5 rounded">
+                            Free Deliv.
+                          </span>
                         )}
                       </div>
 

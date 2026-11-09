@@ -34,6 +34,7 @@ export default function AdminProductsClient({
   const [editingPriceId, setEditingPriceId] = useState<string | null>(null);
   const [priceInput, setPriceInput] = useState<string>('');
   const [compareAtPriceInput, setCompareAtPriceInput] = useState<string>('');
+  const [deliveryFeeInput, setDeliveryFeeInput] = useState<string>('0');
   const [savingPriceId, setSavingPriceId] = useState<string | null>(null);
   const [priceError, setPriceError] = useState<string | null>(null);
   const [priceSuccessId, setPriceSuccessId] = useState<string | null>(null);
@@ -56,6 +57,7 @@ export default function AdminProductsClient({
     setEditingPriceId(product.id);
     setPriceInput(String(product.price ?? ''));
     setCompareAtPriceInput(product.compareAtPrice != null ? String(product.compareAtPrice) : '');
+    setDeliveryFeeInput(product.deliveryFee != null ? String(product.deliveryFee) : '0');
     setPriceError(null);
   };
 
@@ -67,6 +69,7 @@ export default function AdminProductsClient({
     setEditingPriceId(null);
     setPriceInput('');
     setCompareAtPriceInput('');
+    setDeliveryFeeInput('0');
     setPriceError(null);
   };
 
@@ -98,6 +101,7 @@ export default function AdminProductsClient({
       numCompare = val;
     }
 
+    const numDelivery = deliveryFeeInput.trim() === '' ? 0 : parseFloat(deliveryFeeInput.trim()) || 0;
     setSavingPriceId(productId);
     setPriceError(null);
 
@@ -108,6 +112,7 @@ export default function AdminProductsClient({
         body: JSON.stringify({
           price: numPrice,
           compareAtPrice: numCompare,
+          deliveryFee: numDelivery,
         }),
       });
 
@@ -124,6 +129,7 @@ export default function AdminProductsClient({
                 ...p,
                 price: numPrice,
                 compareAtPrice: numCompare,
+                deliveryFee: numDelivery,
               }
             : p
         )
@@ -269,6 +275,15 @@ export default function AdminProductsClient({
                         {p.category?.name || 'General'}
                       </span>
                       <span className="text-[10px] text-slate-400">{p.ageRange}</span>
+                      {p.deliveryFee > 0 ? (
+                        <span className="bg-amber-100 text-amber-800 px-2 py-0.5 rounded-md text-[9px] font-bold">
+                          +₹{p.deliveryFee} Deliv.
+                        </span>
+                      ) : (
+                        <span className="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-md text-[9px] font-bold">
+                          Free Deliv.
+                        </span>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -322,6 +337,26 @@ export default function AdminProductsClient({
                               className="w-full pl-6 pr-2 py-1.5 text-xs bg-white border border-slate-300 rounded-lg focus:outline-none focus:border-[#5a9e2f]"
                             />
                           </div>
+                        </div>
+                      </div>
+
+                      <div>
+                        <label className="text-[10px] font-bold text-slate-700 block mb-0.5">
+                          Delivery Fee (₹) (0 = Free Delivery)
+                        </label>
+                        <div className="relative">
+                          <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs font-bold">
+                            ₹
+                          </span>
+                          <input
+                            type="number"
+                            step="any"
+                            min="0"
+                            value={deliveryFeeInput}
+                            onChange={(e) => setDeliveryFeeInput(e.target.value)}
+                            placeholder="0 (Free Delivery)"
+                            className="w-full pl-6 pr-2 py-1.5 text-xs bg-white border border-slate-300 rounded-lg focus:outline-none focus:border-[#5a9e2f]"
+                          />
                         </div>
                       </div>
 
@@ -423,6 +458,7 @@ export default function AdminProductsClient({
                 <th className="py-4 px-6">Product</th>
                 <th className="py-4 px-4">Category</th>
                 <th className="py-4 px-4 min-w-[210px]">Price (₹)</th>
+                <th className="py-4 px-4">Delivery</th>
                 <th className="py-4 px-4">Stock</th>
                 <th className="py-4 px-4">Featured</th>
                 <th className="py-4 px-6 text-right">Actions</th>
@@ -521,6 +557,24 @@ export default function AdminProductsClient({
                             </div>
                           </div>
 
+                          <div className="space-y-1">
+                            <label className="text-[10px] font-bold text-slate-700 block">Delivery Fee (₹) (0 = Free Delivery)</label>
+                            <div className="relative">
+                              <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs font-bold">
+                                ₹
+                              </span>
+                              <input
+                                type="number"
+                                step="any"
+                                min="0"
+                                value={deliveryFeeInput}
+                                onChange={(e) => setDeliveryFeeInput(e.target.value)}
+                                placeholder="0 (Free Delivery)"
+                                className="w-full pl-6 pr-2 py-1 text-xs bg-white border border-slate-300 rounded-lg focus:outline-none focus:border-[#5a9e2f]"
+                              />
+                            </div>
+                          </div>
+
                           {priceError && (
                             <p className="text-[10px] font-bold text-red-600 flex items-center gap-1">
                               <AlertCircle className="w-3 h-3 shrink-0" />
@@ -569,11 +623,24 @@ export default function AdminProductsClient({
                           <button
                             onClick={(e) => handleStartEditPrice(p, e)}
                             className="p-1.5 rounded-lg text-slate-400 hover:text-[#5a9e2f] hover:bg-[#eef8ea] opacity-75 group-hover/price:opacity-100 transition-all cursor-pointer"
-                            title="Change Price"
+                            title="Change Price & Delivery"
                           >
                             <Edit2 className="w-3.5 h-3.5" />
                           </button>
                         </div>
+                      )}
+                    </td>
+
+                    {/* Delivery Column */}
+                    <td className="py-4 px-4">
+                      {p.deliveryFee > 0 ? (
+                        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-extrabold bg-amber-50 text-amber-800 border border-amber-200">
+                          +₹{p.deliveryFee} Deliv.
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-extrabold bg-emerald-50 text-[#2d6a1e] border border-emerald-200">
+                          ✓ Free Deliv.
+                        </span>
                       )}
                     </td>
 

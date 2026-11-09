@@ -234,7 +234,9 @@ export default function ProductDetailClient({
       title: 'Shipping Information',
       icon: Truck,
       content:
-        'Ships within 24 hours from our Indian fulfillment centers. Free standard shipping across India on all orders. Express delivery options available at checkout.',
+        product.deliveryFee && product.deliveryFee > 0
+          ? `Standard delivery charge of ₹${product.deliveryFee}. Dispatched within 24 hours from our Indian fulfillment centers. Express delivery options available at checkout.`
+          : 'Ships within 24 hours from our Indian fulfillment centers. Free standard shipping across India on this product. Express delivery options available at checkout.',
     },
     {
       id: 'returns',
@@ -373,8 +375,19 @@ export default function ProductDetailClient({
                     <span className="text-base text-slate-400 line-through">₹{product.compareAtPrice}</span>
                   )}
                 </div>
-                <p className="text-xs text-[#5a9e2f] font-semibold mt-0.5">
-                  Taxes included. FREE delivery on all orders across India!
+                <p className="text-xs font-semibold mt-1 flex items-center gap-1.5 flex-wrap">
+                  <span className="text-slate-400">Taxes included.</span>
+                  {product.deliveryFee && product.deliveryFee > 0 ? (
+                    <span className="text-amber-800 font-bold bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-full text-[11px] inline-flex items-center gap-1">
+                      <Truck className="w-3 h-3 text-amber-600" />
+                      +₹{product.deliveryFee} Delivery Charge
+                    </span>
+                  ) : (
+                    <span className="text-[#2d6a1e] font-bold bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full text-[11px] inline-flex items-center gap-1">
+                      <Truck className="w-3 h-3 text-[#5a9e2f]" />
+                      FREE Delivery Across India
+                    </span>
+                  )}
                 </p>
               </div>
 

@@ -48,6 +48,7 @@ export default function ProductForm({ initialData, categories }: ProductFormProp
     description: initialData?.description || '',
     price: initialData?.price || '',
     compareAtPrice: initialData?.compareAtPrice || '',
+    deliveryFee: initialData?.deliveryFee !== undefined ? initialData.deliveryFee : 0,
     stock: initialData?.stock || 10,
     categoryId: initialData?.categoryId || categories[0]?.id || '',
     ageRange: initialData?.ageRange || '3-8 Years',
@@ -155,6 +156,7 @@ export default function ProductForm({ initialData, categories }: ProductFormProp
 
     const payload = {
       ...formData,
+      deliveryFee: Number(formData.deliveryFee) || 0,
       images: cleanImages,
       badges,
       specs: specsObject,
@@ -299,6 +301,44 @@ export default function ProductForm({ initialData, categories }: ProductFormProp
               placeholder="1499"
               className="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-medium focus:outline-none focus:border-[#5a9e2f]"
             />
+          </div>
+
+          <div className="space-y-1 bg-[#fbfdfa] p-3 rounded-2xl border border-emerald-200/80">
+            <div className="flex items-center justify-between">
+              <label className="text-xs font-bold text-[#0d1b1e]">Delivery Charge (₹)</label>
+              {Number(formData.deliveryFee) > 0 ? (
+                <span className="text-[10px] bg-amber-100 text-amber-800 font-extrabold px-2 py-0.5 rounded-full">
+                  +₹{formData.deliveryFee} Delivery
+                </span>
+              ) : (
+                <span className="text-[10px] bg-emerald-100 text-[#2d6a1e] font-extrabold px-2 py-0.5 rounded-full">
+                  ✓ Free Delivery
+                </span>
+              )}
+            </div>
+            <div className="flex items-center gap-2 mt-1">
+              <input
+                type="number"
+                step="any"
+                min="0"
+                name="deliveryFee"
+                value={formData.deliveryFee}
+                onChange={handleChange}
+                placeholder="0 (Free Delivery)"
+                className="w-full px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-xs font-medium focus:outline-none focus:border-[#5a9e2f]"
+              />
+              <button
+                type="button"
+                onClick={() => setFormData({ ...formData, deliveryFee: 0 })}
+                className="shrink-0 px-2.5 py-1.5 text-[10px] font-bold rounded-xl bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200 transition-colors"
+                title="Set to Free Delivery"
+              >
+                Free
+              </button>
+            </div>
+            <p className="text-[9px] text-slate-400">
+              0 = Free Delivery. Enter amount (e.g. 50, 79) if this item has delivery charges.
+            </p>
           </div>
 
           <div className="space-y-1">

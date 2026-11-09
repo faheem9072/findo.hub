@@ -49,6 +49,7 @@ export async function PUT(
       shortDesc,
       price,
       compareAtPrice,
+      deliveryFee,
       stock,
       categoryId,
       images,
@@ -80,6 +81,16 @@ export async function PUT(
       }
     }
 
+    let parsedDeliveryFee: number | undefined = undefined;
+    if (deliveryFee !== undefined) {
+      if (deliveryFee === null || deliveryFee === '') {
+        parsedDeliveryFee = 0;
+      } else {
+        const num = typeof deliveryFee === 'number' ? deliveryFee : parseFloat(String(deliveryFee).trim());
+        parsedDeliveryFee = isNaN(num) || num < 0 ? 0 : num;
+      }
+    }
+
     const product = await prisma.product.update({
       where: { id },
       data: {
@@ -89,6 +100,7 @@ export async function PUT(
         ...(shortDesc !== undefined && { shortDesc }),
         ...(parsedPrice !== undefined && { price: parsedPrice }),
         ...(parsedCompareAtPrice !== undefined && { compareAtPrice: parsedCompareAtPrice }),
+        ...(parsedDeliveryFee !== undefined && { deliveryFee: parsedDeliveryFee }),
         ...(stock !== undefined && { stock: parseInt(stock) }),
         ...(categoryId && { categoryId }),
         ...(images !== undefined && { images: typeof images === 'string' ? images : JSON.stringify(images) }),

@@ -73,7 +73,10 @@ export default function CheckoutPage() {
       .catch((e) => console.error('Failed to sync settings in checkout:', e));
   }, []);
 
-  const shippingFee = liveShippingRate === 0 || subtotal >= liveThreshold ? 0 : liveShippingRate;
+  const maxCartDeliveryFee = cart.reduce((max, item) => Math.max(max, Number(item.deliveryFee || 0)), 0);
+  const baseShippingRate = Math.max(liveShippingRate, maxCartDeliveryFee);
+  const isFreeThresholdMet = liveThreshold > 0 && subtotal >= liveThreshold;
+  const shippingFee = isFreeThresholdMet ? 0 : baseShippingRate;
   const discountAmount = appliedCoupon ? appliedCoupon.calculatedDiscount : 0;
   const totalPayable = Math.max(0, subtotal - discountAmount + shippingFee);
 
@@ -681,16 +684,28 @@ export default function CheckoutPage() {
               {couponError && <p className="text-[11px] font-semibold text-red-600">{couponError}</p>}
             </div>
 
-            {/* Free Shipping Highlight */}
-            <div className="p-3 bg-[#eef8ea] rounded-xl border border-emerald-200 text-xs font-bold text-[#2d6a1e] flex items-center justify-between">
-              <span className="flex items-center gap-2">
-                <Truck className="w-4 h-4 text-[#5a9e2f] shrink-0" />
-                <span>🎉 FREE Delivery All Over India</span>
-              </span>
-              <span className="bg-[#5a9e2f] text-white text-[10px] uppercase font-extrabold px-2 py-0.5 rounded-full">
-                ₹0 FREE
-              </span>
-            </div>
+            {/* Delivery Charge Highlight */}
+            {shippingFee === 0 ? (
+              <div className="p-3 bg-[#eef8ea] rounded-xl border border-emerald-200 text-xs font-bold text-[#2d6a1e] flex items-center justify-between">
+                <span className="flex items-center gap-2">
+                  <Truck className="w-4 h-4 text-[#5a9e2f] shrink-0" />
+                  <span>🎉 FREE Delivery All Over India</span>
+                </span>
+                <span className="bg-[#5a9e2f] text-white text-[10px] uppercase font-extrabold px-2 py-0.5 rounded-full">
+                  ₹0 FREE
+                </span>
+              </div>
+            ) : (
+              <div className="p-3 bg-amber-50 rounded-xl border border-amber-200 text-xs font-bold text-amber-900 flex items-center justify-between">
+                <span className="flex items-center gap-2">
+                  <Truck className="w-4 h-4 text-amber-600 shrink-0" />
+                  <span>Standard Delivery Charge</span>
+                </span>
+                <span className="bg-amber-600 text-white text-[10px] uppercase font-extrabold px-2 py-0.5 rounded-full">
+                  +₹{shippingFee}
+                </span>
+              </div>
+            )}
 
             {/* Totals Breakdown */}
             <div className="space-y-2 pt-4 border-t border-slate-100 text-xs">
