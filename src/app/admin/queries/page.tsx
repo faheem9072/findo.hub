@@ -3,12 +3,18 @@ import prisma from '@/lib/prisma';
 import AdminLayout from '@/components/AdminLayout';
 import { Mail, Phone, Clock, CheckCircle2 } from 'lucide-react';
 
+export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 export default async function AdminQueriesPage() {
-  const queries = await prisma.customerQuery.findMany({
-    orderBy: { createdAt: 'desc' },
-  });
+  let queries: any[] = [];
+  try {
+    queries = await prisma.customerQuery.findMany({
+      orderBy: { createdAt: 'desc' },
+    });
+  } catch (error) {
+    console.error('Admin Queries DB Error:', error);
+  }
 
   return (
     <AdminLayout>

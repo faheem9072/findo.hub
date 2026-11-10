@@ -3,20 +3,26 @@ import prisma from '@/lib/prisma';
 import AdminLayout from '@/components/AdminLayout';
 import { Users, Mail, Phone, ShoppingBag } from 'lucide-react';
 
+export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 export default async function AdminCustomersPage() {
-  const customers = await prisma.customer.findMany({
-    orderBy: { createdAt: 'desc' },
-    include: {
-      _count: {
-        select: { orders: true },
+  let customers: any[] = [];
+  try {
+    customers = await prisma.customer.findMany({
+      orderBy: { createdAt: 'desc' },
+      include: {
+        _count: {
+          select: { orders: true },
+        },
+        orders: {
+          select: { totalAmount: true },
+        },
       },
-      orders: {
-        select: { totalAmount: true },
-      },
-    },
-  });
+    });
+  } catch (error) {
+    console.error('Admin Customers DB Error:', error);
+  }
 
   return (
     <AdminLayout>
@@ -35,7 +41,7 @@ export default async function AdminCustomersPage() {
             {/* Mobile View: Customer Cards */}
             <div className="md:hidden space-y-3">
               {customers.map((c) => {
-                const totalSpent = c.orders.reduce((sum, o) => sum + o.totalAmount, 0);
+                const totalSpent = c.orders.reduce((sum: number, o: any) => sum + (o.totalAmount || 0), 0);
                 return (
                   <div key={c.id} className="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs space-y-2">
                     <div className="flex items-center justify-between">
@@ -79,7 +85,7 @@ export default async function AdminCustomersPage() {
                   </thead>
                   <tbody className="divide-y divide-slate-100 font-medium text-[#0d1b1e]">
                     {customers.map((c) => {
-                      const totalSpent = c.orders.reduce((sum, o) => sum + o.totalAmount, 0);
+                      const totalSpent = c.orders.reduce((sum: number, o: any) => sum + (o.totalAmount || 0), 0);
                       return (
                         <tr key={c.id} className="hover:bg-slate-50">
                           <td className="p-4 font-bold flex items-center gap-2">

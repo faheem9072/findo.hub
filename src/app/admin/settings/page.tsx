@@ -7,9 +7,14 @@ export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 export default async function AdminSettingsPage() {
-  let settings = await prisma.setting.findUnique({
-    where: { id: 'default' },
-  });
+  let settings: any = null;
+  try {
+    settings = await prisma.setting.findUnique({
+      where: { id: 'default' },
+    });
+  } catch (error) {
+    console.error('Admin Settings DB Error:', error);
+  }
 
   if (!settings) {
     settings = {
