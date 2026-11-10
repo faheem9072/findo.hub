@@ -8,102 +8,14 @@ import HeroHamleysSlider from '@/components/HeroHamleysSlider';
 import ShopByAgeSlider from '@/components/ShopByAgeSlider';
 import DealsProductSlider from '@/components/DealsProductSlider';
 import FloatingMascotBuddy from '@/components/FloatingMascotBuddy';
+import { FALLBACK_PRODUCTS } from '@/lib/fallback-data';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0; // Live real-time updates for newly added/edited products
 
-const FALLBACK_PRODUCTS = [
-  {
-    id: 'fb-1',
-    name: 'Findo Kids Daily Routine & Habit Tracker Board',
-    slug: 'habit-tracker',
-    shortDesc: 'Daily morning & evening habit checklist slider board for kids.',
-    price: 349,
-    compareAtPrice: 369,
-    stock: 25,
-    images: JSON.stringify(['/images/habit-tracker.jpg']),
-    ageRange: '3-8 Years',
-    isFeatured: true,
-    isPublished: true,
-    badges: 'TOP SELLING',
-    category: { name: 'Preschool & Routine', slug: 'preschool-routine' },
-  },
-  {
-    id: 'fb-2',
-    name: 'Tetra Tower Stacking & Balance Game (Building Blocks)',
-    slug: 'balance-tower',
-    shortDesc: 'Exciting stacking and balancing game for focus and motor skills.',
-    price: 329,
-    compareAtPrice: 385,
-    stock: 20,
-    images: JSON.stringify(['/images/tetra-tower.jpg']),
-    ageRange: '2-5 Years',
-    isFeatured: true,
-    isPublished: true,
-    category: { name: 'Puzzles & Activity', slug: 'puzzles-activity' },
-  },
-  {
-    id: 'fb-3',
-    name: 'Findo DIY Instant Print Kids Digital Camera',
-    slug: 'kids-instant-print-digital-camera',
-    shortDesc: 'Zero-ink instant thermal printing camera with video and photo effects.',
-    price: 1499,
-    compareAtPrice: 1600,
-    stock: 15,
-    images: JSON.stringify(['/images/instant-print-camera.jpg']),
-    ageRange: '4-10 Years',
-    isFeatured: true,
-    isPublished: true,
-    badges: 'TOP SELLING',
-    category: { name: 'Puzzles & Activity', slug: 'puzzles-activity' },
-  },
-  {
-    id: 'fb-4',
-    name: 'Explore STEM My Super Chemistry Lab Kit',
-    slug: 'my-super-chemistry-lab',
-    shortDesc: 'Exciting hands-on STEM experiments and safe chemical reactions.',
-    price: 975,
-    compareAtPrice: 1100,
-    stock: 12,
-    images: JSON.stringify(['/images/super-chemistry-lab.jpg']),
-    ageRange: '8+ Years',
-    isFeatured: true,
-    isPublished: true,
-    category: { name: 'STEM & Educational', slug: 'stem-educational' },
-  },
-  {
-    id: 'fb-5',
-    name: 'Tangram Woodiness Montessori Geometric Puzzle Set',
-    slug: 'tangram-wooden-puzzle-set',
-    shortDesc: 'Chunky wooden shape sorter puzzle for early motor development.',
-    price: 319,
-    compareAtPrice: 329,
-    stock: 30,
-    images: JSON.stringify(['/images/tangram-woodiness.jpg']),
-    ageRange: '2-5 Years',
-    isFeatured: true,
-    isPublished: true,
-    category: { name: 'Montessori & Sensory', slug: 'montessori-sensory' },
-  },
-  {
-    id: 'fb-6',
-    name: 'Findo Kids Educational Microscope Science Kit (100X-450X)',
-    slug: 'kids-educational-microscope-science-kit',
-    shortDesc: 'Real working optical microscope with slides and specimen tools.',
-    price: 949,
-    compareAtPrice: 1050,
-    stock: 10,
-    images: JSON.stringify(['/images/educational-microscope.jpg']),
-    ageRange: '6-12 Years',
-    isFeatured: true,
-    isPublished: true,
-    category: { name: 'STEM & Educational', slug: 'stem-educational' },
-  },
-];
-
 async function getHomePageData() {
   try {
-    const [featuredProducts, allProducts] = await Promise.all([
+    const fetchDb = Promise.all([
       prisma.product.findMany({
         where: { isFeatured: true, isPublished: true },
         take: 12,
@@ -116,6 +28,12 @@ async function getHomePageData() {
         include: { category: true },
       }),
     ]);
+
+    const timeout = new Promise<never>((_, reject) =>
+      setTimeout(() => reject(new Error('DB Timeout')), 3000)
+    );
+
+    const [featuredProducts, allProducts] = await Promise.race([fetchDb, timeout]);
 
     return {
       featuredProducts: featuredProducts.length > 0 ? featuredProducts : FALLBACK_PRODUCTS.slice(0, 4),

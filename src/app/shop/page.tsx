@@ -1,6 +1,7 @@
 import React, { Suspense } from 'react';
 import prisma from '@/lib/prisma';
 import ShopClient from './ShopClient';
+import { FALLBACK_PRODUCTS, FALLBACK_CATEGORIES } from '@/lib/fallback-data';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0; // Dynamic real-time data
@@ -12,15 +13,33 @@ export const metadata = {
 };
 
 export default async function ShopPage() {
-  const products = await prisma.product.findMany({
-    where: { isPublished: true },
-    orderBy: { createdAt: 'desc' },
-    include: { category: true },
-  });
+  let products: any[] = [];
+  let categories: any[] = [];
 
-  const categories = await prisma.category.findMany({
-    orderBy: { name: 'asc' },
-  });
+  try {
+    const fetchDb = Promise.all([
+      prisma.product.findMany({
+        where: { isPublished: true },
+        orderBy: { createdAt: 'desc' },
+        include: { category: true },
+      }),
+      prisma.category.findMany({
+        orderBy: { name: 'asc' },
+      }),
+    ]);
+
+    const timeout = new Promise<never>((_, reject) =>
+      setTimeout(() => reject(new Error('DB Timeout')), 4000)
+    );
+
+    const [dbProducts, dbCategories] = await Promise.race([fetchDb, timeout]);
+    products = dbProducts && dbProducts.length > 0 ? dbProducts : FALLBACK_PRODUCTS;
+    categories = dbCategories && dbCategories.length > 0 ? dbCategories : FALLBACK_CATEGORIES;
+  } catch (error) {
+    console.warn('ShopPage database lookup fallback:', error);
+    products = FALLBACK_PRODUCTS;
+    categories = FALLBACK_CATEGORIES;
+  }
 
   return (
     <Suspense

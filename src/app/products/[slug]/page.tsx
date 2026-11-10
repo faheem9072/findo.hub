@@ -3,6 +3,7 @@ import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import prisma from '@/lib/prisma';
 import ProductDetailClient from './ProductDetailClient';
+import { getFallbackProductBySlug, FALLBACK_PRODUCTS } from '@/lib/fallback-data';
 
 interface ProductPageProps {
   params: Promise<{ slug: string }>;
@@ -13,10 +14,19 @@ export const revalidate = 0;
 
 export async function generateMetadata({ params }: ProductPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const product = await prisma.product.findFirst({
-    where: { OR: [{ slug: slug }, { id: slug }] },
-    include: { category: true },
-  });
+  let product: any = null;
+  try {
+    product = await prisma.product.findFirst({
+      where: { OR: [{ slug: slug }, { id: slug }] },
+      include: { category: true },
+    });
+  } catch {
+    product = getFallbackProductBySlug(slug);
+  }
+
+  if (!product) {
+    product = getFallbackProductBySlug(slug);
+  }
 
   if (!product) {
     return { title: 'Product Not Found — FINDO' };
@@ -30,7 +40,7 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
 
   return {
     title: product.seoTitle || `${product.name} — FINDO`,
-    description: product.seoDescription || product.shortDesc || product.description.substring(0, 150),
+    description: product.seoDescription || product.shortDesc || product.description?.substring(0, 150) || '',
     openGraph: {
       title: product.name,
       description: product.shortDesc,
@@ -42,33 +52,49 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
 
 export default async function ProductDetailPage({ params }: ProductPageProps) {
   const { slug } = await params;
-  const product = await prisma.product.findFirst({
-    where: { OR: [{ slug: slug }, { id: slug }] },
-    include: {
-      category: true,
-      reviews: {
-        where: { isApproved: true },
-        orderBy: { createdAt: 'desc' },
+  let product: any = null;
+  let relatedProducts: any[] = [];
+
+  try {
+    product = await prisma.product.findFirst({
+      where: { OR: [{ slug: slug }, { id: slug }] },
+      include: {
+        category: true,
+        reviews: {
+          where: { isApproved: true },
+          orderBy: { createdAt: 'desc' },
+        },
       },
-    },
-  });
+    });
+
+    if (product) {
+      relatedProducts = await prisma.product.findMany({
+        where: {
+          isPublished: true,
+          id: { not: product.id },
+          OR: [
+            { categoryId: product.categoryId },
+            { purpose: product.purpose },
+          ],
+        },
+        take: 4,
+        include: { category: true },
+      });
+    }
+  } catch (error) {
+    console.warn('ProductDetailPage DB error, falling back:', error);
+    product = getFallbackProductBySlug(slug);
+    relatedProducts = FALLBACK_PRODUCTS.filter((p) => p.slug !== slug).slice(0, 4);
+  }
+
+  if (!product) {
+    product = getFallbackProductBySlug(slug);
+    relatedProducts = FALLBACK_PRODUCTS.filter((p) => p.slug !== slug).slice(0, 4);
+  }
 
   if (!product) {
     notFound();
   }
-
-  const relatedProducts = await prisma.product.findMany({
-    where: {
-      isPublished: true,
-      id: { not: product.id },
-      OR: [
-        { categoryId: product.categoryId },
-        { purpose: product.purpose },
-      ],
-    },
-    take: 4,
-    include: { category: true },
-  });
 
   return <ProductDetailClient product={product} relatedProducts={relatedProducts} />;
 }

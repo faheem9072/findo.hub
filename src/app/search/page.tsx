@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { Search as SearchIcon, ArrowLeft } from 'lucide-react';
 import prisma from '@/lib/prisma';
 import ProductCard from '@/components/ProductCard';
+import { searchFallbackProducts } from '@/lib/fallback-data';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -45,11 +46,17 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
     whereClause.category = { slug: category };
   }
 
-  const products = await prisma.product.findMany({
-    where: whereClause,
-    orderBy,
-    include: { category: true },
-  });
+  let products: any[] = [];
+  try {
+    products = await prisma.product.findMany({
+      where: whereClause,
+      orderBy,
+      include: { category: true },
+    });
+  } catch (error) {
+    console.warn('SearchPage DB error, falling back:', error);
+    products = searchFallbackProducts(query);
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">

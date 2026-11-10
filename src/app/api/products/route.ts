@@ -3,6 +3,7 @@ import { revalidatePath } from 'next/cache';
 import prisma from '@/lib/prisma';
 import { cookies } from 'next/headers';
 import { verifyAdminToken } from '@/lib/auth';
+import { FALLBACK_PRODUCTS, FALLBACK_CATEGORIES } from '@/lib/fallback-data';
 
 export async function GET(request: Request) {
   try {
@@ -54,7 +55,13 @@ export async function GET(request: Request) {
 
     return NextResponse.json({ products, categories });
   } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    console.warn('GET /api/products DB error, returning fallbacks:', error.message);
+    return NextResponse.json({
+      products: FALLBACK_PRODUCTS,
+      categories: FALLBACK_CATEGORIES,
+      isFallback: true,
+      error: error.message,
+    });
   }
 }
 
