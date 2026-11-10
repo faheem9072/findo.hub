@@ -156,7 +156,9 @@ export async function POST(request: Request) {
     const maxProductDeliveryFee = existingProducts.reduce((max, p) => Math.max(max, Number(p.deliveryFee || 0)), 0);
     const baseShippingRate = Math.max(flatShippingRate, maxProductDeliveryFee);
     const isFreeThresholdMet = freeShippingThreshold > 0 && subtotal >= freeShippingThreshold;
-    const shippingFee = isFreeThresholdMet ? 0 : baseShippingRate;
+    const baseShipping = isFreeThresholdMet ? 0 : baseShippingRate;
+    const codFee = paymentMethod === 'COD' ? 30 : 0;
+    const shippingFee = baseShipping + codFee;
     const totalAmount = Math.max(0, subtotal - discountAmount + shippingFee);
 
     const orderNumber = 'FND-' + Math.floor(100000 + Math.random() * 900000);

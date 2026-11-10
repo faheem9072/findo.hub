@@ -77,8 +77,9 @@ export default function CheckoutPage() {
   const baseShippingRate = Math.max(liveShippingRate, maxCartDeliveryFee);
   const isFreeThresholdMet = liveThreshold > 0 && subtotal >= liveThreshold;
   const shippingFee = isFreeThresholdMet ? 0 : baseShippingRate;
+  const codFee = formData.paymentMethod === 'COD' ? 30 : 0;
   const discountAmount = appliedCoupon ? appliedCoupon.calculatedDiscount : 0;
-  const totalPayable = Math.max(0, subtotal - discountAmount + shippingFee);
+  const totalPayable = Math.max(0, subtotal - discountAmount + shippingFee + codFee);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -553,8 +554,13 @@ export default function CheckoutPage() {
                       className="w-4 h-4 text-[#5a9e2f] focus:ring-[#5a9e2f]"
                     />
                     <div>
-                      <h4 className="font-bold text-[#0d1b1e] text-sm">Cash on Delivery (COD)</h4>
-                      <p className="text-xs text-slate-500">Pay cash upon delivery to your doorstep</p>
+                      <div className="flex items-center gap-2">
+                        <h4 className="font-bold text-[#0d1b1e] text-sm">Cash on Delivery (COD)</h4>
+                        <span className="bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded-full border border-amber-300">
+                          +₹30 Handling Fee
+                        </span>
+                      </div>
+                      <p className="text-xs text-slate-500">Pay cash upon delivery to your doorstep (₹30 COD charge applies)</p>
                     </div>
                   </div>
                   <Truck className="w-5 h-5 text-[#5a9e2f]" />
@@ -727,6 +733,15 @@ export default function CheckoutPage() {
                   {shippingFee === 0 ? 'FREE' : `₹${shippingFee}`}
                 </span>
               </div>
+
+              {formData.paymentMethod === 'COD' && (
+                <div className="flex justify-between text-slate-600">
+                  <span className="flex items-center gap-1.5">
+                    <span>Cash on Delivery (COD) Fee</span>
+                  </span>
+                  <span className="font-bold text-amber-700">+₹30</span>
+                </div>
+              )}
 
               <div className="flex justify-between text-base font-extrabold text-[#0d1b1e] pt-3 border-t border-slate-200">
                 <span>Total Amount Payable</span>

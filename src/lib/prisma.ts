@@ -4,10 +4,25 @@ const NEON_DATABASE_URL =
   'postgresql://neondb_owner:npg_Zcb2nWrh8CQS@ep-little-mode-b4qdwq1h-pooler.c-6.us-east-2.aws.neon.tech/neondb?sslmode=require';
 
 function getDatabaseUrl(): string {
-  if (process.env.DATABASE_URL && process.env.DATABASE_URL.startsWith('postgres')) {
-    return process.env.DATABASE_URL;
+  let url = process.env.DATABASE_URL || NEON_DATABASE_URL;
+  // Strip surrounding quotes if present
+  url = url.replace(/^["']|["']$/g, '').trim();
+
+  // If using Neon pooler host, ensure pgbouncer=true and proper connection timeouts
+  if (url.includes('-pooler')) {
+    const hasQuery = url.includes('?');
+    if (!url.includes('pgbouncer=true')) {
+      url += (hasQuery ? '&' : '?') + 'pgbouncer=true';
+    }
+    if (!url.includes('connect_timeout=')) {
+      url += '&connect_timeout=30';
+    }
+    if (!url.includes('pool_timeout=')) {
+      url += '&pool_timeout=30';
+    }
   }
-  return NEON_DATABASE_URL;
+
+  return url;
 }
 
 const resolvedDbUrl = getDatabaseUrl();
