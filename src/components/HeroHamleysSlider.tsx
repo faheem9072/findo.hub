@@ -7,6 +7,7 @@ import { ChevronLeft, ChevronRight, Sparkles, ArrowRight, ShieldCheck, Tag } fro
 
 interface SlideData {
   id: string;
+  productSlug: string;
   badge: string;
   title: string;
   highlight: string;
@@ -26,6 +27,7 @@ interface SlideData {
 const SLIDES: SlideData[] = [
   {
     id: 'slide-1',
+    productSlug: 'tangram-wooden-puzzle-set',
     badge: '🎉 SPECIAL MEGA OFFER',
     title: 'GLAM UP THE PLAY',
     highlight: 'UP TO 50% OFF*',
@@ -38,11 +40,12 @@ const SLIDES: SlideData[] = [
     productImg: '/images/tangram-woodiness.jpg',
     productName: 'Montessori Geometric Puzzle Set',
     mrp: '₹349',
-    offerPrice: '₹219',
+    offerPrice: '₹319',
     discount: '37% OFF',
   },
   {
     id: 'slide-2',
+    productSlug: 'habit-tracker',
     badge: '🔥 TOP SELLING • PARENTS NO.1 CHOICE',
     title: 'BUILD BETTER HABITS',
     highlight: 'FLAT 42% OFF*',
@@ -54,12 +57,13 @@ const SLIDES: SlideData[] = [
     accentColor: '#16a34a',
     productImg: '/images/habit-tracker.jpg',
     productName: 'Daily Routine Habit Tracker Board',
-    mrp: '₹399',
-    offerPrice: '₹229',
+    mrp: '₹369',
+    offerPrice: '₹349',
     discount: '42% OFF',
   },
   {
     id: 'slide-3',
+    productSlug: 'kids-instant-print-digital-camera',
     badge: '🔥 TOP SELLING • HOT ARRIVAL',
     title: 'SPARK BIG IDEAS',
     highlight: 'UP TO 45% OFF*',
@@ -71,16 +75,37 @@ const SLIDES: SlideData[] = [
     accentColor: '#0284c7',
     productImg: '/images/instant-print-camera.jpg',
     productName: 'Findo DIY Instant Print Kids Camera',
-    mrp: '₹1,999',
-    offerPrice: '₹1,319',
+    mrp: '₹1,600',
+    offerPrice: '₹1,499',
     discount: '34% OFF',
   },
 ];
 
-export default function HeroHamleysSlider() {
+export default function HeroHamleysSlider({ initialProducts = [] }: { initialProducts?: any[] }) {
   const [current, setCurrent] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [liveProducts, setLiveProducts] = useState<any[]>(initialProducts);
   const touchStartX = useRef<number | null>(null);
+
+  // Background sync with API for real-time price updates
+  useEffect(() => {
+    fetch('/api/products')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.products && Array.isArray(data.products)) {
+          setLiveProducts(data.products);
+        }
+      })
+      .catch((err) => console.error('HeroHamleysSlider price sync failed:', err));
+  }, []);
+
+  const productMap = React.useMemo(() => {
+    const map = new Map<string, any>();
+    (liveProducts || []).forEach((p) => {
+      if (p.slug) map.set(p.slug, p);
+    });
+    return map;
+  }, [liveProducts]);
 
   // Auto slide every 5 seconds unless user hovers
   useEffect(() => {
@@ -132,6 +157,13 @@ export default function HeroHamleysSlider() {
         
         {SLIDES.map((slide, idx) => {
           const isActive = idx === current;
+          const live = productMap.get(slide.productSlug);
+          const currentOfferPrice = live ? `₹${live.price}` : slide.offerPrice;
+          const currentMrp = live?.compareAtPrice ? `₹${live.compareAtPrice}` : slide.mrp;
+          const currentDiscount = live && live.compareAtPrice && live.compareAtPrice > live.price
+            ? `${Math.round(((live.compareAtPrice - live.price) / live.compareAtPrice) * 100)}% OFF`
+            : slide.discount;
+
           return (
             <div
               key={slide.id}
@@ -175,13 +207,13 @@ export default function HeroHamleysSlider() {
                     {slide.desc}
                   </p>
 
-                  {/* Price Anchor Tag */}
+                  {/* Price Anchor Tag - Dynamically connected to live DB */}
                   <div className="flex items-center gap-3 pt-1">
                     <span className="text-xs text-slate-500 font-bold uppercase">Offer Deal:</span>
-                    <span className="font-heading text-3xl font-black text-slate-900">{slide.offerPrice}</span>
-                    <span className="text-base text-slate-400 line-through font-semibold">{slide.mrp}</span>
+                    <span className="font-heading text-3xl font-black text-slate-900">{currentOfferPrice}</span>
+                    <span className="text-base text-slate-400 line-through font-semibold">{currentMrp}</span>
                     <span className="font-heading text-xs font-bold px-2.5 py-1 rounded-lg text-white shadow-xs" style={{ backgroundColor: slide.accentColor }}>
-                      {slide.discount}
+                      {currentDiscount}
                     </span>
                   </div>
 
@@ -214,7 +246,7 @@ export default function HeroHamleysSlider() {
                     {/* Offer Tag Badge */}
                     <div className="font-heading absolute top-3 left-3 bg-rose-600 text-white font-black text-xs px-3 py-1 rounded-full shadow-md flex items-center gap-1">
                       <Tag className="w-3.5 h-3.5" />
-                      <span>{slide.discount}</span>
+                      <span>{currentDiscount}</span>
                     </div>
 
                     {/* Product Name footer pill */}
@@ -270,7 +302,7 @@ export default function HeroHamleysSlider() {
                   {/* Bright discount badge */}
                   <div className="font-heading absolute top-2 left-2 bg-rose-600 text-white font-bold text-[10px] px-2.5 py-0.5 rounded-full shadow-sm flex items-center gap-1">
                     <Tag className="w-2.5 h-2.5" />
-                    <span>{slide.discount}</span>
+                    <span>{currentDiscount}</span>
                   </div>
 
                   {/* Product Name footer pill */}
@@ -281,14 +313,14 @@ export default function HeroHamleysSlider() {
                   </div>
                 </Link>
 
-                {/* 3. Mobile Price & CTA */}
+                {/* 3. Mobile Price & CTA - Dynamically connected to live DB */}
                 <div className="w-full flex flex-col items-center gap-2 pb-5">
                   <div className="flex items-center justify-center gap-2">
                     <span className="text-[11px] text-slate-500 font-bold uppercase">Deal:</span>
-                    <span className="font-heading text-2xl font-black text-slate-900">{slide.offerPrice}</span>
-                    <span className="text-xs text-slate-400 line-through font-semibold">{slide.mrp}</span>
+                    <span className="font-heading text-2xl font-black text-slate-900">{currentOfferPrice}</span>
+                    <span className="text-xs text-slate-400 line-through font-semibold">{currentMrp}</span>
                     <span className="font-heading text-[10px] font-bold px-2 py-0.5 rounded-md text-white" style={{ backgroundColor: slide.accentColor }}>
-                      {slide.discount}
+                      {currentDiscount}
                     </span>
                   </div>
 
@@ -339,6 +371,31 @@ export default function HeroHamleysSlider() {
           ))}
         </div>
 
+      </div>
+
+      {/* Hamleys Style Category Navigation Bar (As shown in Image 3) */}
+      <div className="mt-3 bg-white rounded-2xl border border-slate-200/90 py-2.5 px-4 shadow-xs overflow-x-auto scrollbar-none">
+        <div className="flex items-center justify-between min-w-max gap-3 sm:gap-6 text-xs sm:text-sm font-bold text-slate-700 tracking-tight">
+          <Link href="/shop" className="hover:text-rose-600 transition-colors whitespace-nowrap">
+            📋 Routine & Habit Boards
+          </Link>
+          <span className="text-slate-300">|</span>
+          <Link href="/shop" className="hover:text-rose-600 transition-colors whitespace-nowrap">
+            🧩 Montessori Wooden Toys
+          </Link>
+          <span className="text-slate-300">|</span>
+          <Link href="/shop" className="hover:text-rose-600 transition-colors whitespace-nowrap">
+            🔬 STEM Science Kits
+          </Link>
+          <span className="text-slate-300">|</span>
+          <Link href="/shop" className="hover:text-rose-600 transition-colors whitespace-nowrap">
+            📷 DIY Instant Print Cameras
+          </Link>
+          <span className="text-slate-300">|</span>
+          <Link href="/shop" className="hover:text-rose-600 transition-colors whitespace-nowrap">
+            🧱 Magnetic Sticks & Blocks
+          </Link>
+        </div>
       </div>
 
       {/* Sub-Banner Ticker: Clean, Rounded, Stylish Hamleys Style */}

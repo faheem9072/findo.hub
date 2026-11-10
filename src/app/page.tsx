@@ -18,8 +18,8 @@ const FALLBACK_PRODUCTS = [
     name: 'Findo Kids Daily Routine & Habit Tracker Board',
     slug: 'habit-tracker',
     shortDesc: 'Daily morning & evening habit checklist slider board for kids.',
-    price: 229,
-    compareAtPrice: 349,
+    price: 349,
+    compareAtPrice: 369,
     stock: 25,
     images: JSON.stringify(['/images/habit-tracker.jpg']),
     ageRange: '3-8 Years',
@@ -33,7 +33,7 @@ const FALLBACK_PRODUCTS = [
     name: 'Tetra Tower Stacking & Balance Game (Building Blocks)',
     slug: 'balance-tower',
     shortDesc: 'Exciting stacking and balancing game for focus and motor skills.',
-    price: 239,
+    price: 329,
     compareAtPrice: 385,
     stock: 20,
     images: JSON.stringify(['/images/tetra-tower.jpg']),
@@ -47,7 +47,7 @@ const FALLBACK_PRODUCTS = [
     name: 'Findo DIY Instant Print Kids Digital Camera',
     slug: 'kids-instant-print-digital-camera',
     shortDesc: 'Zero-ink instant thermal printing camera with video and photo effects.',
-    price: 1319,
+    price: 1499,
     compareAtPrice: 1600,
     stock: 15,
     images: JSON.stringify(['/images/instant-print-camera.jpg']),
@@ -76,8 +76,8 @@ const FALLBACK_PRODUCTS = [
     name: 'Tangram Woodiness Montessori Geometric Puzzle Set',
     slug: 'tangram-wooden-puzzle-set',
     shortDesc: 'Chunky wooden shape sorter puzzle for early motor development.',
-    price: 219,
-    compareAtPrice: 306,
+    price: 319,
+    compareAtPrice: 329,
     stock: 30,
     images: JSON.stringify(['/images/tangram-woodiness.jpg']),
     ageRange: '2-5 Years',
@@ -106,13 +106,12 @@ async function getHomePageData() {
     const [featuredProducts, allProducts] = await Promise.all([
       prisma.product.findMany({
         where: { isFeatured: true, isPublished: true },
-        take: 8,
+        take: 12,
         orderBy: { createdAt: 'desc' },
         include: { category: true },
       }),
       prisma.product.findMany({
         where: { isPublished: true },
-        take: 12,
         orderBy: { createdAt: 'desc' },
         include: { category: true },
       }),
@@ -146,22 +145,33 @@ export default async function HomePage() {
     stock: p.stock,
   }));
 
-  const curatedCoordinates = [
-    { num: '01', name: 'Habit Tracker Board', age: '3-8 Y', price: '₹229', img: '/images/habit-tracker.jpg', href: '/product/habit-tracker', badge: '🔥 TOP SELLING' },
-    { num: '02', name: 'Tetra Tower Balance', age: '2-5 Y', price: '₹239', img: '/images/tetra-tower.jpg', href: '/product/balance-tower' },
-    { num: '03', name: 'Instant Print Camera', age: '4-10 Y', price: '₹1,319', img: '/images/instant-print-camera.jpg', href: '/product/kids-instant-print-digital-camera', badge: '🔥 TOP SELLING' },
-    { num: '04', name: 'Super Chemistry Lab', age: '8+ Y', price: '₹975', img: '/images/super-chemistry-lab.jpg', href: '/product/my-super-chemistry-lab' },
-    { num: '05', name: 'Montessori Tangram', age: '2-5 Y', price: '₹219', img: '/images/tangram-woodiness.jpg', href: '/product/tangram-wooden-puzzle-set' },
-    { num: '06', name: 'Educational Microscope', age: '6-12 Y', price: '₹949', img: '/images/educational-microscope.jpg', href: '/product/kids-educational-microscope-science-kit' },
-    { num: '07', name: 'Ekta Magna Play', age: '4-8 Y', price: '₹549', img: '/images/magna-play-magnets.jpg', href: '/product/ekta-magna-play-magnetic-art-puzzle' },
-    { num: '08', name: 'Solar System Model', age: '6-12 Y', price: '₹490', img: '/images/solar-system-diy.jpg', href: '/product/diy-working-solar-system-model' },
+  const productBySlug = new Map<string, any>(catalogProducts.map((p) => [p.slug, p]));
+
+  const rawCoordinates = [
+    { num: '01', name: 'Habit Tracker Board', age: '3-8 Y', slug: 'habit-tracker', defaultPrice: 349, img: '/images/habit-tracker.jpg', href: '/product/habit-tracker', badge: '🔥 TOP SELLING' },
+    { num: '02', name: 'Tetra Tower Balance', age: '2-5 Y', slug: 'balance-tower', defaultPrice: 329, img: '/images/tetra-tower.jpg', href: '/product/balance-tower' },
+    { num: '03', name: 'Instant Print Camera', age: '4-10 Y', slug: 'kids-instant-print-digital-camera', defaultPrice: 1499, img: '/images/instant-print-camera.jpg', href: '/product/kids-instant-print-digital-camera', badge: '🔥 TOP SELLING' },
+    { num: '04', name: 'Super Chemistry Lab', age: '8+ Y', slug: 'my-super-chemistry-lab', defaultPrice: 975, img: '/images/super-chemistry-lab.jpg', href: '/product/my-super-chemistry-lab' },
+    { num: '05', name: 'Montessori Tangram', age: '2-5 Y', slug: 'tangram-wooden-puzzle-set', defaultPrice: 319, img: '/images/tangram-woodiness.jpg', href: '/product/tangram-wooden-puzzle-set' },
+    { num: '06', name: 'Educational Microscope', age: '6-12 Y', slug: 'kids-educational-microscope-science-kit', defaultPrice: 949, img: '/images/educational-microscope.jpg', href: '/product/kids-educational-microscope-science-kit' },
+    { num: '07', name: 'Ekta Magna Play', age: '4-8 Y', slug: 'ekta-magna-play-magnetic-art-puzzle', defaultPrice: 549, img: '/images/magna-play-magnets.jpg', href: '/product/ekta-magna-play-magnetic-art-puzzle' },
+    { num: '08', name: 'Solar System Model', age: '6-12 Y', slug: 'diy-working-solar-system-model', defaultPrice: 490, img: '/images/solar-system-diy.jpg', href: '/product/diy-working-solar-system-model' },
   ];
+
+  const curatedCoordinates = rawCoordinates.map((item) => {
+    const live = productBySlug.get(item.slug);
+    const priceNum = live ? live.price : item.defaultPrice;
+    return {
+      ...item,
+      price: `₹${priceNum}`,
+    };
+  });
 
   return (
     <div className="bg-[#fafbf8] text-slate-900 min-h-screen space-y-12 sm:space-y-16 pb-28">
 
       {/* 1. HAMLEYS-STYLE HERO PROMOTIONAL BANNER SLIDER WITH OFFER CALLOUTS */}
-      <HeroHamleysSlider />
+      <HeroHamleysSlider initialProducts={catalogProducts} />
 
       {/* 2. HAMLEYS "SHOP BY AGE" HORIZONTAL SLIDER WITH INSTANT ON-PAGE AGE FILTERING */}
       <ShopByAgeSlider allProducts={catalogProducts} />
