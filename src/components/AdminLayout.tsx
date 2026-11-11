@@ -50,8 +50,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   }, [pathname, router]);
 
   const handleLogout = async () => {
-    await fetch('/api/admin/auth', { method: 'DELETE' });
+    try {
+      await fetch('/api/admin/auth', { method: 'DELETE' });
+    } catch (e) {
+      console.error(e);
+    }
     router.push('/admin/login');
+    router.refresh();
   };
 
   if (pathname === '/admin/login') {
@@ -104,6 +109,14 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           >
             <Store className="w-4 h-4 text-[#5a9e2f]" />
           </Link>
+
+          <button
+            onClick={handleLogout}
+            className="p-2 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 hover:text-rose-300 transition-colors"
+            title="Log Out"
+          >
+            <LogOut className="w-4 h-4" />
+          </button>
 
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
