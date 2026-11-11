@@ -59,7 +59,7 @@ export default function AdminLoginPage() {
           </div>
         )}
 
-        <form onSubmit={handleLogin} className="space-y-4">
+        <form onSubmit={handleLogin} className="space-y-4" autoComplete="off">
           <div className="space-y-1">
             <label className="text-xs font-bold text-[#0d1b1e] uppercase tracking-wider flex items-center gap-1">
               <Mail className="w-3.5 h-3.5 text-[#5a9e2f]" /> Admin Email
@@ -67,6 +67,7 @@ export default function AdminLoginPage() {
             <input
               type="email"
               required
+              autoComplete="off"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="admin@example.com"
@@ -81,6 +82,7 @@ export default function AdminLoginPage() {
             <input
               type="password"
               required
+              autoComplete="new-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••"
