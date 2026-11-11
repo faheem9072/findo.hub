@@ -1,4 +1,5 @@
 import React from 'react';
+import { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight, Sparkles, Lightbulb, Smile, MonitorOff } from 'lucide-react';
@@ -12,6 +13,22 @@ import { FALLBACK_PRODUCTS } from '@/lib/fallback-data';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0; // Live real-time updates for newly added/edited products
+
+export const metadata: Metadata = {
+  title: 'Findo — Find Smart Play | Kids Developmental Toys & Learning',
+  description:
+    'Find Smart Play — Discover unique, screen-free, and child-safe developmental toys for kids across India. From habit tracker routine boards to instant print cameras and STEM science kits.',
+  alternates: {
+    canonical: 'https://www.getfindo.in',
+  },
+  openGraph: {
+    title: 'Findo — Find Smart Play',
+    description:
+      'Find Smart Play — Screen-free, child-safe developmental toys, routine planners, and STEM kits for growing minds across India.',
+    url: 'https://www.getfindo.in',
+    siteName: 'Findo — Find Smart Play',
+  },
+};
 
 async function getHomePageData() {
   try {

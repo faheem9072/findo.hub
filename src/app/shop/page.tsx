@@ -7,9 +7,9 @@ export const dynamic = 'force-dynamic';
 export const revalidate = 0; // Dynamic real-time data
 
 export const metadata = {
-  title: 'Shop All Products — FINDO Kids Brand',
+  title: 'Shop Developmental Toys | Findo — Find Smart Play',
   description:
-    'Explore the complete FINDO catalog of habit trackers, puzzle boxes, balance towers, map pads, routine planners, and STEM building blocks.',
+    'Explore the complete Findo catalog of screen-free developmental toys, routine planners, habit trackers, and STEM science kits.',
 };
 
 export default async function ShopPage() {
