@@ -269,3 +269,4 @@ export default function AdminRecentOrders({ initialOrders }: { initialOrders: an
     </div>
   );
 }
+

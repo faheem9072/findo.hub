@@ -202,11 +202,8 @@ export default function Navbar({ onOpenSearch }: { onOpenSearch?: () => void }) 
             </svg>
             <span>Instagram (@findo.hub)</span>
           </a>
-          <div className="pt-4 border-t border-slate-100 flex justify-between items-center text-xs text-slate-500">
+          <div className="pt-4 border-t border-slate-100 flex justify-center items-center text-xs text-slate-500 font-medium">
             <span>FINDO • Find Smart Play</span>
-            <Link href="/admin" onClick={() => setMobileMenuOpen(false)} className="underline hover:text-[#5a9e2f]">
-              Admin Portal
-            </Link>
           </div>
         </div>
       )}

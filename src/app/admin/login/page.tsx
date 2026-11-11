@@ -3,12 +3,12 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { Lock, Mail, ArrowRight, ShieldCheck, Sparkles } from 'lucide-react';
+import { Lock, Mail, ArrowRight, ShieldCheck } from 'lucide-react';
 
 export default function AdminLoginPage() {
   const router = useRouter();
-  const [email, setEmail] = useState('findohub7@gmail.com');
-  const [password, setPassword] = useState('admin123');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -53,20 +53,6 @@ export default function AdminLoginPage() {
           <p className="text-xs text-slate-500">Log in to manage products, orders, and sales</p>
         </div>
 
-        {/* Demo Credentials Box */}
-        <div className="p-3.5 bg-[#eef8ea] border border-emerald-200 rounded-2xl text-xs space-y-1">
-          <div className="flex items-center gap-1.5 font-bold text-[#5a9e2f]">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>Default Seed Credentials:</span>
-          </div>
-          <p className="text-[#0d1b1e]">
-            <strong>Email:</strong> findohub7@gmail.com
-          </p>
-          <p className="text-[#0d1b1e]">
-            <strong>Password:</strong> admin123
-          </p>
-        </div>
-
         {error && (
           <div className="p-3.5 bg-red-50 border border-red-200 text-red-700 text-xs font-semibold rounded-xl text-center">
             {error}
@@ -83,7 +69,7 @@ export default function AdminLoginPage() {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="findohub7@gmail.com"
+              placeholder="admin@example.com"
               className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-xs font-medium text-[#0d1b1e] focus:outline-none focus:border-[#5a9e2f]"
             />
           </div>

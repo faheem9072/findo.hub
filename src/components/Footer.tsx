@@ -85,7 +85,6 @@ export default function Footer() {
               <li><Link href="/shipping-returns" className="hover:text-white transition-colors">Shipping & Returns</Link></li>
               <li><Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link></li>
               <li><Link href="/terms" className="hover:text-white transition-colors">Terms & Conditions</Link></li>
-              <li><Link href="/admin/login" className="text-slate-500 hover:text-slate-300 transition-colors">Admin Login</Link></li>
             </ul>
           </div>
         </div>
