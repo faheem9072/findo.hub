@@ -47,16 +47,52 @@ export async function PUT(
     const body = await request.json();
     const { orderStatus, paymentStatus } = body;
 
-    const order = await prisma.order.update({
-      where: { id },
-      data: {
-        ...(orderStatus && { orderStatus }),
-        ...(paymentStatus && { paymentStatus }),
+    // Find the order by id or orderNumber
+    const existing = await prisma.order.findFirst({
+      where: {
+        OR: [{ id: id }, { orderNumber: id }],
       },
       include: {
         items: true,
       },
     });
+
+    if (!existing) {
+      return NextResponse.json({ error: 'Order not found' }, { status: 404 });
+    }
+
+    // Determine final payment status: if marked DELIVERED on COD, mark payment as PAID automatically
+    let finalPaymentStatus = paymentStatus || existing.paymentStatus;
+    if (orderStatus === 'DELIVERED' && existing.paymentMethod === 'COD' && !paymentStatus) {
+      finalPaymentStatus = 'PAID';
+    }
+
+    const order = await prisma.order.update({
+      where: { id: existing.id },
+      data: {
+        ...(orderStatus && { orderStatus }),
+        paymentStatus: finalPaymentStatus,
+      },
+      include: {
+        items: true,
+      },
+    });
+
+    // If order is changed to CANCELLED and was not previously CANCELLED, restore stock
+    if (orderStatus === 'CANCELLED' && existing.orderStatus !== 'CANCELLED') {
+      try {
+        for (const item of existing.items) {
+          if (item.productId) {
+            await prisma.product.update({
+              where: { id: item.productId },
+              data: { stock: { increment: item.quantity } },
+            });
+          }
+        }
+      } catch (stockErr) {
+        console.warn('Failed to restore stock on cancel:', stockErr);
+      }
+    }
 
     return NextResponse.json({ order, success: true });
   } catch (error: any) {

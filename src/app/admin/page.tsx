@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import prisma from '@/lib/prisma';
 import AdminLayout from '@/components/AdminLayout';
+import AdminRecentOrders from '@/components/admin/AdminRecentOrders';
 import {
   IndianRupee,
   ShoppingBag,
@@ -182,81 +183,7 @@ export default async function AdminDashboardPage() {
               </Link>
             </div>
 
-            {orders.length === 0 ? (
-              <p className="text-xs text-slate-400 text-center py-6">No orders placed yet.</p>
-            ) : (
-              <>
-                {/* Mobile View: Order Cards */}
-                <div className="md:hidden space-y-3">
-                  {orders.map((order) => (
-                    <div key={order.id} className="p-3 bg-slate-50 rounded-xl border border-slate-100 space-y-2">
-                      <div className="flex items-center justify-between">
-                        <span className="font-bold text-xs text-[#0d1b1e]">{order.orderNumber}</span>
-                        <span
-                          className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
-                            order.orderStatus === 'DELIVERED'
-                              ? 'bg-emerald-100 text-emerald-800'
-                              : order.orderStatus === 'SHIPPED'
-                              ? 'bg-blue-100 text-blue-800'
-                              : 'bg-amber-100 text-amber-800'
-                          }`}
-                        >
-                          {order.orderStatus}
-                        </span>
-                      </div>
-                      <div className="flex items-center justify-between text-xs text-slate-600">
-                        <div>
-                          <p className="font-semibold text-[#0d1b1e]">{order.customerName}</p>
-                          <span className="text-[10px] text-slate-400">{order.city} • {order.items.length} items</span>
-                        </div>
-                        <span className="font-extrabold text-[#5a9e2f] text-sm">₹{order.totalAmount.toFixed(2)}</span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Desktop View: Table */}
-                <div className="hidden md:block overflow-x-auto">
-                  <table className="w-full text-left text-xs">
-                    <thead>
-                      <tr className="border-b border-slate-100 text-slate-400 font-bold uppercase tracking-wider">
-                        <th className="pb-3">Order #</th>
-                        <th className="pb-3">Customer</th>
-                        <th className="pb-3">Items</th>
-                        <th className="pb-3">Amount</th>
-                        <th className="pb-3">Status</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-100 font-medium text-[#0d1b1e]">
-                      {orders.map((order) => (
-                        <tr key={order.id} className="hover:bg-slate-50 transition-colors">
-                          <td className="py-3 font-bold">{order.orderNumber}</td>
-                          <td className="py-3">
-                            <div>{order.customerName}</div>
-                            <span className="text-[10px] text-slate-400">{order.city}</span>
-                          </td>
-                          <td className="py-3">{order.items.length} items</td>
-                          <td className="py-3 font-bold">₹{order.totalAmount.toFixed(2)}</td>
-                          <td className="py-3">
-                            <span
-                              className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold ${
-                                order.orderStatus === 'DELIVERED'
-                                  ? 'bg-emerald-100 text-emerald-800'
-                                  : order.orderStatus === 'SHIPPED'
-                                  ? 'bg-blue-100 text-blue-800'
-                                  : 'bg-amber-100 text-amber-800'
-                              }`}
-                            >
-                              {order.orderStatus}
-                            </span>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </>
-            )}
+            <AdminRecentOrders initialOrders={orders} />
           </div>
 
           {/* Low Stock Alerts */}
