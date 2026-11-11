@@ -76,7 +76,16 @@ export default function AdminOrdersClient({ initialOrders }: { initialOrders: an
     }
   };
 
-  const statuses = ['ALL', 'PENDING', 'PROCESSING', 'SHIPPED', 'DELIVERED', 'CANCELLED'];
+  const statuses = [
+    'ALL',
+    'PENDING',
+    'CONFIRMED',
+    'PROCESSING',
+    'SHIPPED',
+    'OUT_FOR_DELIVERY',
+    'DELIVERED',
+    'CANCELLED',
+  ];
 
   return (
     <div className="space-y-6">
@@ -159,18 +168,24 @@ export default function AdminOrdersClient({ initialOrders }: { initialOrders: an
                   className={`px-2.5 py-1 rounded-lg text-[11px] font-bold border focus:outline-none transition-all cursor-pointer ${
                     o.orderStatus === 'DELIVERED'
                       ? 'bg-emerald-100 text-emerald-800 border-emerald-300'
+                      : o.orderStatus === 'OUT_FOR_DELIVERY'
+                      ? 'bg-indigo-100 text-indigo-800 border-indigo-300'
                       : o.orderStatus === 'SHIPPED'
                       ? 'bg-blue-100 text-blue-800 border-blue-300'
                       : o.orderStatus === 'PROCESSING'
                       ? 'bg-purple-100 text-purple-800 border-purple-300'
+                      : o.orderStatus === 'CONFIRMED'
+                      ? 'bg-sky-100 text-sky-800 border-sky-300'
                       : o.orderStatus === 'CANCELLED'
                       ? 'bg-red-100 text-red-700 border-red-300'
                       : 'bg-amber-100 text-amber-800 border-amber-300'
                   }`}
                 >
                   <option value="PENDING">PENDING</option>
+                  <option value="CONFIRMED">CONFIRMED</option>
                   <option value="PROCESSING">PROCESSING</option>
                   <option value="SHIPPED">SHIPPED</option>
+                  <option value="OUT_FOR_DELIVERY">OUT FOR DELIVERY</option>
                   <option value="DELIVERED">DELIVERED</option>
                   <option value="CANCELLED">CANCELLED</option>
                 </select>
@@ -299,18 +314,24 @@ export default function AdminOrdersClient({ initialOrders }: { initialOrders: an
                         className={`px-3 py-1.5 rounded-xl text-xs font-bold border focus:outline-none transition-all cursor-pointer ${
                           o.orderStatus === 'DELIVERED'
                             ? 'bg-emerald-100 text-emerald-800 border-emerald-300'
+                            : o.orderStatus === 'OUT_FOR_DELIVERY'
+                            ? 'bg-indigo-100 text-indigo-800 border-indigo-300'
                             : o.orderStatus === 'SHIPPED'
                             ? 'bg-blue-100 text-blue-800 border-blue-300'
                             : o.orderStatus === 'PROCESSING'
                             ? 'bg-purple-100 text-purple-800 border-purple-300'
+                            : o.orderStatus === 'CONFIRMED'
+                            ? 'bg-sky-100 text-sky-800 border-sky-300'
                             : o.orderStatus === 'CANCELLED'
                             ? 'bg-red-100 text-red-700 border-red-300'
                             : 'bg-amber-100 text-amber-800 border-amber-300'
                         }`}
                       >
                         <option value="PENDING">PENDING</option>
+                        <option value="CONFIRMED">CONFIRMED</option>
                         <option value="PROCESSING">PROCESSING</option>
                         <option value="SHIPPED">SHIPPED</option>
+                        <option value="OUT_FOR_DELIVERY">OUT FOR DELIVERY</option>
                         <option value="DELIVERED">DELIVERED</option>
                         <option value="CANCELLED">CANCELLED</option>
                       </select>

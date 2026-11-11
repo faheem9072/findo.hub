@@ -148,13 +148,25 @@ export default function AccountPage() {
                     className="bg-white rounded-2xl border border-slate-200 p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-xs"
                   >
                     <div className="space-y-1 text-xs">
-                      <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-2 flex-wrap">
                         <span className="font-extrabold text-base text-[#0d1b1e]">#{ord.orderNumber}</span>
-                        <span className="px-2.5 py-0.5 rounded-full bg-slate-100 font-bold text-[#0d1b1e]">
-                          {ord.orderStatus}
+                        <span
+                          className={`px-2.5 py-0.5 rounded-full font-bold text-[11px] ${
+                            ord.orderStatus === 'DELIVERED'
+                              ? 'bg-emerald-100 text-emerald-800'
+                              : ord.orderStatus === 'OUT_FOR_DELIVERY'
+                              ? 'bg-indigo-100 text-indigo-800'
+                              : ord.orderStatus === 'SHIPPED'
+                              ? 'bg-blue-100 text-blue-800'
+                              : ord.orderStatus === 'CANCELLED'
+                              ? 'bg-rose-100 text-rose-800'
+                              : 'bg-amber-100 text-amber-800'
+                          }`}
+                        >
+                          {ord.orderStatus === 'OUT_FOR_DELIVERY' ? 'Out for Delivery' : ord.orderStatus}
                         </span>
                         <span
-                          className={`px-2.5 py-0.5 rounded-full font-bold ${
+                          className={`px-2.5 py-0.5 rounded-full font-bold text-[11px] ${
                             ord.paymentStatus === 'PAID'
                               ? 'bg-emerald-100 text-emerald-800'
                               : 'bg-amber-100 text-amber-800'
@@ -172,9 +184,13 @@ export default function AccountPage() {
                       <span className="font-extrabold text-base text-[#5a9e2f]">₹{ord.totalAmount}</span>
                       <Link
                         href={`/account/orders/${ord.orderNumber}`}
-                        className="py-2 px-4 rounded-lg bg-[#0d1b1e] hover:bg-[#182e33] text-white text-xs font-bold transition-colors inline-flex items-center gap-1"
+                        className="py-2 px-4 rounded-lg bg-[#0d1b1e] hover:bg-[#182e33] text-white text-xs font-bold transition-colors inline-flex items-center gap-1.5 shadow-xs"
                       >
-                        <span>View Details</span>
+                        <span>
+                          {['DELIVERED', 'CANCELLED'].includes(ord.orderStatus)
+                            ? 'View Details'
+                            : 'Track / Cancel'}
+                        </span>
                         <ArrowRight className="w-3 h-3" />
                       </Link>
                     </div>
