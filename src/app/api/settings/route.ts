@@ -4,8 +4,8 @@ import { cookies } from 'next/headers';
 import { verifyAdminToken } from '@/lib/auth';
 import { revalidatePath } from 'next/cache';
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+// Edge cached with on-demand revalidation on PUT
+export const revalidate = 86400;
 
 export async function GET() {
   try {
@@ -30,9 +30,7 @@ export async function GET() {
       { settings },
       {
         headers: {
-          'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
-          Pragma: 'no-cache',
-          Expires: '0',
+          'Cache-Control': 'public, s-maxage=86400, stale-while-revalidate=604800',
         },
       }
     );

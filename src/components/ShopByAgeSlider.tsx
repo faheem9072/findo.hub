@@ -475,17 +475,12 @@ export default function ShopByAgeSlider({ allProducts = [] }: { allProducts?: Pr
   const { addToCart } = useCart();
   const [addedId, setAddedId] = useState<string | null>(null);
 
-  // Background live sync with API so whenever admin updates prices, they reflect instantly
+  // Sync with allProducts passed from server/ISR page
   useEffect(() => {
-    fetch('/api/products')
-      .then((res) => res.json())
-      .then((data) => {
-        if (data?.products && Array.isArray(data.products)) {
-          setLiveProducts(data.products);
-        }
-      })
-      .catch((err) => console.error('ShopByAgeSlider live price sync failed:', err));
-  }, []);
+    if (allProducts && allProducts.length > 0) {
+      setLiveProducts(allProducts);
+    }
+  }, [allProducts]);
 
   const liveMap = useMemo(() => {
     const map = new Map<string, ProductItem>();

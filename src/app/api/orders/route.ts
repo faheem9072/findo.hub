@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import prisma from '@/lib/prisma';
 import { cookies } from 'next/headers';
 import { verifyAdminToken } from '@/lib/auth';
@@ -211,6 +212,14 @@ export async function POST(request: Request) {
       } catch (err) {
         console.error('Failed to decrement stock for item', item.productId, err);
       }
+    }
+
+    // Refresh static catalog cache when stock changes
+    try {
+      revalidatePath('/', 'layout');
+      revalidatePath('/shop');
+    } catch (e) {
+      console.warn('Revalidate path skipped:', e);
     }
 
     return NextResponse.json({ order, success: true }, { status: 201 });

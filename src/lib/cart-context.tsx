@@ -57,7 +57,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const fetchSettings = useCallback(async () => {
     try {
-      const res = await fetch('/api/settings', { cache: 'no-store' });
+      const res = await fetch('/api/settings');
       if (res.ok) {
         const data = await res.json();
         if (data?.settings) {

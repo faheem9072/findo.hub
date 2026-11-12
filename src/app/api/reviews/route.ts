@@ -13,7 +13,14 @@ export async function GET(request: Request) {
         where: { productId, isApproved: true },
         orderBy: { createdAt: 'desc' },
       });
-      return NextResponse.json({ reviews });
+      return NextResponse.json(
+        { reviews },
+        {
+          headers: {
+            'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400',
+          },
+        }
+      );
     }
 
     // Admin fetch all reviews

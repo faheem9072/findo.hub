@@ -53,15 +53,29 @@ export async function GET(request: Request) {
       orderBy: { name: 'asc' },
     });
 
-    return NextResponse.json({ products, categories });
+    return NextResponse.json(
+      { products, categories },
+      {
+        headers: {
+          'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400',
+        },
+      }
+    );
   } catch (error: any) {
     console.warn('GET /api/products DB error, returning fallbacks:', error.message);
-    return NextResponse.json({
-      products: FALLBACK_PRODUCTS,
-      categories: FALLBACK_CATEGORIES,
-      isFallback: true,
-      error: error.message,
-    });
+    return NextResponse.json(
+      {
+        products: FALLBACK_PRODUCTS,
+        categories: FALLBACK_CATEGORIES,
+        isFallback: true,
+        error: error.message,
+      },
+      {
+        headers: {
+          'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+        },
+      }
+    );
   }
 }
 

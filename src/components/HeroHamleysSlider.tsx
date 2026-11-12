@@ -87,17 +87,12 @@ export default function HeroHamleysSlider({ initialProducts = [] }: { initialPro
   const [liveProducts, setLiveProducts] = useState<any[]>(initialProducts);
   const touchStartX = useRef<number | null>(null);
 
-  // Background sync with API for real-time price updates
+  // Sync with initialProducts passed from server/ISR page
   useEffect(() => {
-    fetch('/api/products')
-      .then((res) => res.json())
-      .then((data) => {
-        if (data?.products && Array.isArray(data.products)) {
-          setLiveProducts(data.products);
-        }
-      })
-      .catch((err) => console.error('HeroHamleysSlider price sync failed:', err));
-  }, []);
+    if (initialProducts && initialProducts.length > 0) {
+      setLiveProducts(initialProducts);
+    }
+  }, [initialProducts]);
 
   const productMap = React.useMemo(() => {
     const map = new Map<string, any>();

@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import prisma from '@/lib/prisma';
 import { cookies } from 'next/headers';
 import { verifyAdminToken } from '@/lib/auth';
@@ -13,7 +14,14 @@ export async function GET() {
         },
       },
     });
-    return NextResponse.json({ categories });
+    return NextResponse.json(
+      { categories },
+      {
+        headers: {
+          'Cache-Control': 'public, s-maxage=86400, stale-while-revalidate=604800',
+        },
+      }
+    );
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
@@ -44,6 +52,13 @@ export async function POST(request: Request) {
         image: image || null,
       },
     });
+
+    try {
+      revalidatePath('/', 'layout');
+      revalidatePath('/shop');
+    } catch (e) {
+      console.warn('Revalidate path error:', e);
+    }
 
     return NextResponse.json({ category, success: true }, { status: 201 });
   } catch (error: any) {

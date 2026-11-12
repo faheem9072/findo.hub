@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import prisma from '@/lib/prisma';
 
 export const dynamic = 'force-dynamic';
@@ -76,6 +77,9 @@ export async function POST(
           });
         }
       }
+      // Purge and refresh static cache so restored stock shows immediately
+      revalidatePath('/', 'layout');
+      revalidatePath('/shop');
     } catch (stockErr) {
       console.warn('Failed to auto-increment stock on cancellation:', stockErr);
     }

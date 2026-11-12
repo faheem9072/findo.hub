@@ -11,8 +11,8 @@ import DealsProductSlider from '@/components/DealsProductSlider';
 import FloatingMascotBuddy from '@/components/FloatingMascotBuddy';
 import { FALLBACK_PRODUCTS } from '@/lib/fallback-data';
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0; // Live real-time updates for newly added/edited products
+// Incremental Static Regeneration (1 hour ISR + on-demand instant purge via revalidatePath)
+export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: 'Findo — Find Smart Play | Kids Developmental Toys & Learning',

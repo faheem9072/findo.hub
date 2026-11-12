@@ -5,8 +5,8 @@ import prisma from '@/lib/prisma';
 import ProductCard from '@/components/ProductCard';
 import { searchFallbackProducts } from '@/lib/fallback-data';
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+// Cache search results at edge for 60 seconds
+export const revalidate = 60;
 
 interface SearchPageProps {
   searchParams: Promise<{ q?: string; category?: string; sort?: string }>;

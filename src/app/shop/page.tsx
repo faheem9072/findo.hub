@@ -3,8 +3,8 @@ import prisma from '@/lib/prisma';
 import ShopClient from './ShopClient';
 import { FALLBACK_PRODUCTS, FALLBACK_CATEGORIES } from '@/lib/fallback-data';
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0; // Dynamic real-time data
+// Incremental Static Regeneration (1 hour ISR + on-demand instant purge via revalidatePath)
+export const revalidate = 3600;
 
 export const metadata = {
   title: 'Shop Developmental Toys | Findo — Find Smart Play',
