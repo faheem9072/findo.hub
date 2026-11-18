@@ -109,7 +109,7 @@ export default async function OrderSuccessPage({ searchParams }: OrderSuccessPro
               {order.items.map((item) => (
                 <div key={item.id} className="p-4 flex items-center gap-4 bg-white text-xs">
                   <div className="relative w-12 h-12 rounded-lg overflow-hidden border border-slate-200 shrink-0 bg-slate-50">
-                    <Image src={item.productImage || '/logo.jpeg'} alt={item.productName} fill className="object-cover" />
+                    <Image src={item.productImage || '/logo.png'} alt={item.productName} fill className="object-cover" />
                   </div>
                   <div className="flex-1 min-w-0">
                     <h4 className="font-bold text-[#0d1b1e] truncate">{item.productName}</h4>

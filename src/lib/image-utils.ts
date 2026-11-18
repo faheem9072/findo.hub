@@ -15,7 +15,7 @@ export function sanitizeProduct<T = any>(product: T): T {
   }
 
   if (!Array.isArray(images)) {
-    images = [images || '/logo.jpeg'];
+    images = [images || '/logo.png'];
   }
 
   const cleanImages = images.map((img: any, idx: number) => {
@@ -24,7 +24,7 @@ export function sanitizeProduct<T = any>(product: T): T {
         ? `/images/products/${(product as any).slug}.jpg`
         : `/images/products/${(product as any).slug}-${idx}.jpg`;
     }
-    return typeof img === 'string' ? img : '/logo.jpeg';
+    return typeof img === 'string' ? img : '/logo.png';
   });
 
   return {

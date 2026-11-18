@@ -100,7 +100,7 @@ export default function SearchModal({
             </div>
           ) : results.length > 0 ? (
             results.map((product) => {
-              let img = '/logo.jpeg';
+              let img = '/logo.png';
               try {
                 const parsed = JSON.parse(product.images);
                 if (Array.isArray(parsed) && parsed.length > 0) img = parsed[0];

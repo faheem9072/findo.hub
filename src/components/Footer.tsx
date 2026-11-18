@@ -16,12 +16,12 @@ export default function Footer() {
           {/* Brand Info */}
           <div className="md:col-span-5 space-y-4">
             <Link href="/" className="inline-block group">
-              <div className="relative h-14 w-48 bg-white p-2 rounded-2xl transition-all shadow-md group-hover:scale-105 border border-white/20">
+              <div className="relative h-12 w-44 transition-transform duration-300 group-hover:scale-105">
                 <Image
-                  src="/logo.png"
+                  src="/logo-white.png"
                   alt="Wooobey — Play. Learn. Create."
                   fill
-                  className="object-contain p-1"
+                  className="object-contain object-left"
                 />
               </div>
             </Link>

@@ -232,7 +232,7 @@ export default function AdminProductsClient({
           </div>
         ) : (
           filteredProducts.map((p) => {
-            let img = '/logo.jpeg';
+            let img = '/logo.png';
             try {
               const imgs = typeof p.images === 'string' ? JSON.parse(p.images) : p.images;
               if (Array.isArray(imgs) && imgs.length > 0) img = imgs[0];
@@ -466,7 +466,7 @@ export default function AdminProductsClient({
             </thead>
             <tbody className="divide-y divide-slate-100 font-medium text-[#0d1b1e]">
               {filteredProducts.map((p) => {
-                let img = '/logo.jpeg';
+                let img = '/logo.png';
                 try {
                   const imgs = typeof p.images === 'string' ? JSON.parse(p.images) : p.images;
                   if (Array.isArray(imgs) && imgs.length > 0) img = imgs[0];

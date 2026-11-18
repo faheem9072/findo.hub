@@ -420,7 +420,7 @@ export default function OrderConfirmationClient({ order: initialOrder }: { order
                 <div className="flex items-center gap-3">
                   <div className="relative w-12 h-12 rounded-lg overflow-hidden border border-slate-200 shrink-0 bg-slate-50">
                     <Image
-                      src={item.productImage || '/logo.jpeg'}
+                      src={item.productImage || '/logo.png'}
                       alt={item.productName}
                       fill
                       className="object-cover"

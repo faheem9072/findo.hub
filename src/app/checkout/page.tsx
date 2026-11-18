@@ -188,7 +188,7 @@ export default function CheckoutPage() {
         currency: razorpayData.currency || 'INR',
         name: 'Wooobey Store',
         description: 'Payment for Wooobey Toys & Products',
-        image: '/logo.jpeg',
+        image: '/logo.png',
         order_id: razorpayData.id,
         handler: function (response: any) {
           if (!response.razorpay_payment_id) {

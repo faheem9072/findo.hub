@@ -118,7 +118,7 @@ export async function POST(request: Request) {
         quantity: item.quantity || 1,
         price: currentPrice,
         productName: matchedProduct ? matchedProduct.name : (item.name || item.productName || fallbackProduct.name),
-        productImage: item.image || item.productImage || '/logo.jpeg',
+        productImage: item.image || item.productImage || '/logo.png',
       };
     });
 

@@ -91,8 +91,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       {/* ─── MOBILE TOPBAR (Visible only on mobile) ─── */}
       <header className="md:hidden sticky top-0 z-40 bg-[#0d1b1e] text-white px-4 py-3 flex items-center justify-between border-b border-emerald-950/40 shadow-sm">
         <Link href="/admin" className="flex items-center gap-2.5">
-          <div className="relative h-7 w-24 bg-white rounded-lg p-0.5 overflow-hidden border border-[#0b574f] shadow-xs">
-            <Image src="/logo.png" alt="Wooobey Admin" fill className="object-contain" priority />
+          <div className="relative h-7 w-28">
+            <Image src="/logo-white.png" alt="Wooobey Admin" fill className="object-contain object-left" priority />
           </div>
           <span className="text-[10px] text-[#ffb703] font-bold uppercase tracking-wider hidden sm:inline">Admin</span>
         </Link>
@@ -140,8 +140,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               {/* Drawer Header */}
               <div className="p-4 px-5 border-b border-emerald-900/40 flex items-center justify-between">
                 <Link href="/admin" onClick={() => setMobileOpen(false)} className="flex items-center gap-2.5">
-                  <div className="relative h-8 w-28 bg-white rounded-lg p-1 overflow-hidden border border-[#0b574f] shadow-xs">
-                    <Image src="/logo.png" alt="Wooobey Admin" fill className="object-contain" priority />
+                  <div className="relative h-8 w-32">
+                    <Image src="/logo-white.png" alt="Wooobey Admin" fill className="object-contain object-left" priority />
                   </div>
                   <span className="text-[10px] text-[#ffb703] font-bold uppercase tracking-wider">Admin</span>
                 </Link>
@@ -224,8 +224,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           {/* Header Branding */}
           <div className="p-6 border-b border-emerald-900/40 flex items-center justify-between shrink-0">
             <Link href="/admin" className="flex flex-col gap-1.5 group">
-              <div className="relative h-10 w-36 bg-white rounded-xl p-1.5 overflow-hidden border border-[#0b574f] shadow-xs group-hover:scale-105 transition-transform">
-                <Image src="/logo.png" alt="Wooobey Admin" fill className="object-contain" priority />
+              <div className="relative h-10 w-40 group-hover:scale-105 transition-transform">
+                <Image src="/logo-white.png" alt="Wooobey Admin" fill className="object-contain object-left" priority />
               </div>
               <span className="text-[10px] text-[#ffb703] font-bold uppercase tracking-wider">Store Management</span>
             </Link>

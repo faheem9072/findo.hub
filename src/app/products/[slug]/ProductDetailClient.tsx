@@ -46,11 +46,11 @@ export default function ProductDetailClient({
   const { addToCart } = useCart();
   const router = useRouter();
 
-  let parsedImages: string[] = ['/logo.jpeg'];
+  let parsedImages: string[] = ['/logo.png'];
   try {
     parsedImages = typeof product.images === 'string' ? JSON.parse(product.images) : product.images;
     if (!Array.isArray(parsedImages) || parsedImages.length === 0) {
-      parsedImages = ['/logo.jpeg'];
+      parsedImages = ['/logo.png'];
     }
   } catch {
     if (typeof product.images === 'string' && product.images) {

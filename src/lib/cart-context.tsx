@@ -143,7 +143,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     ageRange?: string;
     stock: number;
   }, quantityToAdd = 1) => {
-    let parsedImage = '/logo.jpeg';
+    let parsedImage = '/logo.png';
     try {
       const imgs = typeof product.images === 'string' ? JSON.parse(product.images) : product.images;
       if (Array.isArray(imgs) && imgs.length > 0) {
