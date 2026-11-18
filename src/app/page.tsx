@@ -119,11 +119,11 @@ export default async function HomePage() {
       {/* 4. THE WOOOBEY BRAND JOURNEY HERO (DIRECTLY FROM THE USER'S THEME REFERENCE SLIDE!) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="relative rounded-3xl sm:rounded-4xl bg-gradient-to-br from-[#5f3dc4] via-[#7048e8] to-[#4c2889] text-white p-6 sm:p-12 lg:p-16 overflow-hidden shadow-2xl border-2 border-white/20">
-          
+
           {/* Playful Floating Sparkles & Clouds */}
           <div className="absolute top-4 right-8 w-48 h-48 bg-[#ffb703]/20 rounded-full blur-3xl pointer-events-none" />
           <div className="absolute -bottom-8 -left-8 w-60 h-60 bg-[#f25c38]/25 rounded-full blur-3xl pointer-events-none" />
-          
+
           <div className="relative z-10 text-center max-w-3xl mx-auto space-y-4">
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/15 backdrop-blur-md border border-white/25 text-[#ffb703] text-xs font-black uppercase tracking-wider font-heading">
               <Sparkles className="w-3.5 h-3.5" />

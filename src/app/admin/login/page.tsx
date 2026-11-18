@@ -61,8 +61,8 @@ export default function AdminLoginPage() {
       <div className="w-full max-w-md bg-white rounded-3xl p-8 shadow-2xl space-y-6 relative z-10 border border-slate-200">
         {/* Header */}
         <div className="text-center space-y-2">
-          <div className="relative w-16 h-16 rounded-2xl overflow-hidden border-2 border-[#0b574f] mx-auto shadow-md">
-            <Image src="/logo.jpeg" alt="Wooobey Logo" fill className="object-cover" />
+          <div className="relative h-14 w-44 rounded-2xl overflow-hidden border-2 border-[#0b574f] mx-auto shadow-md p-1.5 bg-white">
+            <Image src="/logo.png" alt="Wooobey Logo" fill className="object-contain" priority />
           </div>
           <h1 className="text-2xl font-black text-[#0d1b1e] tracking-tight">Wooobey Admin Portal</h1>
           <p className="text-xs text-slate-500 font-medium">

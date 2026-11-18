@@ -91,13 +91,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       {/* ─── MOBILE TOPBAR (Visible only on mobile) ─── */}
       <header className="md:hidden sticky top-0 z-40 bg-[#0d1b1e] text-white px-4 py-3 flex items-center justify-between border-b border-emerald-950/40 shadow-sm">
         <Link href="/admin" className="flex items-center gap-2.5">
-          <div className="relative w-8 h-8 rounded-full overflow-hidden border border-[#0b574f]">
-            <Image src="/logo.jpeg" alt="Wooobey Admin" fill className="object-cover" />
+          <div className="relative h-7 w-24 bg-white rounded-lg p-0.5 overflow-hidden border border-[#0b574f] shadow-xs">
+            <Image src="/logo.png" alt="Wooobey Admin" fill className="object-contain" priority />
           </div>
-          <div className="flex flex-col">
-            <span className="text-sm font-extrabold text-white leading-tight">Wooobey Admin</span>
-            <span className="text-[9px] text-[#ffb703] font-semibold">Store Manager</span>
-          </div>
+          <span className="text-[10px] text-[#ffb703] font-bold uppercase tracking-wider hidden sm:inline">Admin</span>
         </Link>
 
         <div className="flex items-center gap-2">
@@ -143,13 +140,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               {/* Drawer Header */}
               <div className="p-4 px-5 border-b border-emerald-900/40 flex items-center justify-between">
                 <Link href="/admin" onClick={() => setMobileOpen(false)} className="flex items-center gap-2.5">
-                  <div className="relative w-8 h-8 rounded-full overflow-hidden border border-[#0b574f]">
-                    <Image src="/logo.jpeg" alt="Wooobey Admin" fill className="object-cover" />
+                  <div className="relative h-8 w-28 bg-white rounded-lg p-1 overflow-hidden border border-[#0b574f] shadow-xs">
+                    <Image src="/logo.png" alt="Wooobey Admin" fill className="object-contain" priority />
                   </div>
-                  <div className="flex flex-col">
-                    <span className="text-sm font-bold text-white">Wooobey Admin</span>
-                    <span className="text-[9px] text-[#ffb703] font-medium">Control Panel</span>
-                  </div>
+                  <span className="text-[10px] text-[#ffb703] font-bold uppercase tracking-wider">Admin</span>
                 </Link>
 
                 <button
@@ -229,14 +223,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <div className="flex-1 flex flex-col min-h-0">
           {/* Header Branding */}
           <div className="p-6 border-b border-emerald-900/40 flex items-center justify-between shrink-0">
-            <Link href="/admin" className="flex items-center gap-3">
-              <div className="relative w-9 h-9 rounded-full overflow-hidden border-2 border-[#0b574f]">
-                <Image src="/logo.jpeg" alt="Wooobey Admin" fill className="object-cover" />
+            <Link href="/admin" className="flex flex-col gap-1.5 group">
+              <div className="relative h-10 w-36 bg-white rounded-xl p-1.5 overflow-hidden border border-[#0b574f] shadow-xs group-hover:scale-105 transition-transform">
+                <Image src="/logo.png" alt="Wooobey Admin" fill className="object-contain" priority />
               </div>
-              <div className="flex flex-col">
-                <span className="text-lg font-bold text-white leading-none">Wooobey Admin</span>
-                <span className="text-[10px] text-[#ffb703] font-semibold mt-0.5">Store Management</span>
-              </div>
+              <span className="text-[10px] text-[#ffb703] font-bold uppercase tracking-wider">Store Management</span>
             </Link>
           </div>
 

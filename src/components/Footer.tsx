@@ -16,7 +16,7 @@ export default function Footer() {
           {/* Brand Info */}
           <div className="md:col-span-5 space-y-4">
             <Link href="/" className="inline-block group">
-              <div className="relative h-12 w-44 bg-white/10 hover:bg-white/15 p-2 rounded-2xl transition-all border border-white/10">
+              <div className="relative h-14 w-48 bg-white p-2 rounded-2xl transition-all shadow-md group-hover:scale-105 border border-white/20">
                 <Image
                   src="/logo.png"
                   alt="Wooobey — Play. Learn. Create."

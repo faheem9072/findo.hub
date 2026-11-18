@@ -42,7 +42,7 @@ export default function FloatingMascotBuddy() {
         {/* Mascot Avatar Frame */}
         <div className="relative w-12 h-12 sm:w-16 sm:h-16 rounded-full overflow-hidden bg-white border-2 border-[#f25c38] shadow-lg p-0.5 animate-float flex items-center justify-center">
           <Image
-            src="/logo.jpeg"
+            src="/logo.png"
             alt="Wooobey Mascot"
             fill
             className="object-contain p-1"
