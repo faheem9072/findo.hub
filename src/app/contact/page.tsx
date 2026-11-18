@@ -113,7 +113,7 @@ export default function ContactPage() {
                 <MapPin className="w-5 h-5" />
               </div>
               <div>
-                <h4 className="font-bold text-xs text-emerald-400 uppercase">Findo Hub</h4>
+                <h4 className="font-bold text-xs text-emerald-400 uppercase">Wooobey Care</h4>
                 <p className="text-xs text-slate-300">Kerala, India • Pan-India Delivery</p>
               </div>
             </div>
@@ -149,7 +149,7 @@ export default function ContactPage() {
               </div>
               <h3 className="text-2xl font-bold text-[#0d1b1e]">Message Received!</h3>
               <p className="text-sm text-slate-500 max-w-md mx-auto">
-                Thank you for contacting Findo. Our support team has logged your query and will reply via email shortly.
+                Thank you for contacting Wooobey. Our support team has logged your query and will reply shortly.
               </p>
               <button
                 onClick={() => setSuccess(false)}

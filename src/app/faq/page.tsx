@@ -9,8 +9,8 @@ export default function FAQPage() {
 
   const faqs = [
     {
-      q: 'Are Findo products safe for toddlers and infants?',
-      a: 'Yes, 100%! All Findo products are crafted using non-toxic, BPA-free, food-grade materials. Toys pass strict ASTM and EN71 child safety standards with zero sharp edges.',
+      q: 'Are Wooobey products safe for toddlers and infants?',
+      a: 'Yes, 100%! All Wooobey products are crafted using non-toxic, BPA-free, child-safe materials. Toys pass strict ASTM and EN71 child safety standards with zero sharp edges.',
     },
     {
       q: 'How does the 360° Anti-Spill Gyro Bowl work?',

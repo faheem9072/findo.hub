@@ -13,7 +13,7 @@ export default function AccountPage() {
 
   useEffect(() => {
     // Check localStorage for stored customer email
-    const saved = localStorage.getItem('findo_customer_email');
+    const saved = localStorage.getItem('wooobey_customer_email') || localStorage.getItem('findo_customer_email');
     if (saved) {
       setEmail(saved);
       fetchOrders(saved);
@@ -30,7 +30,7 @@ export default function AccountPage() {
       if (res.ok) {
         const data = await res.json();
         setOrders(data.orders || []);
-        localStorage.setItem('findo_customer_email', targetEmail.trim());
+        localStorage.setItem('wooobey_customer_email', targetEmail.trim());
       }
     } catch {
       setOrders([]);
@@ -45,6 +45,7 @@ export default function AccountPage() {
   };
 
   const handleLogout = () => {
+    localStorage.removeItem('wooobey_customer_email');
     localStorage.removeItem('findo_customer_email');
     setEmail('');
     setSearchedEmail('');
@@ -58,7 +59,7 @@ export default function AccountPage() {
         <div>
           <h1 className="text-3xl font-extrabold text-[#0d1b1e]">My Account</h1>
           <p className="text-xs text-slate-500 mt-1">
-            Track your FINDO orders, manage delivery addresses, and view purchase history.
+            Track your Wooobey orders, manage delivery addresses, and view purchase history.
           </p>
         </div>
 

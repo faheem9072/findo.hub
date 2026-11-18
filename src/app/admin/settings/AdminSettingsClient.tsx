@@ -110,7 +110,7 @@ export default function AdminSettingsClient({ initialSettings }: { initialSettin
         {/* Support Contact Settings */}
         <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-4">
           <h2 className="text-base font-extrabold text-[#0d1b1e] flex items-center gap-2">
-            <PhoneCall className="w-4 h-4 text-[#5a9e2f]" />
+            <PhoneCall className="w-4 h-4 text-[#0b574f]" />
             <span>Support & Contact Channels</span>
           </h2>
 
@@ -121,7 +121,7 @@ export default function AdminSettingsClient({ initialSettings }: { initialSettin
                 type="text"
                 value={whatsappNumber}
                 onChange={(e) => setWhatsappNumber(e.target.value)}
-                className="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#5a9e2f] outline-none"
+                className="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#0b574f] outline-none"
                 placeholder="+917025387764"
               />
             </div>
@@ -132,7 +132,7 @@ export default function AdminSettingsClient({ initialSettings }: { initialSettin
                 type="email"
                 value={supportEmail}
                 onChange={(e) => setSupportEmail(e.target.value)}
-                className="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#5a9e2f] outline-none"
+                className="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#0b574f] outline-none"
                 placeholder="findohub7@gmail.com"
               />
             </div>
@@ -142,7 +142,7 @@ export default function AdminSettingsClient({ initialSettings }: { initialSettin
         {/* Shipping Settings */}
         <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-4">
           <h2 className="text-base font-extrabold text-[#0d1b1e] flex items-center gap-2">
-            <Truck className="w-4 h-4 text-[#5a9e2f]" />
+            <Truck className="w-4 h-4 text-[#0b574f]" />
             <span>Shipping Policy Rules</span>
           </h2>
 
@@ -153,7 +153,7 @@ export default function AdminSettingsClient({ initialSettings }: { initialSettin
                 type="number"
                 value={freeShippingThreshold}
                 onChange={(e) => setFreeShippingThreshold(e.target.value)}
-                className="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#5a9e2f] outline-none"
+                className="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#0b574f] outline-none"
               />
               <p className="text-[10px] text-slate-400 mt-1">Orders at or above this subtotal get free shipping (0 = all orders qualify).</p>
             </div>
@@ -164,7 +164,7 @@ export default function AdminSettingsClient({ initialSettings }: { initialSettin
                 type="number"
                 value={flatShippingRate}
                 onChange={(e) => setFlatShippingRate(e.target.value)}
-                className="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#5a9e2f] outline-none"
+                className="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#0b574f] outline-none"
               />
               <p className="text-[10px] text-slate-400 mt-1">Set to 0 for storewide 100% Free Shipping.</p>
             </div>
@@ -174,7 +174,7 @@ export default function AdminSettingsClient({ initialSettings }: { initialSettin
         {/* Announcement Banner */}
         <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-4">
           <h2 className="text-base font-extrabold text-[#0d1b1e] flex items-center gap-2">
-            <Bell className="w-4 h-4 text-[#5a9e2f]" />
+            <Bell className="w-4 h-4 text-[#0b574f]" />
             <span>Store Announcement Notice</span>
           </h2>
 
@@ -184,7 +184,7 @@ export default function AdminSettingsClient({ initialSettings }: { initialSettin
               type="text"
               value={storeNotice}
               onChange={(e) => setStoreNotice(e.target.value)}
-              className="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#5a9e2f] outline-none"
+              className="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#0b574f] outline-none"
               placeholder="e.g. 🎉 FREE SHIPPING ALL OVER INDIA ON ALL ORDERS!"
             />
           </div>
@@ -196,7 +196,7 @@ export default function AdminSettingsClient({ initialSettings }: { initialSettin
           <button
             type="submit"
             disabled={saving}
-            className="py-3 px-8 rounded-xl bg-[#5a9e2f] hover:bg-[#488224] text-white font-bold text-xs flex items-center gap-2 shadow-xs transition-all disabled:opacity-50"
+            className="py-3 px-8 rounded-xl bg-[#0b574f] hover:bg-[#073e38] text-white font-bold text-xs flex items-center gap-2 shadow-xs transition-all disabled:opacity-50"
           >
             {saved ? (
               <>
@@ -217,7 +217,7 @@ export default function AdminSettingsClient({ initialSettings }: { initialSettin
       <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-4 pt-6 border-t-2 border-t-slate-100">
         <div>
           <h2 className="text-base font-extrabold text-[#0d1b1e] flex items-center gap-2">
-            <ShieldCheck className="w-4 h-4 text-[#5a9e2f]" />
+            <ShieldCheck className="w-4 h-4 text-[#0b574f]" />
             <span>Admin Security & Password Change</span>
           </h2>
           <p className="text-xs text-slate-500">
@@ -246,7 +246,7 @@ export default function AdminSettingsClient({ initialSettings }: { initialSettin
               value={currentPassword}
               onChange={(e) => setCurrentPassword(e.target.value)}
               placeholder="Enter current password"
-              className="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#5a9e2f] outline-none"
+              className="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#0b574f] outline-none"
             />
           </div>
 
@@ -259,7 +259,7 @@ export default function AdminSettingsClient({ initialSettings }: { initialSettin
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
               placeholder="At least 6 characters"
-              className="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#5a9e2f] outline-none"
+              className="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#0b574f] outline-none"
             />
           </div>
 
@@ -268,7 +268,7 @@ export default function AdminSettingsClient({ initialSettings }: { initialSettin
             disabled={pwdUpdating}
             className="py-2.5 px-6 rounded-xl bg-[#0d1b1e] hover:bg-[#1a3237] text-white font-bold text-xs flex items-center gap-2 shadow-xs transition-all disabled:opacity-50"
           >
-            <Lock className="w-3.5 h-3.5 text-[#5a9e2f]" />
+            <Lock className="w-3.5 h-3.5 text-[#0b574f]" />
             <span>{pwdUpdating ? 'Updating Password...' : 'Update Admin Password'}</span>
           </button>
         </form>

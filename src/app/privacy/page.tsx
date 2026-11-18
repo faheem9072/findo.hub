@@ -21,9 +21,9 @@ import {
 } from 'lucide-react';
 
 export const metadata = {
-  title: 'Privacy Policy — Findo',
+  title: 'Privacy Policy — Wooobey',
   description:
-    'Findo Privacy Policy: Learn how we collect, use, store, and safeguard your personal information when using getfindo.in.',
+    'Wooobey Privacy Policy: Learn how we collect, use, store, and safeguard your personal information when using getWooobey.in.',
 };
 
 export default function PrivacyPage() {
@@ -50,14 +50,14 @@ export default function PrivacyPage() {
           </div>
           <div>
             <h2 className="text-base font-bold text-[#0d1b1e]">Your Privacy Is Our Priority</h2>
-            <p className="text-xs text-slate-400">Findo (getfindo.in) Customer Data Protection Commitment</p>
+            <p className="text-xs text-slate-400">Wooobey (getWooobey.in) Customer Data Protection Commitment</p>
           </div>
         </div>
         <p className="font-semibold text-[#0d1b1e]">
-          At Findo, we value your privacy and are committed to protecting your personal information.
+          At Wooobey, we value your privacy and are committed to protecting your personal information.
         </p>
         <p className="text-xs sm:text-sm text-slate-600">
-          This Privacy Policy explains how Findo collects, uses, stores, and protects your information when you visit our website, place an order, or contact us.
+          This Privacy Policy explains how Wooobey collects, uses, stores, and protects your information when you visit our website, place an order, or contact us.
         </p>
         <div className="p-3.5 bg-emerald-50 rounded-2xl border border-emerald-200 text-xs text-emerald-900 font-medium flex items-center gap-2">
           <CheckCircle2 className="w-4 h-4 text-[#5a9e2f] shrink-0" />
@@ -65,7 +65,7 @@ export default function PrivacyPage() {
         </div>
       </div>
 
-      {/* 1. About Findo */}
+      {/* 1. About Wooobey */}
       <section className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-xs space-y-4">
         <div className="flex items-center gap-3 pb-3 border-b border-slate-100">
           <div className="w-9 h-9 rounded-xl bg-[#eef8ea] text-[#5a9e2f] flex items-center justify-center shrink-0">
@@ -73,22 +73,22 @@ export default function PrivacyPage() {
           </div>
           <div>
             <span className="text-[11px] font-bold text-[#5a9e2f] uppercase tracking-wider">Section 1</span>
-            <h2 className="text-lg font-bold text-[#0d1b1e]">About Findo</h2>
+            <h2 className="text-lg font-bold text-[#0d1b1e]">About Wooobey</h2>
           </div>
         </div>
         <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-          Findo is an online store offering educational toys, creative products, puzzles, and fun activity products for children.
+          Wooobey is an online store offering educational toys, creative products, puzzles, and fun activity products for children.
         </p>
         <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200/80 space-y-2 text-xs sm:text-sm text-slate-700">
           <p>
             <strong>Website:</strong>{' '}
             <a
-              href="https://getfindo.in"
+              href="https://getWooobey.in"
               target="_blank"
               rel="noopener noreferrer"
               className="text-[#5a9e2f] font-semibold hover:underline"
             >
-              https://getfindo.in
+              https://getWooobey.in
             </a>
           </p>
           <p className="flex items-start gap-1.5">
@@ -155,7 +155,7 @@ export default function PrivacyPage() {
             Payments made through our website may be processed by third-party payment gateways. We may receive payment-related information such as transaction IDs, payment status, and payment method.
           </p>
           <p className="text-xs font-semibold text-emerald-900 bg-emerald-100/60 p-2.5 rounded-xl border border-emerald-200">
-            Findo does not intentionally store customers&apos; complete debit card, credit card, or banking credentials.
+            Wooobey does not intentionally store customers&apos; complete debit card, credit card, or banking credentials.
           </p>
         </div>
 
@@ -232,7 +232,7 @@ export default function PrivacyPage() {
           </div>
         </div>
         <div className="p-3.5 bg-emerald-50 rounded-2xl border border-emerald-200 text-xs sm:text-sm font-semibold text-emerald-950">
-          Findo does not sell or rent your personal information to third parties.
+          Wooobey does not sell or rent your personal information to third parties.
         </div>
         <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
           However, we may share necessary information with trusted service providers to operate our business, including:
@@ -309,7 +309,7 @@ export default function PrivacyPage() {
           </div>
         </div>
         <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-          Findo takes reasonable measures to protect customers&apos; personal information against unauthorised access, loss, misuse, alteration, or disclosure.
+          Wooobey takes reasonable measures to protect customers&apos; personal information against unauthorised access, loss, misuse, alteration, or disclosure.
         </p>
         <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
           We use appropriate technical and organisational safeguards, depending on the nature of the information and the services we use. However, no online platform can guarantee complete security.
@@ -360,7 +360,7 @@ export default function PrivacyPage() {
           </div>
         </div>
         <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-          Findo offers products intended for children. Our website is intended to be used by adults, parents, or legal guardians for purchasing products.
+          Wooobey offers products intended for children. Our website is intended to be used by adults, parents, or legal guardians for purchasing products.
         </p>
         <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
           We do not knowingly collect personal information directly from children without appropriate consent or legal authorisation.
@@ -423,7 +423,7 @@ export default function PrivacyPage() {
           </div>
         </div>
         <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-          Our website may contain links to third-party websites or services. Findo is not responsible for the privacy practices or content of external websites.
+          Our website may contain links to third-party websites or services. Wooobey is not responsible for the privacy practices or content of external websites.
         </p>
         <p className="text-xs text-slate-600">
           Customers are encouraged to review the privacy policies of those websites before providing personal information.
@@ -442,7 +442,7 @@ export default function PrivacyPage() {
           </div>
         </div>
         <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-          Findo may update this Privacy Policy from time to time to reflect changes in our business, website features, or applicable laws.
+          Wooobey may update this Privacy Policy from time to time to reflect changes in our business, website features, or applicable laws.
         </p>
         <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
           Any updated version will be published on this page with a revised effective date. We encourage customers to review this page periodically.
@@ -469,30 +469,30 @@ export default function PrivacyPage() {
           <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2.5 text-xs">
             <h4 className="font-bold text-[#0d1b1e] uppercase tracking-wider text-[11px] flex items-center gap-1.5">
               <Phone className="w-3.5 h-3.5 text-[#5a9e2f]" />
-              Findo Customer Support
+              Wooobey Customer Support
             </h4>
             <div className="space-y-1.5 text-slate-600">
               <p>
-                <strong>Brand:</strong> Findo
+                <strong>Brand:</strong> Wooobey
               </p>
               <p>
                 <strong>Website:</strong>{' '}
                 <a
-                  href="https://getfindo.in"
+                  href="https://getWooobey.in"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-[#5a9e2f] hover:underline"
                 >
-                  https://getfindo.in
+                  https://getWooobey.in
                 </a>
               </p>
               <p>
                 <strong>Email:</strong>{' '}
                 <a
-                  href="mailto:findohub7@gmail.com"
+                  href="mailto:Wooobeyhub7@gmail.com"
                   className="text-[#5a9e2f] hover:underline font-medium"
                 >
-                  findohub7@gmail.com
+                  Wooobeyhub7@gmail.com
                 </a>
               </p>
               <p>
@@ -538,10 +538,10 @@ export default function PrivacyPage() {
               <p>
                 <strong>Email:</strong>{' '}
                 <a
-                  href="mailto:findohub7@gmail.com"
+                  href="mailto:Wooobeyhub7@gmail.com"
                   className="text-[#5a9e2f] hover:underline font-medium"
                 >
-                  findohub7@gmail.com
+                  Wooobeyhub7@gmail.com
                 </a>
               </p>
               <p className="flex items-center gap-1 text-[11px] text-slate-500 pt-1">
@@ -557,7 +557,7 @@ export default function PrivacyPage() {
             We aim to acknowledge privacy-related complaints within 48 hours and address them within the applicable legal timeframe.
           </p>
           <p className="text-slate-600 font-semibold pt-1">
-            Thank you for trusting Findo. &mdash; <span className="text-[#5a9e2f]">Find smart play.</span>
+            Thank you for trusting Wooobey. &mdash; <span className="text-[#5a9e2f]">Find smart play.</span>
           </p>
         </div>
 

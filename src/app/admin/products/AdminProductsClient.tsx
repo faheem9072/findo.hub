@@ -194,13 +194,13 @@ export default function AdminProductsClient({
         <div>
           <h1 className="text-2xl font-extrabold text-[#0d1b1e]">Product Inventory Management</h1>
           <p className="text-xs text-slate-500">
-            Add, edit, or adjust prices live on the Findo storefront.
+            Add, edit, or adjust prices live on the Wooobey storefront.
           </p>
         </div>
 
         <Link
           href="/admin/products/new"
-          className="py-2.5 px-5 rounded-xl bg-[#5a9e2f] hover:bg-[#488224] text-white font-bold text-xs flex items-center gap-2 shadow-md transition-all"
+          className="py-2.5 px-5 rounded-xl bg-[#0b574f] hover:bg-[#073e38] text-white font-bold text-xs flex items-center gap-2 shadow-md transition-all"
         >
           <Plus className="w-4 h-4" />
           <span>Add New Product</span>
@@ -216,7 +216,7 @@ export default function AdminProductsClient({
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search product title or category..."
-            className="w-full pl-9 pr-4 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs font-medium focus:outline-none focus:border-[#5a9e2f]"
+            className="w-full pl-9 pr-4 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs font-medium focus:outline-none focus:border-[#0b574f]"
           />
         </div>
         <span className="text-xs font-bold text-slate-500">
@@ -253,7 +253,7 @@ export default function AdminProductsClient({
                       <Link
                         href={`/products/${p.slug}`}
                         target="_blank"
-                        className="font-bold text-[#0d1b1e] text-xs leading-snug hover:text-[#5a9e2f] transition-colors line-clamp-2"
+                        className="font-bold text-[#0d1b1e] text-xs leading-snug hover:text-[#0b574f] transition-colors line-clamp-2"
                       >
                         {p.name}
                       </Link>
@@ -271,7 +271,7 @@ export default function AdminProductsClient({
                     </div>
 
                     <div className="flex items-center gap-2 mt-1">
-                      <span className="bg-[#eef8ea] text-[#5a9e2f] px-2 py-0.5 rounded-md text-[9px] font-bold">
+                      <span className="bg-[#eef8ea] text-[#0b574f] px-2 py-0.5 rounded-md text-[9px] font-bold">
                         {p.category?.name || 'General'}
                       </span>
                       <span className="text-[10px] text-slate-400">{p.ageRange}</span>
@@ -311,7 +311,7 @@ export default function AdminProductsClient({
                                 setPriceError(null);
                               }}
                               placeholder="599"
-                              className="w-full pl-6 pr-2 py-1.5 text-xs font-bold bg-white border border-slate-300 rounded-lg focus:outline-none focus:border-[#5a9e2f]"
+                              className="w-full pl-6 pr-2 py-1.5 text-xs font-bold bg-white border border-slate-300 rounded-lg focus:outline-none focus:border-[#0b574f]"
                               autoFocus
                             />
                           </div>
@@ -334,7 +334,7 @@ export default function AdminProductsClient({
                                 setPriceError(null);
                               }}
                               placeholder="Optional"
-                              className="w-full pl-6 pr-2 py-1.5 text-xs bg-white border border-slate-300 rounded-lg focus:outline-none focus:border-[#5a9e2f]"
+                              className="w-full pl-6 pr-2 py-1.5 text-xs bg-white border border-slate-300 rounded-lg focus:outline-none focus:border-[#0b574f]"
                             />
                           </div>
                         </div>
@@ -355,7 +355,7 @@ export default function AdminProductsClient({
                             value={deliveryFeeInput}
                             onChange={(e) => setDeliveryFeeInput(e.target.value)}
                             placeholder="0 (Free Delivery)"
-                            className="w-full pl-6 pr-2 py-1.5 text-xs bg-white border border-slate-300 rounded-lg focus:outline-none focus:border-[#5a9e2f]"
+                            className="w-full pl-6 pr-2 py-1.5 text-xs bg-white border border-slate-300 rounded-lg focus:outline-none focus:border-[#0b574f]"
                           />
                         </div>
                       </div>
@@ -371,7 +371,7 @@ export default function AdminProductsClient({
                         <button
                           onClick={(e) => handleSavePrice(p.id, e)}
                           disabled={savingPriceId === p.id}
-                          className="flex-1 py-1.5 px-3 bg-[#5a9e2f] hover:bg-[#488224] text-white text-xs font-bold rounded-lg flex items-center justify-center gap-1.5 transition-all disabled:opacity-50 shadow-xs cursor-pointer"
+                          className="flex-1 py-1.5 px-3 bg-[#0b574f] hover:bg-[#073e38] text-white text-xs font-bold rounded-lg flex items-center justify-center gap-1.5 transition-all disabled:opacity-50 shadow-xs cursor-pointer"
                         >
                           {savingPriceId === p.id ? (
                             <Loader2 className="w-3.5 h-3.5 animate-spin" />
@@ -417,7 +417,7 @@ export default function AdminProductsClient({
                       <div className="flex items-center gap-1.5">
                         <button
                           onClick={(e) => handleStartEditPrice(p, e)}
-                          className="p-2 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-[#5a9e2f] transition-colors cursor-pointer"
+                          className="p-2 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-[#0b574f] transition-colors cursor-pointer"
                           title="Change Price"
                         >
                           <IndianRupee className="w-4 h-4" />
@@ -486,7 +486,7 @@ export default function AdminProductsClient({
                           <Link
                             href={`/products/${p.slug}`}
                             target="_blank"
-                            className="font-bold text-[#0d1b1e] hover:text-[#5a9e2f] transition-colors flex items-center gap-1"
+                            className="font-bold text-[#0d1b1e] hover:text-[#0b574f] transition-colors flex items-center gap-1"
                           >
                             <span>{p.name}</span>
                             <ExternalLink className="w-3 h-3 text-slate-400" />
@@ -497,7 +497,7 @@ export default function AdminProductsClient({
                     </td>
 
                     <td className="py-4 px-4">
-                      <span className="bg-[#eef8ea] text-[#5a9e2f] px-2.5 py-1 rounded-full text-[10px] font-bold">
+                      <span className="bg-[#eef8ea] text-[#0b574f] px-2.5 py-1 rounded-full text-[10px] font-bold">
                         {p.category?.name || 'Uncategorized'}
                       </span>
                     </td>
@@ -526,7 +526,7 @@ export default function AdminProductsClient({
                                   if (e.key === 'Escape') handleCancelEditPrice(e);
                                 }}
                                 placeholder="599"
-                                className="w-full pl-6 pr-2 py-1 text-xs font-bold bg-white border border-slate-300 rounded-lg focus:outline-none focus:border-[#5a9e2f] focus:ring-1 focus:ring-[#5a9e2f]"
+                                className="w-full pl-6 pr-2 py-1 text-xs font-bold bg-white border border-slate-300 rounded-lg focus:outline-none focus:border-[#0b574f] focus:ring-1 focus:ring-[#0b574f]"
                                 autoFocus
                               />
                             </div>
@@ -552,7 +552,7 @@ export default function AdminProductsClient({
                                   if (e.key === 'Escape') handleCancelEditPrice(e);
                                 }}
                                 placeholder="Optional (e.g. 999)"
-                                className="w-full pl-6 pr-2 py-1 text-xs bg-white border border-slate-300 rounded-lg focus:outline-none focus:border-[#5a9e2f]"
+                                className="w-full pl-6 pr-2 py-1 text-xs bg-white border border-slate-300 rounded-lg focus:outline-none focus:border-[#0b574f]"
                               />
                             </div>
                           </div>
@@ -570,7 +570,7 @@ export default function AdminProductsClient({
                                 value={deliveryFeeInput}
                                 onChange={(e) => setDeliveryFeeInput(e.target.value)}
                                 placeholder="0 (Free Delivery)"
-                                className="w-full pl-6 pr-2 py-1 text-xs bg-white border border-slate-300 rounded-lg focus:outline-none focus:border-[#5a9e2f]"
+                                className="w-full pl-6 pr-2 py-1 text-xs bg-white border border-slate-300 rounded-lg focus:outline-none focus:border-[#0b574f]"
                               />
                             </div>
                           </div>
@@ -586,7 +586,7 @@ export default function AdminProductsClient({
                             <button
                               onClick={(e) => handleSavePrice(p.id, e)}
                               disabled={savingPriceId === p.id}
-                              className="flex-1 py-1 px-2.5 bg-[#5a9e2f] hover:bg-[#488224] text-white text-[11px] font-bold rounded-lg flex items-center justify-center gap-1 transition-all disabled:opacity-50 shadow-xs cursor-pointer"
+                              className="flex-1 py-1 px-2.5 bg-[#0b574f] hover:bg-[#073e38] text-white text-[11px] font-bold rounded-lg flex items-center justify-center gap-1 transition-all disabled:opacity-50 shadow-xs cursor-pointer"
                             >
                               {savingPriceId === p.id ? (
                                 <Loader2 className="w-3 h-3 animate-spin" />
@@ -622,7 +622,7 @@ export default function AdminProductsClient({
 
                           <button
                             onClick={(e) => handleStartEditPrice(p, e)}
-                            className="p-1.5 rounded-lg text-slate-400 hover:text-[#5a9e2f] hover:bg-[#eef8ea] opacity-75 group-hover/price:opacity-100 transition-all cursor-pointer"
+                            className="p-1.5 rounded-lg text-slate-400 hover:text-[#0b574f] hover:bg-[#eef8ea] opacity-75 group-hover/price:opacity-100 transition-all cursor-pointer"
                             title="Change Price & Delivery"
                           >
                             <Edit2 className="w-3.5 h-3.5" />
@@ -675,7 +675,7 @@ export default function AdminProductsClient({
                     <td className="py-4 px-6 text-right space-x-2">
                       <button
                         onClick={(e) => handleStartEditPrice(p, e)}
-                        className="inline-flex p-2 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-[#5a9e2f] transition-colors cursor-pointer"
+                        className="inline-flex p-2 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-[#0b574f] transition-colors cursor-pointer"
                         title="Change Price"
                       >
                         <IndianRupee className="w-4 h-4" />

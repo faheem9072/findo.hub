@@ -79,7 +79,7 @@ const WORLDS: WorldConfig[] = [
       price: '₹229',
       originalPrice: '₹399',
       image: '/images/habit-tracker.jpg',
-      slug: 'findo-kids-daily-routine-habit-tracker-board',
+      slug: 'wooobey-kids-daily-routine-habit-tracker-board',
       tag: 'Best Seller',
     },
   },
@@ -104,7 +104,7 @@ const WORLDS: WorldConfig[] = [
       price: '₹1,319',
       originalPrice: '₹1,999',
       image: '/images/instant-print-camera.jpg',
-      slug: 'findo-diy-instant-print-camera',
+      slug: 'wooobey-diy-instant-print-camera',
       tag: 'Creative Favorite',
     },
   },
@@ -261,17 +261,17 @@ export default function HeroEarshot() {
             TOP FLOATING CAPSULE BAR (Earshot Nav Bar)
         ========================================================================= */}
         <div className="relative z-30 w-full flex items-center justify-between gap-2 sm:gap-3">
-          {/* Brand Mark (Findo Squirrel Badge + Wordmark) */}
+          {/* Brand Mark (Wooobey Squirrel Badge + Wordmark) */}
           <Link
             href="/"
             className="flex items-center gap-2 bg-white/90 hover:bg-white backdrop-blur-md px-3 py-1.5 sm:px-4 sm:py-2 rounded-full border border-white/80 shadow-md transition-transform hover:scale-105"
           >
             <div className="relative w-6 h-6 sm:w-7 sm:h-7 rounded-full overflow-hidden bg-white shrink-0">
-              <Image src="/logo.png" alt="Findo" fill className="object-contain" />
+              <Image src="/logo.png" alt="Wooobey" fill className="object-contain" />
             </div>
             <div className="flex items-baseline gap-1">
               <span className="font-black text-xs sm:text-base tracking-tight text-slate-900 leading-none">
-                FINDO
+                WOOOBEY
               </span>
               <span className="w-1.5 h-1.5 rounded-full bg-[#5a9e2f]" />
             </div>
@@ -417,7 +417,7 @@ export default function HeroEarshot() {
             <div className="relative w-48 h-48 sm:w-56 sm:h-56 md:w-72 md:h-72 lg:w-84 lg:h-84 drop-shadow-[0_20px_25px_rgba(0,0,0,0.6)]">
               <Image
                 src="/images/earshot/squirrel-running-loop.webp"
-                alt="Findo 3D Squirrel Adventurer Running Forward"
+                alt="Wooobey 3D Squirrel Adventurer Running Forward"
                 fill
                 priority
                 unoptimized

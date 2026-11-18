@@ -47,7 +47,7 @@ export default function OrderConfirmationClient({ order: initialOrder }: { order
           particleCount: 80,
           spread: 60,
           origin: { y: 0.6 },
-          colors: ['#5a9e2f', '#0d1b1e', '#72bf44', '#f8f9fa'],
+          colors: ['#0b574f', '#f25c38', '#ffb703', '#7048e8'],
         });
       } catch (e) {
         console.error(e);

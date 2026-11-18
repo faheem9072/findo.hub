@@ -104,7 +104,7 @@ export default async function AdminDashboardPage() {
           <div className="flex items-center gap-3">
             <Link
               href="/admin/products/new"
-              className="py-2.5 px-4 rounded-xl bg-[#5a9e2f] hover:bg-[#488224] text-white font-bold text-xs flex items-center gap-2 shadow-md transition-all"
+              className="py-2.5 px-4 rounded-xl bg-[#0b574f] hover:bg-[#073e38] text-white font-bold text-xs flex items-center gap-2 shadow-md transition-all"
             >
               <Plus className="w-4 h-4" />
               <span>Add New Product</span>
@@ -118,7 +118,7 @@ export default async function AdminDashboardPage() {
           <div className="bg-white p-4 sm:p-6 rounded-2xl border border-slate-200 shadow-xs space-y-1.5 sm:space-y-2">
             <div className="flex items-center justify-between">
               <span className="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-wider">Revenue</span>
-              <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-emerald-100 text-[#5a9e2f] flex items-center justify-center">
+              <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-emerald-100 text-[#0b574f] flex items-center justify-center">
                 <IndianRupee className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
             </div>
@@ -178,7 +178,7 @@ export default async function AdminDashboardPage() {
           <div className="lg:col-span-8 bg-white p-4 sm:p-6 rounded-2xl sm:rounded-3xl border border-slate-200 shadow-xs space-y-4">
             <div className="flex items-center justify-between pb-3 border-b border-slate-100">
               <h2 className="text-base font-bold text-[#0d1b1e]">Recent Orders</h2>
-              <Link href="/admin/orders" className="text-xs font-bold text-[#5a9e2f] hover:underline">
+              <Link href="/admin/orders" className="text-xs font-bold text-[#0b574f] hover:underline">
                 View All Orders
               </Link>
             </div>

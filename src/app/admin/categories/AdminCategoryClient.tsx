@@ -87,7 +87,7 @@ export default function AdminCategoryClient({ initialCategories }: { initialCate
         </div>
         <button
           onClick={openNew}
-          className="py-2.5 px-4 rounded-xl bg-[#5a9e2f] hover:bg-[#488224] text-white font-bold text-xs flex items-center gap-2 shadow-xs transition-all w-fit"
+          className="py-2.5 px-4 rounded-xl bg-[#0b574f] hover:bg-[#073e38] text-white font-bold text-xs flex items-center gap-2 shadow-xs transition-all w-fit"
         >
           <Plus className="w-4 h-4" />
           <span>Add New Category</span>
@@ -99,7 +99,7 @@ export default function AdminCategoryClient({ initialCategories }: { initialCate
           <div key={cat.id} className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-4">
             <div className="flex items-start justify-between">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-[#eef8ea] text-[#5a9e2f] flex items-center justify-center font-bold">
+                <div className="w-10 h-10 rounded-xl bg-[#eef8ea] text-[#0b574f] flex items-center justify-center font-bold">
                   <Layers className="w-5 h-5" />
                 </div>
                 <div>
@@ -117,7 +117,7 @@ export default function AdminCategoryClient({ initialCategories }: { initialCate
             <div className="flex items-center justify-end gap-2 pt-2 border-t border-slate-100">
               <button
                 onClick={() => openEdit(cat)}
-                className="p-2 rounded-lg text-slate-500 hover:text-[#5a9e2f] hover:bg-slate-50 transition-colors"
+                className="p-2 rounded-lg text-slate-500 hover:text-[#0b574f] hover:bg-slate-50 transition-colors"
                 title="Edit Category"
               >
                 <Edit3 className="w-4 h-4" />
@@ -152,7 +152,7 @@ export default function AdminCategoryClient({ initialCategories }: { initialCate
                     setName(e.target.value);
                     if (!editId) setSlug(e.target.value.toLowerCase().replace(/[^a-z0-9]+/g, '-'));
                   }}
-                  className="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#5a9e2f] outline-none"
+                  className="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#0b574f] outline-none"
                   placeholder="e.g. STEM & Logic"
                 />
               </div>
@@ -163,7 +163,7 @@ export default function AdminCategoryClient({ initialCategories }: { initialCate
                   type="text"
                   value={slug}
                   onChange={(e) => setSlug(e.target.value)}
-                  className="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#5a9e2f] outline-none"
+                  className="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#0b574f] outline-none"
                   placeholder="stem-logic"
                 />
               </div>
@@ -174,7 +174,7 @@ export default function AdminCategoryClient({ initialCategories }: { initialCate
                   rows={3}
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  className="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#5a9e2f] outline-none"
+                  className="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#0b574f] outline-none"
                   placeholder="Brief summary of category products..."
                 />
               </div>
@@ -192,7 +192,7 @@ export default function AdminCategoryClient({ initialCategories }: { initialCate
                 <button
                   type="submit"
                   disabled={loading}
-                  className="py-2 px-5 rounded-xl bg-[#5a9e2f] hover:bg-[#488224] text-white font-bold text-xs shadow-xs transition-colors"
+                  className="py-2 px-5 rounded-xl bg-[#0b574f] hover:bg-[#073e38] text-white font-bold text-xs shadow-xs transition-colors"
                 >
                   {loading ? 'Saving...' : 'Save Category'}
                 </button>

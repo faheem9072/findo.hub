@@ -82,7 +82,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   // Load cart from localStorage on client mount & auto-sync prices
   useEffect(() => {
     try {
-      const savedCart = localStorage.getItem('findo_cart');
+      const savedCart = localStorage.getItem('wooobey_cart') || localStorage.getItem('findo_cart');
       if (savedCart) {
         const parsed = JSON.parse(savedCart);
         if (Array.isArray(parsed) && parsed.length > 0) {
@@ -124,7 +124,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (isLoaded) {
       try {
-        localStorage.setItem('findo_cart', JSON.stringify(cart));
+        localStorage.setItem('wooobey_cart', JSON.stringify(cart));
+        localStorage.removeItem('findo_cart');
       } catch (e) {
         console.error('Failed to save cart to localStorage:', e);
       }

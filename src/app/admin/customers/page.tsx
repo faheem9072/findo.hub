@@ -46,7 +46,7 @@ export default async function AdminCustomersPage() {
                   <div key={c.id} className="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs space-y-2">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 rounded-full bg-[#eef8ea] text-[#5a9e2f] flex items-center justify-center font-bold text-xs">
+                        <div className="w-8 h-8 rounded-full bg-[#eef8ea] text-[#0b574f] flex items-center justify-center font-bold text-xs">
                           {c.name[0]}
                         </div>
                         <div>
@@ -54,13 +54,13 @@ export default async function AdminCustomersPage() {
                           <p className="text-[10px] text-slate-400">{c.email}</p>
                         </div>
                       </div>
-                      <span className="font-extrabold text-[#5a9e2f] text-sm">₹{totalSpent.toFixed(2)}</span>
+                      <span className="font-extrabold text-[#0b574f] text-sm">₹{totalSpent.toFixed(2)}</span>
                     </div>
 
                     <div className="flex items-center justify-between text-slate-500 text-[11px] pt-2 border-t border-slate-100">
                       <span>{c._count.orders} orders placed</span>
                       {c.phone && (
-                        <a href={`tel:${c.phone}`} className="text-[#5a9e2f] font-semibold hover:underline">
+                        <a href={`tel:${c.phone}`} className="text-[#0b574f] font-semibold hover:underline">
                           {c.phone}
                         </a>
                       )}
@@ -89,7 +89,7 @@ export default async function AdminCustomersPage() {
                       return (
                         <tr key={c.id} className="hover:bg-slate-50">
                           <td className="p-4 font-bold flex items-center gap-2">
-                            <div className="w-7 h-7 rounded-full bg-[#eef8ea] text-[#5a9e2f] flex items-center justify-center font-bold text-xs">
+                            <div className="w-7 h-7 rounded-full bg-[#eef8ea] text-[#0b574f] flex items-center justify-center font-bold text-xs">
                               {c.name[0]}
                             </div>
                             <span>{c.name}</span>
@@ -99,7 +99,7 @@ export default async function AdminCustomersPage() {
                             {c.phone && <div className="text-[10px] text-slate-400">{c.phone}</div>}
                           </td>
                           <td className="p-4 font-semibold">{c._count.orders} orders</td>
-                          <td className="p-4 font-extrabold text-[#5a9e2f]">₹{totalSpent.toFixed(2)}</td>
+                          <td className="p-4 font-extrabold text-[#0b574f]">₹{totalSpent.toFixed(2)}</td>
                           <td className="p-4 text-slate-400">{new Date(c.createdAt).toLocaleDateString()}</td>
                         </tr>
                       );

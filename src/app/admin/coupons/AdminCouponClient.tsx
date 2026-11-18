@@ -74,7 +74,7 @@ export default function AdminCouponClient({ initialCoupons }: { initialCoupons: 
         </div>
         <button
           onClick={() => setShowModal(true)}
-          className="py-2.5 px-4 rounded-xl bg-[#5a9e2f] hover:bg-[#488224] text-white font-bold text-xs flex items-center gap-2 shadow-xs transition-all w-fit"
+          className="py-2.5 px-4 rounded-xl bg-[#0b574f] hover:bg-[#073e38] text-white font-bold text-xs flex items-center gap-2 shadow-xs transition-all w-fit"
         >
           <Plus className="w-4 h-4" />
           <span>Create Coupon Code</span>
@@ -91,7 +91,7 @@ export default function AdminCouponClient({ initialCoupons }: { initialCoupons: 
           coupons.map((c) => (
             <div key={c.id} className="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs space-y-2.5">
               <div className="flex items-center justify-between">
-                <span className="font-extrabold text-sm text-[#5a9e2f] uppercase tracking-wider">{c.code}</span>
+                <span className="font-extrabold text-sm text-[#0b574f] uppercase tracking-wider">{c.code}</span>
                 <button
                   onClick={() => toggleStatus(c.id, c.isActive)}
                   className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold ${
@@ -143,7 +143,7 @@ export default function AdminCouponClient({ initialCoupons }: { initialCoupons: 
             <tbody className="divide-y divide-slate-100 font-medium text-[#0d1b1e]">
               {coupons.map((c) => (
                 <tr key={c.id} className="hover:bg-slate-50">
-                  <td className="p-4 font-bold text-[#5a9e2f] uppercase tracking-wider">{c.code}</td>
+                  <td className="p-4 font-bold text-[#0b574f] uppercase tracking-wider">{c.code}</td>
                   <td className="p-4">
                     {c.discountType === 'PERCENTAGE' ? `${c.discountValue}% OFF` : `₹${c.discountValue} OFF`}
                   </td>
@@ -187,8 +187,8 @@ export default function AdminCouponClient({ initialCoupons }: { initialCoupons: 
                   required
                   value={code}
                   onChange={(e) => setCode(e.target.value.toUpperCase())}
-                  className="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#5a9e2f] outline-none font-bold uppercase tracking-wider"
-                  placeholder="e.g. FINDO20"
+                  className="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#0b574f] outline-none font-bold uppercase tracking-wider"
+                  placeholder="e.g. WOOOBEY20"
                 />
               </div>
 
@@ -212,7 +212,7 @@ export default function AdminCouponClient({ initialCoupons }: { initialCoupons: 
                     required
                     value={discountValue}
                     onChange={(e) => setDiscountValue(e.target.value)}
-                    className="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#5a9e2f] outline-none"
+                    className="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#0b574f] outline-none"
                   />
                 </div>
               </div>
@@ -223,7 +223,7 @@ export default function AdminCouponClient({ initialCoupons }: { initialCoupons: 
                   type="number"
                   value={minOrderValue}
                   onChange={(e) => setMinOrderValue(e.target.value)}
-                  className="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#5a9e2f] outline-none"
+                  className="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#0b574f] outline-none"
                 />
               </div>
 
@@ -238,7 +238,7 @@ export default function AdminCouponClient({ initialCoupons }: { initialCoupons: 
                 <button
                   type="submit"
                   disabled={loading}
-                  className="py-2 px-5 rounded-xl bg-[#5a9e2f] hover:bg-[#488224] text-white font-bold text-xs shadow-xs"
+                  className="py-2 px-5 rounded-xl bg-[#0b574f] hover:bg-[#073e38] text-white font-bold text-xs shadow-xs"
                 >
                   {loading ? 'Creating...' : 'Save Coupon'}
                 </button>

@@ -204,7 +204,7 @@ export default function ProductForm({ initialData, categories }: ProductFormProp
         <button
           type="submit"
           disabled={loading}
-          className="py-2.5 px-6 rounded-xl bg-[#5a9e2f] hover:bg-[#488224] text-white font-bold text-xs flex items-center gap-2 shadow-md transition-all disabled:opacity-50"
+          className="py-2.5 px-6 rounded-xl bg-[#0b574f] hover:bg-[#073e38] text-white font-bold text-xs flex items-center gap-2 shadow-md transition-all disabled:opacity-50"
         >
           <Save className="w-4 h-4" />
           <span>{loading ? 'Saving...' : 'Save Product'}</span>
@@ -230,8 +230,8 @@ export default function ProductForm({ initialData, categories }: ProductFormProp
               required
               value={formData.name}
               onChange={handleChange}
-              placeholder="e.g. Findo Smart Magic Drawing Tablet"
-              className="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-medium focus:outline-none focus:border-[#5a9e2f]"
+              placeholder="e.g. Wooobey Smart Magic Drawing Tablet"
+              className="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-medium focus:outline-none focus:border-[#0b574f]"
             />
           </div>
 
@@ -241,7 +241,7 @@ export default function ProductForm({ initialData, categories }: ProductFormProp
               name="categoryId"
               value={formData.categoryId}
               onChange={handleChange}
-              className="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-semibold focus:outline-none focus:border-[#5a9e2f]"
+              className="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-semibold focus:outline-none focus:border-[#0b574f]"
             >
               {categories.map((c) => (
                 <option key={c.id} value={c.id}>
@@ -257,7 +257,7 @@ export default function ProductForm({ initialData, categories }: ProductFormProp
               name="ageRange"
               value={formData.ageRange}
               onChange={handleChange}
-              className="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-semibold focus:outline-none focus:border-[#5a9e2f]"
+              className="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-semibold focus:outline-none focus:border-[#0b574f]"
             >
               <option value="1-3 Years">1 - 3 Years (Toddlers & Sensory)</option>
               <option value="3-6 Years">3 - 6 Years (Preschool & Early Learners)</option>
@@ -285,7 +285,7 @@ export default function ProductForm({ initialData, categories }: ProductFormProp
               value={formData.price}
               onChange={handleChange}
               placeholder="799"
-              className="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-medium focus:outline-none focus:border-[#5a9e2f]"
+              className="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-medium focus:outline-none focus:border-[#0b574f]"
             />
           </div>
 
@@ -299,7 +299,7 @@ export default function ProductForm({ initialData, categories }: ProductFormProp
               value={formData.compareAtPrice}
               onChange={handleChange}
               placeholder="1499"
-              className="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-medium focus:outline-none focus:border-[#5a9e2f]"
+              className="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-medium focus:outline-none focus:border-[#0b574f]"
             />
           </div>
 
@@ -325,7 +325,7 @@ export default function ProductForm({ initialData, categories }: ProductFormProp
                 value={formData.deliveryFee}
                 onChange={handleChange}
                 placeholder="0 (Free Delivery)"
-                className="w-full px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-xs font-medium focus:outline-none focus:border-[#5a9e2f]"
+                className="w-full px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-xs font-medium focus:outline-none focus:border-[#0b574f]"
               />
               <button
                 type="button"
@@ -350,7 +350,7 @@ export default function ProductForm({ initialData, categories }: ProductFormProp
               value={formData.stock}
               onChange={handleChange}
               placeholder="25"
-              className="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-medium focus:outline-none focus:border-[#5a9e2f]"
+              className="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-medium focus:outline-none focus:border-[#0b574f]"
             />
           </div>
 
@@ -361,7 +361,7 @@ export default function ProductForm({ initialData, categories }: ProductFormProp
               name="isFeatured"
               checked={formData.isFeatured}
               onChange={handleChange}
-              className="w-4 h-4 text-[#5a9e2f] focus:ring-[#5a9e2f]"
+              className="w-4 h-4 text-[#0b574f] focus:ring-[#0b574f]"
             />
             <label htmlFor="isFeatured" className="text-xs font-bold text-[#0d1b1e] cursor-pointer">
               Feature this product on Homepage carousel
@@ -377,7 +377,7 @@ export default function ProductForm({ initialData, categories }: ProductFormProp
               value={formData.shortDesc}
               onChange={handleChange}
               placeholder="1-sentence eye-catching summary for product card"
-              className="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-medium focus:outline-none focus:border-[#5a9e2f]"
+              className="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-medium focus:outline-none focus:border-[#0b574f]"
             />
           </div>
 
@@ -390,7 +390,7 @@ export default function ProductForm({ initialData, categories }: ProductFormProp
               value={formData.description}
               onChange={handleChange}
               placeholder="Complete features, benefits, safety details..."
-              className="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-medium focus:outline-none focus:border-[#5a9e2f]"
+              className="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-medium focus:outline-none focus:border-[#0b574f]"
             />
           </div>
         </div>
@@ -400,9 +400,9 @@ export default function ProductForm({ initialData, categories }: ProductFormProp
       <div className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-4">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <h3 className="text-sm font-bold text-[#0d1b1e] uppercase tracking-wider flex items-center gap-2">
-            <ImageIcon className="w-4 h-4 text-[#5a9e2f]" />
+            <ImageIcon className="w-4 h-4 text-[#0b574f]" />
             <span>Product Images</span>
-            <span className="text-[10px] font-semibold bg-emerald-50 text-[#5a9e2f] border border-emerald-200 px-2 py-0.5 rounded-full">
+            <span className="text-[10px] font-semibold bg-emerald-50 text-[#0b574f] border border-emerald-200 px-2 py-0.5 rounded-full">
               Device Upload / Direct URL
             </span>
           </h3>
@@ -444,7 +444,7 @@ export default function ProductForm({ initialData, categories }: ProductFormProp
             <button
               type="button"
               onClick={addImageUrl}
-              className="text-xs font-bold text-[#5a9e2f] hover:underline flex items-center gap-1"
+              className="text-xs font-bold text-[#0b574f] hover:underline flex items-center gap-1"
             >
               <Plus className="w-3.5 h-3.5" />
               <span>Add URL</span>
@@ -471,7 +471,7 @@ export default function ProductForm({ initialData, categories }: ProductFormProp
                 readOnly={Boolean(url?.startsWith('data:'))}
                 onChange={(e) => handleImageChange(idx, e.target.value)}
                 placeholder={url?.startsWith('data:') ? 'Custom image uploaded from device' : 'Paste Image URL or click Upload button above'}
-                className="flex-1 px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-mono text-[#0d1b1e] focus:outline-none focus:border-[#5a9e2f]"
+                className="flex-1 px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-mono text-[#0d1b1e] focus:outline-none focus:border-[#0b574f]"
               />
 
               {imageUrls.length > 1 && (
@@ -499,12 +499,12 @@ export default function ProductForm({ initialData, categories }: ProductFormProp
               value={badgeInput}
               onChange={(e) => setBadgeInput(e.target.value)}
               placeholder="e.g. 100% Non-Toxic"
-              className="flex-1 px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs focus:outline-none focus:border-[#5a9e2f]"
+              className="flex-1 px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs focus:outline-none focus:border-[#0b574f]"
             />
             <button
               type="button"
               onClick={addBadge}
-              className="px-4 py-2 bg-[#5a9e2f] text-white font-bold text-xs rounded-xl"
+              className="px-4 py-2 bg-[#0b574f] text-white font-bold text-xs rounded-xl"
             >
               Add
             </button>
@@ -514,7 +514,7 @@ export default function ProductForm({ initialData, categories }: ProductFormProp
             {badges.map((b) => (
               <span
                 key={b}
-                className="bg-[#eef8ea] text-[#5a9e2f] px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1.5"
+                className="bg-[#eef8ea] text-[#0b574f] px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1.5"
               >
                 <span>{b}</span>
                 <button type="button" onClick={() => removeBadge(b)} className="hover:text-red-600">
@@ -532,7 +532,7 @@ export default function ProductForm({ initialData, categories }: ProductFormProp
             <button
               type="button"
               onClick={addSpecRow}
-              className="text-xs font-bold text-[#5a9e2f] hover:underline"
+              className="text-xs font-bold text-[#0b574f] hover:underline"
             >
               + Add Row
             </button>

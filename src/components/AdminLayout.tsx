@@ -67,8 +67,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     return (
       <div className="min-h-screen bg-[#0d1b1e] flex items-center justify-center text-white">
         <div className="flex flex-col items-center gap-3">
-          <div className="w-10 h-10 border-4 border-[#5a9e2f] border-t-transparent rounded-full animate-spin" />
-          <span className="text-xs font-bold tracking-wider uppercase text-slate-300">Authenticating Findo Admin...</span>
+          <div className="w-10 h-10 border-4 border-[#0b574f] border-t-transparent rounded-full animate-spin" />
+          <span className="text-xs font-bold tracking-wider uppercase text-slate-300">Authenticating Wooobey Admin...</span>
         </div>
       </div>
     );
@@ -91,12 +91,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       {/* ─── MOBILE TOPBAR (Visible only on mobile) ─── */}
       <header className="md:hidden sticky top-0 z-40 bg-[#0d1b1e] text-white px-4 py-3 flex items-center justify-between border-b border-emerald-950/40 shadow-sm">
         <Link href="/admin" className="flex items-center gap-2.5">
-          <div className="relative w-8 h-8 rounded-full overflow-hidden border border-[#5a9e2f]">
-            <Image src="/logo.jpeg" alt="Findo Admin" fill className="object-cover" />
+          <div className="relative w-8 h-8 rounded-full overflow-hidden border border-[#0b574f]">
+            <Image src="/logo.jpeg" alt="Wooobey Admin" fill className="object-cover" />
           </div>
           <div className="flex flex-col">
-            <span className="text-sm font-extrabold text-white leading-tight">Findo Admin</span>
-            <span className="text-[9px] text-[#5a9e2f] font-semibold">Store Manager</span>
+            <span className="text-sm font-extrabold text-white leading-tight">Wooobey Admin</span>
+            <span className="text-[9px] text-[#ffb703] font-semibold">Store Manager</span>
           </div>
         </Link>
 
@@ -107,7 +107,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             className="p-2 rounded-lg bg-white/10 hover:bg-white/20 text-slate-300 hover:text-white transition-colors"
             title="View Store"
           >
-            <Store className="w-4 h-4 text-[#5a9e2f]" />
+            <Store className="w-4 h-4 text-[#ffb703]" />
           </Link>
 
           <button
@@ -143,12 +143,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               {/* Drawer Header */}
               <div className="p-4 px-5 border-b border-emerald-900/40 flex items-center justify-between">
                 <Link href="/admin" onClick={() => setMobileOpen(false)} className="flex items-center gap-2.5">
-                  <div className="relative w-8 h-8 rounded-full overflow-hidden border border-[#5a9e2f]">
-                    <Image src="/logo.jpeg" alt="Findo Admin" fill className="object-cover" />
+                  <div className="relative w-8 h-8 rounded-full overflow-hidden border border-[#0b574f]">
+                    <Image src="/logo.jpeg" alt="Wooobey Admin" fill className="object-cover" />
                   </div>
                   <div className="flex flex-col">
-                    <span className="text-sm font-bold text-white">Findo Admin</span>
-                    <span className="text-[9px] text-[#5a9e2f] font-medium">Control Panel</span>
+                    <span className="text-sm font-bold text-white">Wooobey Admin</span>
+                    <span className="text-[9px] text-[#ffb703] font-medium">Control Panel</span>
                   </div>
                 </Link>
 
@@ -172,7 +172,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                       onClick={() => setMobileOpen(false)}
                       className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all ${
                         isActive
-                          ? 'bg-[#5a9e2f] text-white shadow-sm'
+                          ? 'bg-[#0b574f] text-white shadow-sm'
                           : 'text-slate-300 hover:bg-white/10 hover:text-white'
                       }`}
                     >
@@ -193,12 +193,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 className="flex items-center justify-between px-3.5 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-xs font-semibold text-slate-300 hover:text-white"
               >
                 <span>View Storefront</span>
-                <ExternalLink className="w-3.5 h-3.5 text-[#5a9e2f]" />
+                <ExternalLink className="w-3.5 h-3.5 text-[#ffb703]" />
               </Link>
 
               <div className="flex items-center justify-between pt-1">
                 <div className="flex items-center gap-2">
-                  <div className="w-7 h-7 rounded-full bg-[#5a9e2f] text-white font-bold text-xs flex items-center justify-center">
+                  <div className="w-7 h-7 rounded-full bg-[#0b574f] text-white font-bold text-xs flex items-center justify-center">
                     {adminUser?.name?.[0] || 'A'}
                   </div>
                   <div className="text-[11px] truncate max-w-[120px]">
@@ -217,7 +217,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               </div>
 
               <div className="pt-2 text-center text-[10px] text-slate-500 border-t border-white/5">
-                Designed &amp; Developed by <span className="text-[#5a9e2f] font-semibold">KORE</span>
+                Designed &amp; Developed by <span className="text-[#ffb703] font-semibold">KORE</span>
               </div>
             </div>
           </div>
@@ -230,12 +230,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           {/* Header Branding */}
           <div className="p-6 border-b border-emerald-900/40 flex items-center justify-between shrink-0">
             <Link href="/admin" className="flex items-center gap-3">
-              <div className="relative w-9 h-9 rounded-full overflow-hidden border-2 border-[#5a9e2f]">
-                <Image src="/logo.jpeg" alt="Findo Admin" fill className="object-cover" />
+              <div className="relative w-9 h-9 rounded-full overflow-hidden border-2 border-[#0b574f]">
+                <Image src="/logo.jpeg" alt="Wooobey Admin" fill className="object-cover" />
               </div>
               <div className="flex flex-col">
-                <span className="text-lg font-bold text-white leading-none">Findo Admin</span>
-                <span className="text-[10px] text-[#5a9e2f] font-semibold mt-0.5">Store Management</span>
+                <span className="text-lg font-bold text-white leading-none">Wooobey Admin</span>
+                <span className="text-[10px] text-[#ffb703] font-semibold mt-0.5">Store Management</span>
               </div>
             </Link>
           </div>
@@ -251,7 +251,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                   href={item.href}
                   className={`flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs font-bold transition-all ${
                     isActive
-                      ? 'bg-[#5a9e2f] text-white shadow-md'
+                      ? 'bg-[#0b574f] text-white shadow-md'
                       : 'text-slate-300 hover:bg-white/10 hover:text-white'
                   }`}
                 >
@@ -271,12 +271,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             className="flex items-center justify-between px-4 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-xs font-semibold text-slate-300 hover:text-white transition-colors"
           >
             <span>View Live Storefront</span>
-            <ExternalLink className="w-3.5 h-3.5 text-[#5a9e2f]" />
+            <ExternalLink className="w-3.5 h-3.5 text-[#ffb703]" />
           </Link>
 
           <div className="flex items-center justify-between pt-1">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-full bg-[#5a9e2f] text-white font-bold text-xs flex items-center justify-center">
+              <div className="w-8 h-8 rounded-full bg-[#0b574f] text-white font-bold text-xs flex items-center justify-center">
                 {adminUser?.name?.[0] || 'A'}
               </div>
               <div className="text-[11px] truncate max-w-[110px]">
@@ -295,7 +295,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           </div>
 
           <div className="pt-2 text-center text-[10px] text-slate-500 border-t border-white/5">
-            Designed &amp; Developed by <span className="text-[#5a9e2f] font-semibold">KORE</span>
+            Designed &amp; Developed by <span className="text-[#ffb703] font-semibold">KORE</span>
           </div>
         </div>
       </aside>

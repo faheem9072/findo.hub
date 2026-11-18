@@ -65,7 +65,7 @@ export default function MobileBottomNav({ onOpenSearch }: { onOpenSearch?: () =>
           <div className="relative">
             <ShoppingBag className="w-5 h-5" strokeWidth={2} />
             {cartCount > 0 && (
-              <span className="absolute -top-1.5 -right-2 bg-[#5a9e2f] text-white text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center shadow-xs animate-in zoom-in-50">
+              <span className="absolute -top-1.5 -right-2 bg-[#f25c38] text-white text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center shadow-xs animate-in zoom-in-50">
                 {cartCount}
               </span>
             )}
@@ -75,7 +75,7 @@ export default function MobileBottomNav({ onOpenSearch }: { onOpenSearch?: () =>
 
         {/* WhatsApp Support */}
         <a
-          href="https://wa.me/917025387764?text=Hello%20Findo%20Team!%20I%20have%20an%20enquiry%20about%20your%20products."
+          href="https://wa.me/917025387764?text=Hello%20Wooobey%20Team!%20I%20have%20an%20enquiry%20about%20your%20products."
           target="_blank"
           rel="noopener noreferrer"
           className="flex flex-col items-center justify-center py-1 px-1 rounded-xl text-slate-400 hover:text-emerald-400 font-medium transition-colors"

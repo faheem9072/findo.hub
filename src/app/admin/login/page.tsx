@@ -55,16 +55,16 @@ export default function AdminLoginPage() {
   return (
     <div className="min-h-screen bg-[#070e10] flex items-center justify-center p-4 relative overflow-hidden">
       {/* Background Ambience */}
-      <div className="absolute -top-32 -left-32 w-96 h-96 bg-[#5a9e2f]/15 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-[#72bf44]/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute -top-32 -left-32 w-96 h-96 bg-[#0b574f]/20 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-[#f25c38]/15 rounded-full blur-3xl pointer-events-none" />
 
       <div className="w-full max-w-md bg-white rounded-3xl p-8 shadow-2xl space-y-6 relative z-10 border border-slate-200">
         {/* Header */}
         <div className="text-center space-y-2">
-          <div className="relative w-16 h-16 rounded-2xl overflow-hidden border-2 border-[#5a9e2f] mx-auto shadow-md">
-            <Image src="/logo.jpeg" alt="Findo Logo" fill className="object-cover" />
+          <div className="relative w-16 h-16 rounded-2xl overflow-hidden border-2 border-[#0b574f] mx-auto shadow-md">
+            <Image src="/logo.jpeg" alt="Wooobey Logo" fill className="object-cover" />
           </div>
-          <h1 className="text-2xl font-black text-[#0d1b1e] tracking-tight">Findo Admin Access</h1>
+          <h1 className="text-2xl font-black text-[#0d1b1e] tracking-tight">Wooobey Admin Portal</h1>
           <p className="text-xs text-slate-500 font-medium">
             Authorized store administrators only.
           </p>
@@ -104,7 +104,7 @@ export default function AdminLoginPage() {
           {/* Email Field */}
           <div className="space-y-1">
             <label className="text-xs font-bold text-[#0d1b1e] uppercase tracking-wider flex items-center gap-1">
-              <Mail className="w-3.5 h-3.5 text-[#5a9e2f]" /> Admin Email
+              <Mail className="w-3.5 h-3.5 text-[#0b574f]" /> Admin Email
             </label>
             <input
               type="email"
@@ -115,14 +115,14 @@ export default function AdminLoginPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter admin email"
-              className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-xs font-medium text-[#0d1b1e] focus:outline-none focus:border-[#5a9e2f]"
+              className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-xs font-medium text-[#0d1b1e] focus:outline-none focus:border-[#0b574f]"
             />
           </div>
 
           {/* Password Field */}
           <div className="space-y-1">
             <label className="text-xs font-bold text-[#0d1b1e] uppercase tracking-wider flex items-center gap-1">
-              <Lock className="w-3.5 h-3.5 text-[#5a9e2f]" /> Admin Password
+              <Lock className="w-3.5 h-3.5 text-[#0b574f]" /> Admin Password
             </label>
             <input
               type="password"
@@ -133,14 +133,14 @@ export default function AdminLoginPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter admin password"
-              className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-xs font-medium text-[#0d1b1e] focus:outline-none focus:border-[#5a9e2f]"
+              className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-xs font-medium text-[#0d1b1e] focus:outline-none focus:border-[#0b574f]"
             />
           </div>
 
           {/* Admin Security PIN Field */}
           <div className="space-y-1">
             <label className="text-xs font-bold text-[#0d1b1e] uppercase tracking-wider flex items-center gap-1">
-              <KeyRound className="w-3.5 h-3.5 text-[#5a9e2f]" /> Security Passcode / PIN
+              <KeyRound className="w-3.5 h-3.5 text-[#0b574f]" /> Security Passcode / PIN
             </label>
             <input
               type="password"
@@ -152,14 +152,14 @@ export default function AdminLoginPage() {
               value={securityPin}
               onChange={(e) => setSecurityPin(e.target.value)}
               placeholder="Enter Master Security PIN"
-              className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-xs font-bold tracking-widest text-[#0d1b1e] focus:outline-none focus:border-[#5a9e2f]"
+              className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-xs font-bold tracking-widest text-[#0d1b1e] focus:outline-none focus:border-[#0b574f]"
             />
           </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3.5 px-6 rounded-xl bg-[#5a9e2f] hover:bg-[#488224] text-white font-bold text-xs flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all disabled:opacity-50"
+            className="w-full py-3.5 px-6 rounded-xl bg-[#0b574f] hover:bg-[#073e38] text-white font-bold text-xs flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all disabled:opacity-50"
           >
             {loading ? (
               <span>Verifying Credentials...</span>
@@ -174,7 +174,7 @@ export default function AdminLoginPage() {
         </form>
 
         <p className="text-[10px] text-center text-slate-400">
-          Findo Admin Security System • Unauthorized attempts are strictly prohibited.
+          Wooobey Admin Security System • Unauthorized attempts are strictly prohibited.
         </p>
       </div>
     </div>

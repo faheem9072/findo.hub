@@ -33,7 +33,7 @@ export default function HeroMogo() {
       {/* Background Subtle Grid Coordinates & Plus Marks */}
       <div className="absolute inset-0 bg-[radial-gradient(#5a9e2f_1px,transparent_1px)] [background-size:32px_32px] opacity-15 pointer-events-none" />
 
-      {/* Top Header Collab Bar (Mogo Style: "3000 x Abubakar Seitov" -> "FINDO 3000 x SMART PLAY") */}
+      {/* Top Header Collab Bar (Mogo Style: "3000 x Abubakar Seitov" -> "WOOOBEY 3000 x SMART PLAY") */}
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-10">
         <div className="flex items-center justify-between pb-6 border-b border-white/10 font-mono text-xs">
           
@@ -43,13 +43,13 @@ export default function HeroMogo() {
               3D EDITION
             </span>
             <span className="text-slate-400 hidden sm:inline text-[11px] uppercase tracking-wider">
-              Findo Official Playground
+              Wooobey Official Playground
             </span>
           </div>
 
           {/* Center Brand Identity Collab Marker */}
           <div className="flex items-center gap-2 font-black tracking-widest uppercase text-xs sm:text-sm">
-            <span className="text-emerald-400 font-extrabold text-sm sm:text-base">FINDO</span>
+            <span className="text-emerald-400 font-extrabold text-sm sm:text-base">WOOOBEY</span>
             <span className="text-slate-500 font-normal">✕</span>
             <span className="text-white">SMART PLAY</span>
           </div>
@@ -62,7 +62,7 @@ export default function HeroMogo() {
         </div>
       </div>
 
-      {/* Centerpiece Hero Stage: Giant Glowing 'findo' + 3D Mascot Character */}
+      {/* Centerpiece Hero Stage: Giant Glowing 'wooobey' + 3D Mascot Character */}
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-10 sm:py-16 my-auto z-10 flex flex-col items-center justify-center text-center">
         
         {/* Floating Holographic Capsules (Mogo Aesthetic) */}
@@ -95,7 +95,7 @@ export default function HeroMogo() {
               transform: `perspective(1000px) rotateX(${mousePos.y * -4}deg) rotateY(${mousePos.x * 4}deg)`,
             }}
           >
-            findo
+            wooobey
           </h1>
 
           {/* 3D Mascot Character Layer (Sitting in Front & Interacting with the letters, exactly like Mogo character) */}
@@ -111,7 +111,7 @@ export default function HeroMogo() {
             <div className="relative w-full h-full animate-float">
               <Image
                 src="/logo.png"
-                alt="Findo 3D Squirrel Mascot"
+                alt="Wooobey 3D Squirrel Mascot"
                 fill
                 className="object-contain drop-shadow-[0_25px_40px_rgba(0,0,0,0.85)] filter contrast-105"
                 priority

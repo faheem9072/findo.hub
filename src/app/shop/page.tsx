@@ -2,14 +2,15 @@ import React, { Suspense } from 'react';
 import prisma from '@/lib/prisma';
 import ShopClient from './ShopClient';
 import { FALLBACK_PRODUCTS, FALLBACK_CATEGORIES } from '@/lib/fallback-data';
+import { sanitizeProducts } from '@/lib/image-utils';
 
 // Incremental Static Regeneration (1 hour ISR + on-demand instant purge via revalidatePath)
 export const revalidate = 3600;
 
 export const metadata = {
-  title: 'Shop Developmental Toys | Findo — Find Smart Play',
+  title: 'Shop Developmental Toys | Wooobey — Play. Learn. Create.',
   description:
-    'Explore the complete Findo catalog of screen-free developmental toys, routine planners, habit trackers, and STEM science kits.',
+    'Explore the complete Wooobey catalog of screen-free developmental toys, routine planners, habit trackers, and STEM science kits.',
 };
 
 export default async function ShopPage() {
@@ -50,7 +51,7 @@ export default async function ShopPage() {
         </div>
       }
     >
-      <ShopClient initialProducts={products} categories={categories} />
+      <ShopClient initialProducts={sanitizeProducts(products)} categories={categories} />
     </Suspense>
   );
 }

@@ -1,36 +1,22 @@
 import type { Metadata } from 'next';
-import { Quicksand, Fredoka } from 'next/font/google';
 import './globals.css';
 import ClientShell from '@/components/ClientShell';
-
-const quicksand = Quicksand({
-  subsets: ['latin'],
-  variable: '--font-quicksand',
-  weight: ['400', '500', '600', '700'],
-  display: 'swap',
-});
-
-const fredoka = Fredoka({
-  subsets: ['latin'],
-  variable: '--font-fredoka',
-  weight: ['400', '500', '600', '700'],
-  display: 'swap',
-});
 
 const siteUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://www.getfindo.in';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'Findo — Find Smart Play | Kids Developmental Toys & Learning',
-    template: '%s | Findo — Find Smart Play',
+    default: 'Wooobey — Play. Learn. Create. | Kids Developmental Toys',
+    template: '%s | Wooobey — Play. Learn. Create.',
   },
   description:
-    'Find Smart Play — Discover unique, screen-free, and child-safe developmental toys for kids across India. From habit tracker boards and wooden puzzles to DIY instant print cameras and STEM science kits!',
+    'Welcome to Wooobey! Discover screen-free, child-safe developmental toys, habit tracker routine boards, Montessori wooden puzzles, and STEM kits that inspire curious minds across India. Keep Exploring. Keep Creating. Keep Growing.',
   keywords: [
-    'Findo',
-    'Find Smart Play',
-    'Findo Kids Brand',
+    'Wooobey',
+    'Wooobey Toys',
+    'Wooobey Kids',
+    'Play Learn Create',
     'kids developmental toys',
     'habit tracker for kids',
     'daily routine board for kids',
@@ -40,22 +26,22 @@ export const metadata: Metadata = {
     'stem science kits',
     'tetra tower balance game',
   ],
-  authors: [{ name: 'Findo — Find Smart Play' }],
+  authors: [{ name: 'Wooobey — Play. Learn. Create.' }],
   alternates: {
     canonical: 'https://www.getfindo.in',
   },
   openGraph: {
-    title: 'Findo — Find Smart Play',
+    title: 'Wooobey — Play. Learn. Create.',
     description:
-      'Find Smart Play — Screen-free, child-safe developmental toys, routine planners, and STEM kits for growing minds across India.',
+      'Screen-free, child-safe developmental toys, routine planners, and STEM kits for growing minds across India. Keep Exploring. Keep Creating. Keep Growing.',
     url: 'https://www.getfindo.in',
-    siteName: 'Findo — Find Smart Play',
+    siteName: 'Wooobey',
     images: [
       {
-        url: '/logo.jpeg',
+        url: '/logo.png',
         width: 1200,
         height: 630,
-        alt: 'Findo — Find Smart Play',
+        alt: 'Wooobey — Play. Learn. Create.',
       },
     ],
     locale: 'en_IN',
@@ -63,10 +49,10 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Findo — Find Smart Play',
+    title: 'Wooobey — Play. Learn. Create.',
     description:
-      'Find Smart Play — Screen-free, child-safe developmental toys, routine planners, and STEM kits for growing minds across India.',
-    images: ['/logo.jpeg'],
+      'Screen-free, child-safe developmental toys, routine planners, and STEM kits for growing minds across India.',
+    images: ['/logo.png'],
   },
   icons: {
     icon: [
@@ -85,17 +71,17 @@ export const metadata: Metadata = {
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
-  name: 'Findo — Find Smart Play',
-  alternateName: ['Findo', 'Findo Kids', 'Find Smart Play'],
+  name: 'Wooobey — Play. Learn. Create.',
+  alternateName: ['Wooobey', 'Wooobey Kids', 'Play Learn Create'],
   url: 'https://www.getfindo.in',
   description:
-    'Find Smart Play — Screen-free, child-safe developmental toys, habit trackers, and STEM kits for kids across India.',
+    'Play. Learn. Create. — Screen-free, child-safe developmental toys, habit trackers, and STEM kits for kids across India.',
   publisher: {
     '@type': 'Organization',
-    name: 'Findo',
+    name: 'Wooobey',
     url: 'https://www.getfindo.in',
     logo: 'https://www.getfindo.in/logo.png',
-    slogan: 'Find Smart Play',
+    slogan: 'Play. Learn. Create.',
   },
 };
 
@@ -105,14 +91,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${quicksand.variable} ${fredoka.variable} h-full antialiased`}>
+    <html lang="en" className="h-full antialiased">
       <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&display=swap"
+          rel="stylesheet"
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="min-h-full font-sans bg-[#fafbf8] text-[#0d1b1e]">
+      <body className="min-h-full font-sans bg-[#fffdfa] text-[#0e2a27]">
         <ClientShell>{children}</ClientShell>
       </body>
     </html>

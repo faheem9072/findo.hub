@@ -200,15 +200,15 @@ export default function ShopClient({ initialProducts, categories }: ShopClientPr
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-6">
       
       {/* Editorial Page Header */}
-      <div className="space-y-2 pt-2 border-b border-[#0d1b1e]/10 pb-6">
-        <span className="font-mono text-[10px] font-bold text-[#5a9e2f] uppercase tracking-widest bg-[#eef8ea] px-3.5 py-1 rounded-full inline-block">
-          + [ FINDO STORE / CATALOG ]
+      <div className="space-y-2 pt-2 border-b border-[#0b574f]/10 pb-6">
+        <span className="font-heading text-[10px] font-bold text-[#f25c38] uppercase tracking-widest bg-[#fef0ec] px-3.5 py-1 rounded-full inline-block">
+          ✨ WOOOBEY STORE • PLAY. LEARN. CREATE.
         </span>
-        <h1 className="text-3xl sm:text-5xl font-black text-[#0d1b1e] tracking-tight uppercase">
-          Catalog
+        <h1 className="text-3xl sm:text-5xl font-black text-[#0b574f] tracking-tight uppercase font-heading">
+          All Toys & Kits
         </h1>
-        <p className="text-xs sm:text-sm text-slate-500 font-mono">
-          Thoughtfully chosen, screen-free products for curious young minds.
+        <p className="text-xs sm:text-sm text-slate-500 font-medium">
+          Thoughtfully chosen, screen-free developmental toys and routine planners for curious minds across India.
         </p>
       </div>
 

@@ -12,6 +12,19 @@ interface ProductPageProps {
 // Incremental Static Regeneration (1 hour ISR + on-demand instant purge via revalidatePath)
 export const revalidate = 3600;
 
+export async function generateStaticParams() {
+  try {
+    const products = await prisma.product.findMany({
+      where: { isPublished: true },
+      select: { slug: true },
+    });
+    if (products && products.length > 0) {
+      return products.map((p) => ({ slug: p.slug }));
+    }
+  } catch {}
+  return FALLBACK_PRODUCTS.map((p) => ({ slug: p.slug }));
+}
+
 // Deduplicated cached data fetcher shared between generateMetadata and ProductDetailPage
 const getCachedProduct = cache(async (slug: string) => {
   try {
@@ -37,17 +50,17 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
   const product = await getCachedProduct(slug);
 
   if (!product) {
-    return { title: 'Product Not Found — FINDO' };
+    return { title: 'Product Not Found — Wooobey' };
   }
 
   let images: string[] = [];
   try {
     images = typeof product.images === 'string' ? JSON.parse(product.images) : product.images;
   } catch {}
-  const mainImage = images[0] || '/logo.jpeg';
+  const mainImage = images[0] || '/logo.png';
 
   return {
-    title: product.seoTitle || `${product.name} — FINDO`,
+    title: product.seoTitle || `${product.name} — Wooobey`,
     description: product.seoDescription || product.shortDesc || product.description?.substring(0, 150) || '',
     openGraph: {
       title: product.name,

@@ -11,7 +11,9 @@ export async function middleware(request: NextRequest) {
 
   // Protect all /admin routes except /admin/login
   if (pathname.startsWith('/admin') && pathname !== '/admin/login') {
-    const token = request.cookies.get('findo_admin_token')?.value;
+    const token =
+      request.cookies.get('wooobey_admin_token')?.value ||
+      request.cookies.get('findo_admin_token')?.value;
 
     if (!token) {
       const loginUrl = new URL('/admin/login', request.url);
@@ -24,6 +26,7 @@ export async function middleware(request: NextRequest) {
     } catch {
       const loginUrl = new URL('/admin/login', request.url);
       const response = NextResponse.redirect(loginUrl);
+      response.cookies.delete('wooobey_admin_token');
       response.cookies.delete('findo_admin_token');
       return response;
     }

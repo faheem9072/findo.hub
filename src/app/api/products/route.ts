@@ -4,6 +4,7 @@ import prisma from '@/lib/prisma';
 import { cookies } from 'next/headers';
 import { verifyAdminToken } from '@/lib/auth';
 import { FALLBACK_PRODUCTS, FALLBACK_CATEGORIES } from '@/lib/fallback-data';
+import { sanitizeProducts } from '@/lib/image-utils';
 
 export async function GET(request: Request) {
   try {
@@ -54,7 +55,7 @@ export async function GET(request: Request) {
     });
 
     return NextResponse.json(
-      { products, categories },
+      { products: sanitizeProducts(products), categories },
       {
         headers: {
           'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400',

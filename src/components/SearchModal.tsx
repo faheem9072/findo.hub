@@ -92,7 +92,7 @@ export default function SearchModal({
         {/* Results List */}
         <div className="max-h-96 overflow-y-auto p-4 space-y-2 custom-scrollbar">
           {loading ? (
-            <div className="text-center py-8 text-slate-400 text-sm">Searching Findo catalog...</div>
+            <div className="text-center py-8 text-slate-400 text-sm">Searching Wooobey catalog...</div>
           ) : query && results.length === 0 ? (
             <div className="text-center py-8 space-y-2">
               <p className="text-[#0d1b1e] font-semibold text-sm">No products found for &quot;{query}&quot;</p>

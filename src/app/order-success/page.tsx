@@ -35,7 +35,7 @@ export default async function OrderSuccessPage({ searchParams }: OrderSuccessPro
         </div>
         <h1 className="text-3xl sm:text-4xl font-extrabold text-[#0d1b1e]">Order Confirmed!</h1>
         <p className="text-sm text-slate-600 max-w-md mx-auto">
-          Thank you for choosing FINDO! We’re preparing your order with care for delivery.
+          Thank you for choosing Wooobey! We’re preparing your order with care for delivery.
         </p>
       </div>
 

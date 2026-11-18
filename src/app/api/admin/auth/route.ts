@@ -41,6 +41,13 @@ export async function POST(request: Request) {
     });
 
     const cookieStore = await cookies();
+    cookieStore.set('wooobey_admin_token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: 60 * 60 * 24, // 24 hours
+      path: '/',
+    });
     cookieStore.set('findo_admin_token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
@@ -61,7 +68,9 @@ export async function POST(request: Request) {
 export async function GET() {
   try {
     const cookieStore = await cookies();
-    const token = cookieStore.get('findo_admin_token')?.value;
+    const token =
+      cookieStore.get('wooobey_admin_token')?.value ||
+      cookieStore.get('findo_admin_token')?.value;
 
     if (!token) {
       return NextResponse.json({ authenticated: false }, { status: 401 });
@@ -81,7 +90,9 @@ export async function GET() {
 export async function PUT(request: Request) {
   try {
     const cookieStore = await cookies();
-    const token = cookieStore.get('findo_admin_token')?.value;
+    const token =
+      cookieStore.get('wooobey_admin_token')?.value ||
+      cookieStore.get('findo_admin_token')?.value;
 
     if (!token) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -131,6 +142,7 @@ export async function PUT(request: Request) {
 export async function DELETE() {
   try {
     const cookieStore = await cookies();
+    cookieStore.delete('wooobey_admin_token');
     cookieStore.delete('findo_admin_token');
     return NextResponse.json({ success: true, message: 'Logged out successfully' });
   } catch (error: any) {

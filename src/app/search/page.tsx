@@ -15,8 +15,8 @@ interface SearchPageProps {
 export async function generateMetadata({ searchParams }: SearchPageProps) {
   const { q } = await searchParams;
   return {
-    title: q ? `Search results for "${q}" — FINDO` : 'Search Products — FINDO',
-    description: 'Search thoughtfully chosen kids products, habit trackers, puzzle boxes, and STEM sets.',
+    title: q ? `Search results for "${q}" — Wooobey` : 'Search Products — Wooobey',
+    description: 'Search thoughtfully chosen kids developmental toys, habit trackers, puzzle boxes, and STEM sets.',
   };
 }
 

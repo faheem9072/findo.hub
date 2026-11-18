@@ -28,22 +28,22 @@ export default function FloatingMascotBuddy() {
         </div>
       )}
 
-      {/* Floating 3D Squirrel Button */}
+      {/* Floating 3D Mascot Button */}
       <a
-        href="https://wa.me/917025387764?text=Hello%20Findo!%20I%20would%20like%20to%20know%20more%20about%20your%20educational%20toys."
+        href="https://wa.me/917025387764?text=Hello%20Wooobey!%20I%20would%20like%20to%20know%20more%20about%20your%20educational%20toys."
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="Chat with Findo on WhatsApp"
+        aria-label="Chat with Wooobey on WhatsApp"
         className="group relative flex items-center justify-center transition-transform hover:scale-110 active:scale-95"
       >
         {/* Glow & Ring */}
-        <div className="absolute inset-0 rounded-full bg-emerald-500/20 blur-md group-hover:bg-emerald-500/35 transition-all animate-pulse" />
+        <div className="absolute inset-0 rounded-full bg-[#f25c38]/20 blur-md group-hover:bg-[#f25c38]/35 transition-all animate-pulse" />
         
-        {/* Squirrel Avatar Frame */}
-        <div className="relative w-12 h-12 sm:w-16 sm:h-16 rounded-full overflow-hidden bg-white border-2 border-[#5a9e2f] shadow-lg p-0.5 animate-float flex items-center justify-center">
+        {/* Mascot Avatar Frame */}
+        <div className="relative w-12 h-12 sm:w-16 sm:h-16 rounded-full overflow-hidden bg-white border-2 border-[#f25c38] shadow-lg p-0.5 animate-float flex items-center justify-center">
           <Image
-            src="/images/squirrel-buddy.png"
-            alt="Findo Mascot"
+            src="/logo.jpeg"
+            alt="Wooobey Mascot"
             fill
             className="object-contain p-1"
           />

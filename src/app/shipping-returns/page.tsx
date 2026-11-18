@@ -2,8 +2,8 @@ import React from 'react';
 import { Truck, RotateCcw, ShieldCheck, Clock, CheckCircle2 } from 'lucide-react';
 
 export const metadata = {
-  title: 'Shipping & Returns Policy — Findo',
-  description: 'Read Findo shipping timelines across India, 7-day easy replacement policy, and refund guidelines.',
+  title: 'Shipping & Returns Policy — Wooobey',
+  description: 'Read Wooobey shipping timelines across India, 7-day easy replacement policy, and refund guidelines.',
 };
 
 export default function ShippingReturnsPage() {
@@ -18,7 +18,7 @@ export default function ShippingReturnsPage() {
           Shipping & Returns Policy
         </h1>
         <p className="text-sm text-slate-500 max-w-lg mx-auto">
-          Everything you need to know about how we package, ship, and support your purchases at Findo.
+          Everything you need to know about how we package, ship, and support your purchases at Wooobey.
         </p>
       </div>
 
@@ -76,7 +76,7 @@ export default function ShippingReturnsPage() {
             <h4 className="font-bold text-sm text-[#0d1b1e]">How to Request a Replacement:</h4>
             <ol className="list-decimal pl-5 space-y-1">
               <li>Take a quick photo or 10-second video showing the issue.</li>
-              <li>Email us at <strong>findohub7@gmail.com</strong> or WhatsApp/Call us at <strong>+91 70253 87764</strong> / <strong>+91 95397 40449</strong> within 7 days of delivery.</li>
+              <li>Email us at <strong>Wooobeyhub7@gmail.com</strong> or WhatsApp/Call us at <strong>+91 70253 87764</strong> / <strong>+91 95397 40449</strong> within 7 days of delivery.</li>
               <li>Our team will arrange a free reverse pickup and send a brand-new replacement immediately!</li>
             </ol>
           </div>

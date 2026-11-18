@@ -186,8 +186,8 @@ export default function CheckoutPage() {
         key: razorpayData.key_id,
         amount: razorpayData.amount,
         currency: razorpayData.currency || 'INR',
-        name: 'FINDO Store',
-        description: 'Payment for FINDO Kids Products',
+        name: 'Wooobey Store',
+        description: 'Payment for Wooobey Toys & Products',
         image: '/logo.jpeg',
         order_id: razorpayData.id,
         handler: function (response: any) {
@@ -346,7 +346,7 @@ export default function CheckoutPage() {
                 </div>
                 <div>
                   <h2 className="text-lg font-bold text-[#0d1b1e]">Shipping Address</h2>
-                  <p className="text-xs text-slate-500">Where should we deliver your FINDO order?</p>
+                  <p className="text-xs text-slate-500">Where should we deliver your Wooobey order?</p>
                 </div>
               </div>
 
@@ -610,7 +610,7 @@ export default function CheckoutPage() {
               )}
             </button>
             <p className="text-[11px] text-center text-slate-400 font-medium pt-1">
-              By placing this order, you agree to Findo&apos;s{' '}
+              By placing this order, you agree to Wooobey&apos;s{' '}
               <Link href="/terms" target="_blank" className="text-[#5a9e2f] hover:underline font-semibold">
                 Terms & Conditions
               </Link>{' '}

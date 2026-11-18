@@ -192,7 +192,7 @@ const DEFAULT_AGE_TOYS: Record<string, ProductItem[]> = {
     },
     {
       id: 'fb-mag-sticks',
-      name: 'Findo 36-Piece 3D Magnetic Sticks & Balls Set',
+      name: 'Wooobey 36-Piece 3D Magnetic Sticks & Balls Set',
       slug: '36-pcs-magnetic-sticks-building-set',
       price: 849,
       compareAtPrice: 999,
@@ -234,7 +234,7 @@ const DEFAULT_AGE_TOYS: Record<string, ProductItem[]> = {
     },
     {
       id: 'fb-mag-sticks',
-      name: 'Findo 36-Piece 3D Magnetic Sticks & Balls Set',
+      name: 'Wooobey 36-Piece 3D Magnetic Sticks & Balls Set',
       slug: '36-pcs-magnetic-sticks-building-set',
       price: 849,
       compareAtPrice: 999,
@@ -246,7 +246,7 @@ const DEFAULT_AGE_TOYS: Record<string, ProductItem[]> = {
   '3-5y': [
     {
       id: 'fb-habit',
-      name: 'Findo Kids Daily Routine & Habit Checklist Board',
+      name: 'Wooobey Kids Daily Routine & Habit Checklist Board',
       slug: 'habit-tracker',
       price: 349,
       compareAtPrice: 369,
@@ -288,7 +288,7 @@ const DEFAULT_AGE_TOYS: Record<string, ProductItem[]> = {
   '5-7y': [
     {
       id: 'fb-camera',
-      name: 'Findo DIY Instant Print Kids Digital Camera',
+      name: 'Wooobey DIY Instant Print Kids Digital Camera',
       slug: 'kids-instant-print-digital-camera',
       price: 1499,
       compareAtPrice: 1600,
@@ -298,7 +298,7 @@ const DEFAULT_AGE_TOYS: Record<string, ProductItem[]> = {
     },
     {
       id: 'fb-habit',
-      name: 'Findo Kids Daily Routine & Habit Checklist Board',
+      name: 'Wooobey Kids Daily Routine & Habit Checklist Board',
       slug: 'habit-tracker',
       price: 349,
       compareAtPrice: 369,
@@ -330,7 +330,7 @@ const DEFAULT_AGE_TOYS: Record<string, ProductItem[]> = {
   '7-9y': [
     {
       id: 'fb-camera',
-      name: 'Findo DIY Instant Print Kids Digital Camera',
+      name: 'Wooobey DIY Instant Print Kids Digital Camera',
       slug: 'kids-instant-print-digital-camera',
       price: 1499,
       compareAtPrice: 1600,
@@ -392,7 +392,7 @@ const DEFAULT_AGE_TOYS: Record<string, ProductItem[]> = {
     },
     {
       id: 'fb-microscope',
-      name: 'Findo Kids Educational Microscope Science Kit (100X-450X)',
+      name: 'Wooobey Kids Educational Microscope Science Kit (100X-450X)',
       slug: 'kids-educational-microscope-science-kit',
       price: 949,
       compareAtPrice: 1050,
@@ -424,7 +424,7 @@ const DEFAULT_AGE_TOYS: Record<string, ProductItem[]> = {
     },
     {
       id: 'fb-microscope',
-      name: 'Findo Kids Educational Microscope Science Kit (100X-450X)',
+      name: 'Wooobey Kids Educational Microscope Science Kit (100X-450X)',
       slug: 'kids-educational-microscope-science-kit',
       price: 949,
       compareAtPrice: 1050,

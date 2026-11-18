@@ -17,9 +17,9 @@ import {
 } from 'lucide-react';
 
 export const metadata = {
-  title: 'Terms & Conditions — Findo Kids Products',
+  title: 'Terms & Conditions — Wooobey Kids Products',
   description:
-    'Read the official Terms & Conditions, shipping, cancellation, return, refund, and customer support policies for Findo (getfindo.in).',
+    'Read the official Terms & Conditions, shipping, cancellation, return, refund, and customer support policies for Wooobey (getWooobey.in).',
 };
 
 export default function TermsPage() {
@@ -41,10 +41,10 @@ export default function TermsPage() {
       {/* Intro Banner */}
       <div className="bg-[#fafbf8] p-6 sm:p-8 rounded-3xl border border-slate-200/80 shadow-xs space-y-3 text-slate-700 leading-relaxed text-sm">
         <p className="font-semibold text-[#0d1b1e]">
-          Welcome to Findo! We are happy to have you here.
+          Welcome to Wooobey! We are happy to have you here.
         </p>
         <p className="text-xs sm:text-sm text-slate-600">
-          Findo is an online store offering creative, educational, and fun products for children.
+          Wooobey is an online store offering creative, educational, and fun products for children.
           These Terms & Conditions explain how you can use our website, place orders, make payments,
           and receive products from us.
         </p>
@@ -54,22 +54,22 @@ export default function TermsPage() {
         </div>
       </div>
 
-      {/* 1. About Findo */}
+      {/* 1. About Wooobey */}
       <section className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-xs space-y-4">
         <div className="flex items-center gap-3 pb-3 border-b border-slate-100">
           <div className="w-9 h-9 rounded-xl bg-[#eef8ea] text-[#5a9e2f] flex items-center justify-center shrink-0">
             <FileText className="w-5 h-5" />
           </div>
-          <h2 className="text-lg font-bold text-[#0d1b1e]">1. About Findo</h2>
+          <h2 className="text-lg font-bold text-[#0d1b1e]">1. About Wooobey</h2>
         </div>
         <div className="space-y-2.5 text-xs sm:text-sm text-slate-600 leading-relaxed">
           <p>
-            Findo is an e-commerce brand based in Kerala, India, dedicated to curated child-safe toys and educational kits.
+            Wooobey is an e-commerce brand based in Kerala, India, dedicated to curated child-safe toys and educational kits.
           </p>
           <p>
             Our official website:{' '}
-            <Link href="https://getfindo.in" className="text-[#5a9e2f] font-bold hover:underline">
-              https://getfindo.in
+            <Link href="https://getWooobey.in" className="text-[#5a9e2f] font-bold hover:underline">
+              https://getWooobey.in
             </Link>
           </p>
           <p>
@@ -96,7 +96,7 @@ export default function TermsPage() {
           <li>Product prices are displayed in Indian Rupees (INR).</li>
           <li>Shipping charges, if applicable, will be displayed before checkout.</li>
           <li>Orders will be processed after successful payment or confirmation of Cash on Delivery (COD), where available.</li>
-          <li>Findo reserves the right to cancel an order in case of incorrect pricing, product unavailability, payment issues, or suspected fraudulent activity.</li>
+          <li>Wooobey reserves the right to cancel an order in case of incorrect pricing, product unavailability, payment issues, or suspected fraudulent activity.</li>
           <li>If an order is cancelled after payment, the eligible amount will be refunded.</li>
         </ul>
       </section>
@@ -117,7 +117,7 @@ export default function TermsPage() {
           <div>
             <h3 className="font-bold text-[#0d1b1e] text-xs uppercase tracking-wider mb-1">Shipping Locations</h3>
             <p>
-              Findo currently delivers across serviceable locations in India. Delivery availability depends on the courier service and the customer&apos;s PIN code.
+              Wooobey currently delivers across serviceable locations in India. Delivery availability depends on the courier service and the customer&apos;s PIN code.
             </p>
           </div>
 
@@ -152,7 +152,7 @@ export default function TermsPage() {
           <div>
             <h3 className="font-bold text-[#0d1b1e] text-xs uppercase tracking-wider mb-1">Shipping Charges</h3>
             <p>
-              Shipping charges will be displayed during checkout. Findo may offer free shipping or promotional delivery offers from time to time based on order subtotal.
+              Shipping charges will be displayed during checkout. Wooobey may offer free shipping or promotional delivery offers from time to time based on order subtotal.
             </p>
           </div>
 
@@ -166,7 +166,7 @@ export default function TermsPage() {
           <div>
             <h3 className="font-bold text-[#0d1b1e] text-xs uppercase tracking-wider mb-1">Delayed Deliveries</h3>
             <p>
-              We do our best to deliver orders within the estimated timeframe. However, Findo cannot guarantee exact delivery dates due to circumstances beyond our control. If your order is delayed, please contact our customer support team.
+              We do our best to deliver orders within the estimated timeframe. However, Wooobey cannot guarantee exact delivery dates due to circumstances beyond our control. If your order is delayed, please contact our customer support team.
             </p>
           </div>
 
@@ -190,7 +190,7 @@ export default function TermsPage() {
         <ul className="space-y-2 text-xs sm:text-sm text-slate-600 leading-relaxed list-disc pl-5">
           <li>Customers may request order cancellation before the order is dispatched.</li>
           <li>Once an order has been shipped, cancellation may not be possible.</li>
-          <li>If an order is cancelled by Findo due to product unavailability or other reasons, the customer will receive an eligible refund.</li>
+          <li>If an order is cancelled by Wooobey due to product unavailability or other reasons, the customer will receive an eligible refund.</li>
           <li>Cancellation requests can be made by contacting our customer support team directly via WhatsApp or email.</li>
         </ul>
       </section>
@@ -206,7 +206,7 @@ export default function TermsPage() {
 
         <div className="space-y-3 text-xs sm:text-sm text-slate-600 leading-relaxed">
           <p>
-            At Findo, customer satisfaction is important to us. Customers may request a return or replacement in the following situations:
+            At Wooobey, customer satisfaction is important to us. Customers may request a return or replacement in the following situations:
           </p>
           <ul className="list-disc pl-5 space-y-1">
             <li>The product received is damaged.</li>
@@ -298,7 +298,7 @@ export default function TermsPage() {
           <h2 className="text-lg font-bold text-[#0d1b1e]">8. Product Information</h2>
         </div>
         <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-          Findo makes reasonable efforts to display accurate product descriptions, images, prices, and specifications. However:
+          Wooobey makes reasonable efforts to display accurate product descriptions, images, prices, and specifications. However:
         </p>
         <ul className="list-disc pl-5 text-xs sm:text-sm text-slate-600 space-y-1">
           <li>Product colours may vary slightly due to screen display settings.</li>
@@ -320,11 +320,11 @@ export default function TermsPage() {
           <h2 className="text-lg font-bold text-[#0d1b1e]">9. Privacy Policy</h2>
         </div>
         <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-          Findo respects the privacy of its customers. We may collect personal information such as: Name, phone number, email address, shipping address, order details, and payment transaction information.
+          Wooobey respects the privacy of its customers. We may collect personal information such as: Name, phone number, email address, shipping address, order details, and payment transaction information.
         </p>
         <ul className="list-disc pl-5 text-xs sm:text-sm text-slate-600 space-y-1">
           <li>This information is used strictly for processing orders, delivering products, providing customer support, and improving our services.</li>
-          <li>Payment information is processed through authorised and encrypted payment gateways (such as Razorpay). Findo does not store customers&apos; complete card details or CVVs.</li>
+          <li>Payment information is processed through authorised and encrypted payment gateways (such as Razorpay). Wooobey does not store customers&apos; complete card details or CVVs.</li>
           <li>We do not sell customers&apos; personal information to third parties.</li>
           <li>Information is shared only with verified courier partners, payment providers, and service providers where necessary to complete an order or comply with legal requirements.</li>
         </ul>
@@ -339,7 +339,7 @@ export default function TermsPage() {
           <h2 className="text-lg font-bold text-[#0d1b1e]">10. Website Usage</h2>
         </div>
         <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-          Customers agree to use the Findo website for lawful purposes only. Users must not attempt to misuse or damage the website, submit false or misleading information, engage in fraudulent transactions, or attempt to access restricted areas. Findo reserves the right to restrict access to users who violate these terms.
+          Customers agree to use the Wooobey website for lawful purposes only. Users must not attempt to misuse or damage the website, submit false or misleading information, engage in fraudulent transactions, or attempt to access restricted areas. Wooobey reserves the right to restrict access to users who violate these terms.
         </p>
       </section>
 
@@ -348,14 +348,14 @@ export default function TermsPage() {
         <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-xs space-y-2">
           <h2 className="text-sm font-bold text-[#0d1b1e]">11. Limitation of Liability</h2>
           <p className="text-xs text-slate-600 leading-relaxed">
-            Findo will make reasonable efforts to provide reliable products and services. However, we are not responsible for delays or interruptions caused by circumstances beyond our reasonable control, including courier disruptions, natural disasters, or technical issues. Applicable consumer protection rights remain preserved.
+            Wooobey will make reasonable efforts to provide reliable products and services. However, we are not responsible for delays or interruptions caused by circumstances beyond our reasonable control, including courier disruptions, natural disasters, or technical issues. Applicable consumer protection rights remain preserved.
           </p>
         </div>
 
         <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-xs space-y-2">
           <h2 className="text-sm font-bold text-[#0d1b1e]">12. Changes to Terms</h2>
           <p className="text-xs text-slate-600 leading-relaxed">
-            Findo reserves the right to update these Terms & Conditions from time to time. Any changes will be published on this website. Customers are encouraged to review this page periodically.
+            Wooobey reserves the right to update these Terms & Conditions from time to time. Any changes will be published on this website. Customers are encouraged to review this page periodically.
           </p>
         </div>
       </section>
@@ -377,8 +377,8 @@ export default function TermsPage() {
               <Mail className="w-4 h-4 text-[#5a9e2f] shrink-0 mt-0.5" />
               <div>
                 <span className="text-slate-400 text-xs block">Customer Support Email:</span>
-                <a href="mailto:findohub7@gmail.com" className="text-white font-semibold hover:text-[#5a9e2f]">
-                  findohub7@gmail.com
+                <a href="mailto:Wooobeyhub7@gmail.com" className="text-white font-semibold hover:text-[#5a9e2f]">
+                  Wooobeyhub7@gmail.com
                 </a>
               </div>
             </div>
@@ -425,7 +425,7 @@ export default function TermsPage() {
         </div>
 
         <div className="text-center pt-4 border-t border-slate-800 text-xs text-slate-400">
-          Thank you for choosing Findo! — <em>Find smart play.</em>
+          Thank you for choosing Wooobey! — <em>Find smart play.</em>
         </div>
       </section>
     </div>
