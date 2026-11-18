@@ -173,9 +173,9 @@ export default async function HomePage() {
             </span>
 
             <h2 className="font-heading text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight drop-shadow-sm">
-              THANK YOU
+              PLAY. LEARN. CREATE.
               <span className="block text-xl sm:text-2xl lg:text-3xl font-extrabold text-[#fff9e6] mt-1 font-sans">
-                For Being Part of Our Journey
+                Smart Screen-Free Toys For Curious Growing Minds
               </span>
             </h2>
 

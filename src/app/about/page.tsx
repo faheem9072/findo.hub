@@ -54,13 +54,60 @@ export default function AboutPage() {
           </div>
         </div>
 
-        <div className="lg:col-span-6 relative aspect-4/3 rounded-3xl overflow-hidden border-4 border-white shadow-xl bg-[#fffaf5] p-6 flex items-center justify-center">
-          <Image
-            src="/images/wooobey-brand-banner.jpg"
-            alt="Wooobey Brand Journey"
-            fill
-            className="object-cover rounded-2xl"
-          />
+        <div className="lg:col-span-6">
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 p-4 sm:p-6 rounded-3xl bg-gradient-to-br from-[#0b574f]/5 via-[#f25c38]/5 to-[#ffb703]/10 border border-[#0b574f]/15 shadow-xl">
+            <div className="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center text-center space-y-2 hover:-translate-y-1 transition-transform">
+              <div className="relative w-20 h-20 sm:w-28 sm:h-28 rounded-xl overflow-hidden bg-slate-50 p-2">
+                <Image
+                  src="/images/habit-tracker.jpg"
+                  alt="Habit Tracker"
+                  fill
+                  className="object-contain"
+                />
+              </div>
+              <span className="font-heading text-xs font-black text-[#0b574f]">Daily Habit Tracker</span>
+              <span className="text-[11px] text-slate-500 font-medium">Routine & Morning Discipline</span>
+            </div>
+
+            <div className="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center text-center space-y-2 hover:-translate-y-1 transition-transform">
+              <div className="relative w-20 h-20 sm:w-28 sm:h-28 rounded-xl overflow-hidden bg-slate-50 p-2">
+                <Image
+                  src="/images/tangram-woodiness.jpg"
+                  alt="Montessori Puzzle"
+                  fill
+                  className="object-contain"
+                />
+              </div>
+              <span className="font-heading text-xs font-black text-[#0b574f]">Montessori Tangram</span>
+              <span className="text-[11px] text-slate-500 font-medium">Cognitive & Spatial Logic</span>
+            </div>
+
+            <div className="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center text-center space-y-2 hover:-translate-y-1 transition-transform">
+              <div className="relative w-20 h-20 sm:w-28 sm:h-28 rounded-xl overflow-hidden bg-slate-50 p-2">
+                <Image
+                  src="/images/instant-print-camera.jpg"
+                  alt="Instant Print Camera"
+                  fill
+                  className="object-contain"
+                />
+              </div>
+              <span className="font-heading text-xs font-black text-[#0b574f]">Instant Print Camera</span>
+              <span className="text-[11px] text-slate-500 font-medium">Zero-Ink Tactile Creativity</span>
+            </div>
+
+            <div className="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center text-center space-y-2 hover:-translate-y-1 transition-transform">
+              <div className="relative w-20 h-20 sm:w-28 sm:h-28 rounded-xl overflow-hidden bg-slate-50 p-2">
+                <Image
+                  src="/images/super-chemistry-lab.jpg"
+                  alt="Science STEM Kit"
+                  fill
+                  className="object-contain"
+                />
+              </div>
+              <span className="font-heading text-xs font-black text-[#0b574f]">Super Chemistry Lab</span>
+              <span className="text-[11px] text-slate-500 font-medium">Hands-On STEM Discovery</span>
+            </div>
+          </div>
         </div>
       </div>
 
