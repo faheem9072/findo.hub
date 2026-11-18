@@ -110,6 +110,48 @@ export default async function HomePage() {
       {/* 1. HAMLEYS-STYLE HERO PROMOTIONAL BANNER SLIDER WITH OFFER CALLOUTS */}
       <HeroHamleysSlider initialProducts={catalogProducts} />
 
+      {/* 1.5. WOOOBEY PARENT TRUST PILLARS */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-4 sm:-mt-6 relative z-20">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 p-4 sm:p-5 rounded-2xl sm:rounded-3xl bg-white/95 backdrop-blur-md border border-[#0b574f]/10 shadow-lg">
+          <div className="flex items-center gap-3 p-2">
+            <div className="w-10 h-10 rounded-2xl bg-[#e6f4f2] text-[#0b574f] flex items-center justify-center font-black text-lg shrink-0">
+              🌿
+            </div>
+            <div>
+              <h4 className="font-heading text-xs sm:text-sm font-black text-[#0b574f] leading-tight">100% Screen-Free</h4>
+              <p className="text-[10px] sm:text-[11px] text-slate-500 font-medium">Cognitive Montessori play</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-3 p-2">
+            <div className="w-10 h-10 rounded-2xl bg-[#fff9e6] text-[#d97706] flex items-center justify-center font-black text-lg shrink-0">
+              🚚
+            </div>
+            <div>
+              <h4 className="font-heading text-xs sm:text-sm font-black text-[#0b574f] leading-tight">Pan-India Express</h4>
+              <p className="text-[10px] sm:text-[11px] text-slate-500 font-medium">Free delivery over ₹999</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-3 p-2">
+            <div className="w-10 h-10 rounded-2xl bg-[#fef0ec] text-[#f25c38] flex items-center justify-center font-black text-lg shrink-0">
+              🛡️
+            </div>
+            <div>
+              <h4 className="font-heading text-xs sm:text-sm font-black text-[#0b574f] leading-tight">Child-Safe Certified</h4>
+              <p className="text-[10px] sm:text-[11px] text-slate-500 font-medium">Non-toxic, smooth edges</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-3 p-2">
+            <div className="w-10 h-10 rounded-2xl bg-[#f3f0ff] text-[#7048e8] flex items-center justify-center font-black text-lg shrink-0">
+              💬
+            </div>
+            <div>
+              <h4 className="font-heading text-xs sm:text-sm font-black text-[#0b574f] leading-tight">Instant Care</h4>
+              <p className="text-[10px] sm:text-[11px] text-slate-500 font-medium">+91 70253 87764 (WhatsApp)</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* 2. HAMLEYS "SHOP BY AGE" HORIZONTAL SLIDER WITH INSTANT ON-PAGE AGE FILTERING */}
       <ShopByAgeSlider allProducts={catalogProducts} />
 
@@ -144,90 +186,134 @@ export default async function HomePage() {
               </span>
             </p>
 
-            {/* Glowing Brand Centerpiece */}
-            <div className="pt-2 pb-4">
-              <div className="inline-block px-8 py-3 rounded-2xl bg-white/10 backdrop-blur-md border-2 border-white/40 shadow-[0_0_30px_rgba(255,255,255,0.3)]">
-                <span className="font-heading text-3xl sm:text-5xl font-black text-white tracking-wider lowercase">
-                  wooobey
-                </span>
-                <span className="block text-[11px] sm:text-xs font-bold text-[#ffb703] uppercase tracking-widest mt-0.5">
-                  Play. Learn. Create.
-                </span>
+            {/* Illuminated Brand Centerpiece from Slide Reference */}
+            <div className="pt-2 pb-4 flex flex-col items-center justify-center">
+              <div className="relative h-16 sm:h-22 w-52 sm:w-72 transition-transform duration-300 hover:scale-105 drop-shadow-[0_4px_24px_rgba(255,255,255,0.4)]">
+                <Image
+                  src="/logo-white.png"
+                  alt="Wooobey — Play. Learn. Create."
+                  fill
+                  className="object-contain"
+                  priority
+                />
               </div>
+              <span className="text-xs sm:text-sm font-black text-[#ffb703] uppercase tracking-[0.2em] font-heading mt-2">
+                ★ PLAY. LEARN. CREATE. ★
+              </span>
             </div>
 
-            {/* 5 Cloud Cards - Representing the Slide Collection */}
+            {/* 5 Cloud Cards - Representing the Slide Collection with Product Photos */}
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 pt-6 text-[#0e2a27]">
               <Link
                 href="/product/habit-tracker"
                 className="group p-3 sm:p-4 rounded-2xl bg-white/95 hover:bg-white transition-all transform hover:-translate-y-1 shadow-lg text-center flex flex-col items-center justify-between"
               >
-                <div className="w-8 h-8 rounded-full bg-[#fef0ec] text-[#f25c38] flex items-center justify-center font-black text-xs mb-2">
+                <div className="relative w-16 h-16 sm:w-20 sm:h-20 mb-2 rounded-xl overflow-hidden bg-slate-50 p-1">
+                  <Image
+                    src="/images/habit-tracker.jpg"
+                    alt="Habit Tracker"
+                    fill
+                    className="object-contain group-hover:scale-110 transition-transform duration-300"
+                  />
+                </div>
+                <div className="w-6 h-6 rounded-full bg-[#fef0ec] text-[#f25c38] flex items-center justify-center font-black text-[10px] mb-1">
                   01
                 </div>
                 <h4 className="font-heading text-xs font-black leading-tight text-[#0b574f] group-hover:text-[#f25c38]">
                   HABIT TRACKER
                 </h4>
-                <span className="text-[10px] text-slate-500 font-bold block mt-1">Daily Routine Board</span>
+                <span className="text-[10px] text-slate-500 font-bold block mt-0.5">Daily Routine Board</span>
               </Link>
 
               <Link
                 href="/shop?category=montessori-sensory"
                 className="group p-3 sm:p-4 rounded-2xl bg-white/95 hover:bg-white transition-all transform hover:-translate-y-1 shadow-lg text-center flex flex-col items-center justify-between"
               >
-                <div className="w-8 h-8 rounded-full bg-[#e6f4f2] text-[#0b574f] flex items-center justify-center font-black text-xs mb-2">
+                <div className="relative w-16 h-16 sm:w-20 sm:h-20 mb-2 rounded-xl overflow-hidden bg-slate-50 p-1">
+                  <Image
+                    src="/images/tangram-woodiness.jpg"
+                    alt="Creative Puzzle Box"
+                    fill
+                    className="object-contain group-hover:scale-110 transition-transform duration-300"
+                  />
+                </div>
+                <div className="w-6 h-6 rounded-full bg-[#e6f4f2] text-[#0b574f] flex items-center justify-center font-black text-[10px] mb-1">
                   02
                 </div>
                 <h4 className="font-heading text-xs font-black leading-tight text-[#0b574f] group-hover:text-[#f25c38]">
-                  CREATIVE PUZZLE BOX
+                  CREATIVE PUZZLE
                 </h4>
-                <span className="text-[10px] text-slate-500 font-bold block mt-1">Montessori & Logic</span>
+                <span className="text-[10px] text-slate-500 font-bold block mt-0.5">Montessori & Logic</span>
               </Link>
 
               <Link
                 href="/shop?category=exploration-art"
                 className="group p-3 sm:p-4 rounded-2xl bg-white/95 hover:bg-white transition-all transform hover:-translate-y-1 shadow-lg text-center flex flex-col items-center justify-between"
               >
-                <div className="w-8 h-8 rounded-full bg-[#fff9e6] text-[#d97706] flex items-center justify-center font-black text-xs mb-2">
+                <div className="relative w-16 h-16 sm:w-20 sm:h-20 mb-2 rounded-xl overflow-hidden bg-slate-50 p-1">
+                  <Image
+                    src="/images/super-chemistry-lab.jpg"
+                    alt="Creative Play Toys"
+                    fill
+                    className="object-contain group-hover:scale-110 transition-transform duration-300"
+                  />
+                </div>
+                <div className="w-6 h-6 rounded-full bg-[#fff9e6] text-[#d97706] flex items-center justify-center font-black text-[10px] mb-1">
                   03
                 </div>
                 <h4 className="font-heading text-xs font-black leading-tight text-[#0b574f] group-hover:text-[#f25c38]">
-                  CREATIVE PLAY TOYS
+                  CREATIVE PLAY
                 </h4>
-                <span className="text-[10px] text-slate-500 font-bold block mt-1">Art & Building</span>
+                <span className="text-[10px] text-slate-500 font-bold block mt-0.5">Art & Science</span>
               </Link>
 
               <Link
                 href="/product/balance-tower"
                 className="group p-3 sm:p-4 rounded-2xl bg-white/95 hover:bg-white transition-all transform hover:-translate-y-1 shadow-lg text-center flex flex-col items-center justify-between"
               >
-                <div className="w-8 h-8 rounded-full bg-[#f3f0ff] text-[#7048e8] flex items-center justify-center font-black text-xs mb-2">
+                <div className="relative w-16 h-16 sm:w-20 sm:h-20 mb-2 rounded-xl overflow-hidden bg-slate-50 p-1">
+                  <Image
+                    src="/images/tetra-tower.jpg"
+                    alt="Balance & Stacking"
+                    fill
+                    className="object-contain group-hover:scale-110 transition-transform duration-300"
+                  />
+                </div>
+                <div className="w-6 h-6 rounded-full bg-[#f3f0ff] text-[#7048e8] flex items-center justify-center font-black text-[10px] mb-1">
                   04
                 </div>
                 <h4 className="font-heading text-xs font-black leading-tight text-[#0b574f] group-hover:text-[#f25c38]">
-                  BALANCE & STACKING
+                  BALANCE & STACK
                 </h4>
-                <span className="text-[10px] text-slate-500 font-bold block mt-1">Tetra Tower Games</span>
+                <span className="text-[10px] text-slate-500 font-bold block mt-0.5">Tetra Tower Game</span>
               </Link>
 
               <Link
                 href="/product/kids-instant-print-digital-camera"
                 className="group p-3 sm:p-4 rounded-2xl bg-white/95 hover:bg-white transition-all transform hover:-translate-y-1 shadow-lg text-center flex flex-col items-center justify-between col-span-2 sm:col-span-1"
               >
-                <div className="w-8 h-8 rounded-full bg-[#fef0ec] text-[#f25c38] flex items-center justify-center font-black text-xs mb-2">
+                <div className="relative w-16 h-16 sm:w-20 sm:h-20 mb-2 rounded-xl overflow-hidden bg-slate-50 p-1">
+                  <Image
+                    src="/images/instant-print-camera.jpg"
+                    alt="Instant Camera"
+                    fill
+                    className="object-contain group-hover:scale-110 transition-transform duration-300"
+                  />
+                </div>
+                <div className="w-6 h-6 rounded-full bg-[#fef0ec] text-[#f25c38] flex items-center justify-center font-black text-[10px] mb-1">
                   05
                 </div>
                 <h4 className="font-heading text-xs font-black leading-tight text-[#0b574f] group-hover:text-[#f25c38]">
-                  INSTANT DIGITAL CAMERA
+                  INSTANT CAMERA
                 </h4>
-                <span className="text-[10px] text-slate-500 font-bold block mt-1">Zero-Ink Printing</span>
+                <span className="text-[10px] text-slate-500 font-bold block mt-0.5">Zero-Ink Printing</span>
               </Link>
             </div>
 
             <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
                 href="/shop"
-                className="font-heading inline-flex items-center gap-2 py-3 px-8 rounded-full bg-[#f25c38] hover:bg-[#ff5e36] text-white text-xs font-black uppercase tracking-wider transition-all shadow-xl hover:scale-105"
+                className="font-heading inline-flex items-center gap-2 py-3.5 px-8 rounded-full bg-[#f25c38] hover:bg-[#ff5e36] text-white text-xs font-black uppercase tracking-wider transition-all shadow-xl hover:scale-105"
               >
                 <span>EXPLORE ALL WOOOBEY TOYS</span>
                 <ArrowRight className="w-4 h-4" />

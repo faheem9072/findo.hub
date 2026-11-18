@@ -67,54 +67,54 @@ export default function ContactPage() {
 
           <div className="space-y-6 text-sm">
             <div className="flex items-start gap-4">
-              <div className="w-10 h-10 rounded-xl bg-[#5a9e2f] text-white flex items-center justify-center shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-[#0b574f] text-[#ffb703] flex items-center justify-center shrink-0 shadow-xs border border-white/10">
                 <Mail className="w-5 h-5" />
               </div>
               <div>
-                <h4 className="font-bold text-xs text-emerald-400 uppercase">Email Support</h4>
+                <h4 className="font-bold text-xs text-[#ffb703] uppercase tracking-wider">Email Support</h4>
                 <a
-                  href="mailto:findohub7@gmail.com"
-                  className="text-sm font-semibold text-white hover:text-[#5a9e2f] transition-colors block"
+                  href="mailto:infowooobey@gmail.com"
+                  className="text-sm font-semibold text-white hover:text-[#f25c38] transition-colors block"
                 >
-                  findohub7@gmail.com
+                  infowooobey@gmail.com
                 </a>
-                <p className="text-[11px] text-slate-400">Response within 24 hours</p>
+                <p className="text-[11px] text-slate-300">Fast response within 24 hours</p>
               </div>
             </div>
 
             <div className="flex items-start gap-4">
-              <div className="w-10 h-10 rounded-xl bg-[#5a9e2f] text-white flex items-center justify-center shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-[#0b574f] text-[#ffb703] flex items-center justify-center shrink-0 shadow-xs border border-white/10">
                 <Phone className="w-5 h-5" />
               </div>
               <div className="space-y-1.5">
-                <h4 className="font-bold text-xs text-emerald-400 uppercase">Phone & WhatsApp Support</h4>
+                <h4 className="font-bold text-xs text-[#ffb703] uppercase tracking-wider">Phone & WhatsApp Support</h4>
                 <div className="space-y-1">
                   <a
                     href="https://wa.me/917025387764"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-sm font-semibold text-white hover:text-[#5a9e2f] transition-colors block"
+                    className="text-sm font-semibold text-white hover:text-[#f25c38] transition-colors block"
                   >
-                    +91 70253 87764 <span className="text-[11px] text-emerald-400 font-normal">(WhatsApp & Call)</span>
+                    +91 70253 87764 <span className="text-[11px] text-[#ffb703] font-normal">(WhatsApp & Call)</span>
                   </a>
                   <a
                     href="tel:+919539740449"
-                    className="text-sm font-semibold text-white hover:text-[#5a9e2f] transition-colors block"
+                    className="text-sm font-semibold text-white hover:text-[#f25c38] transition-colors block"
                   >
-                    +91 95397 40449 <span className="text-[11px] text-emerald-400 font-normal">(Call Support)</span>
+                    +91 95397 40449 <span className="text-[11px] text-[#ffb703] font-normal">(Direct Line)</span>
                   </a>
                 </div>
-                <p className="text-[11px] text-slate-400">Mon - Sat, 9am - 8pm IST</p>
+                <p className="text-[11px] text-slate-300">Mon - Sat, 9am - 8pm IST</p>
               </div>
             </div>
 
             <div className="flex items-start gap-4">
-              <div className="w-10 h-10 rounded-xl bg-[#5a9e2f] text-white flex items-center justify-center shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-[#0b574f] text-[#ffb703] flex items-center justify-center shrink-0 shadow-xs border border-white/10">
                 <MapPin className="w-5 h-5" />
               </div>
               <div>
-                <h4 className="font-bold text-xs text-emerald-400 uppercase">Wooobey Care</h4>
-                <p className="text-xs text-slate-300">Kerala, India • Pan-India Delivery</p>
+                <h4 className="font-bold text-xs text-[#ffb703] uppercase tracking-wider">Wooobey Care</h4>
+                <p className="text-xs text-slate-200">Kerala, India • Pan-India Express Delivery</p>
               </div>
             </div>
 

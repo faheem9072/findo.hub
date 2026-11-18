@@ -53,11 +53,11 @@ export default function Footer() {
                 <span>+91 95397 40449</span>
               </a>
               <a
-                href="mailto:support@wooobey.com"
+                href="mailto:infowooobey@gmail.com"
                 className="inline-flex items-center gap-1.5 text-xs hover:text-[#ffb703] transition-colors bg-white/5 hover:bg-white/10 px-3 py-1.5 rounded-xl border border-white/10 font-medium"
               >
                 <Mail className="w-3.5 h-3.5 text-[#7048e8]" />
-                <span>support@wooobey.com</span>
+                <span>infowooobey@gmail.com</span>
               </a>
             </div>
           </div>

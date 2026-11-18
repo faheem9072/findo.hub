@@ -20,7 +20,7 @@ export default async function AdminSettingsPage() {
     settings = {
       id: 'default',
       whatsappNumber: '+917025387764',
-      supportEmail: 'findohub7@gmail.com',
+      supportEmail: 'infowooobey@gmail.com',
       freeShippingThreshold: 0,
       flatShippingRate: 0,
       storeNotice: '🎉 FREE SHIPPING ALL OVER INDIA ON ALL ORDERS!',

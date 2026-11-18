@@ -133,7 +133,7 @@ export default function AdminSettingsClient({ initialSettings }: { initialSettin
                 value={supportEmail}
                 onChange={(e) => setSupportEmail(e.target.value)}
                 className="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#0b574f] outline-none"
-                placeholder="findohub7@gmail.com"
+                placeholder="infowooobey@gmail.com"
               />
             </div>
           </div>

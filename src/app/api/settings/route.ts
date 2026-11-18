@@ -18,7 +18,7 @@ export async function GET() {
         data: {
           id: 'default',
           whatsappNumber: '+917025387764',
-          supportEmail: 'findohub7@gmail.com',
+          supportEmail: 'infowooobey@gmail.com',
           freeShippingThreshold: 0,
           flatShippingRate: 0,
           storeNotice: '🎉 FREE SHIPPING ON ALL ORDERS ACROSS INDIA!',
@@ -68,7 +68,7 @@ export async function PUT(request: Request) {
       create: {
         id: 'default',
         whatsappNumber: whatsappNumber || '+917025387764',
-        supportEmail: supportEmail || 'findohub7@gmail.com',
+        supportEmail: supportEmail || 'infowooobey@gmail.com',
         freeShippingThreshold: finalThreshold,
         flatShippingRate: finalShippingRate,
         storeNotice,
